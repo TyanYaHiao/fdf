@@ -3,7 +3,12 @@ project(fdf)
 
 set(CMAKE_C_STANDARD 99)
 
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lmlx -framework OpenGL -framework AppKit")
+
+#add_library (my_library STATIC|SHARED|MODULE minilibx/libmlx.a)
+
 add_executable(fdf
+		minilibx/libmlx.a
 		libft/libft.h
 		libft/ft_atoi.c
 		libft/ft_bzero.c
