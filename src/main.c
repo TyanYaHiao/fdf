@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/16 20:28:30 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/16 21:02:22 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ int		ft_abs1(int x1, int x0)
 	int 	res;
 
 	res = x1 - x0;
-	if (res >= 0)
-		return (res);
-	return (res * (-1));
+	return (res);
 }
 
 t_map	swap(t_map map)
@@ -50,8 +48,6 @@ void 	plot_line_low(t_map *map, int i, int check)
 	D = 2 * map[i].dely - map[i].delx;
 	while (map[i].x0 < map[i].x1)
 	{
-
-		mlx_string_put(map[0].mlx_ptr, map[0].win_ptr, 200, 200, 0xcdcd, "Xyu");
 		mlx_pixel_put(map[0].mlx_ptr, map[0].win_ptr, map[i].x0, map[i].y0, 0x6a5acd);
 		if (D > 0)
 		{
@@ -67,7 +63,10 @@ void 	plot_line_low(t_map *map, int i, int check)
 void 	plot_line_high(t_map *map, int i, int check)
 {
 	if (check)
+	{
 		map[i] = swap(map[i]);
+
+	}
 	map[i].delx = ft_abs1(map[i].x1, map[i].x0);
 	map[i].dely = ft_abs1(map[i].y1, map[i].y0);
 	int D;
@@ -79,12 +78,8 @@ void 	plot_line_high(t_map *map, int i, int check)
 		map[i].delx *= -1;
 	}
 	D = 2 * map[i].delx - map[i].dely;
-	mlx_pixel_put(map[0].mlx_ptr, map[0].win_ptr, map[i].x0, map[i].y0, 0xcdcd);
-	mlx_pixel_put(map[0].mlx_ptr, map[0].win_ptr, map[i].x1, map[i].y1, 0x6a5acd);
 	while (map[i].y0 < map[i].y1)
 	{
-
-		mlx_string_put(map[0].mlx_ptr, map[0].win_ptr, 300, 300, 0xcdcd, "Xyu4");
 		mlx_pixel_put(map[0].mlx_ptr, map[0].win_ptr, map[i].x0, map[i].y0, 0x6a5acd);
 		if (D > 0)
 		{
@@ -101,7 +96,6 @@ void	plot_line(t_map *map, int i)
 
 	if (map[i].dely < map[i].delx)
 	{
-		mlx_string_put(map[0].mlx_ptr, map[0].win_ptr, 200, 200, 0xcdcd, "Xyu3");
 		if (map[i].x0 > map[i].x1)
 			plot_line_low(map, i, 1);
 		else
@@ -110,15 +104,9 @@ void	plot_line(t_map *map, int i)
 	else
 	{
 		if (map[i].y0 > map[i].y1)
-		{
 			plot_line_high(map, i, 1);
-			mlx_string_put(map[0].mlx_ptr, map[0].win_ptr, 200, 200, 0xcdcd, "Xyu1");
-		}
 		else
-		{
 			plot_line_high(map, i, 0);
-			mlx_string_put(map[0].mlx_ptr, map[0].win_ptr, 500, 200, 0xcdcd, "Xyu2");
-		}
 	}
 }
 
@@ -158,10 +146,10 @@ int				main()
 	map[0].x1 = 200;
 	map[0].y0 = 90;
 	map[0].y1 = 200;
-	map[1].x1 = 200;
-	map[1].x0 = 400;
-	map[1].y1 = 400;
-	map[1].y0 = 200;
+	map[1].x1 = 90;
+	map[1].x0 = 200;
+	map[1].y1 = 200;
+	map[1].y0 = 90;
 
 	map[0].mlx_ptr = mlx_init(); //нужно
 	map[0].win_ptr = mlx_new_window(map[0].mlx_ptr, 900, 900, "Lejatb"); //создает окно
@@ -174,6 +162,7 @@ int				main()
 		plot_line(map, i);
 		i++;
 	}
+
 
 	mlx_loop(map[0].mlx_ptr); //тоже нужно
 	return (0);
