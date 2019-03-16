@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/15 21:48:23 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/16 21:26:02 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef			struct s_map{
 	int 		x1;
 	int 		y0;
 	int 		y1;
+	int 		z;
 	int 		delx;
 	int 		dely;
 	void		*mlx_ptr;
