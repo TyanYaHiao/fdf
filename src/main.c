@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/17 14:57:44 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/17 19:00:26 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ int				main(int argc, char **argv)
 //		!(map_size = (int*)malloc(sizeof(*map_size) * 2)))
 //		return (0);
 //	if (!(fillit_validate(figure, &tetriminos, num)))
+//	field_init(&field);
+	mlx_loop(field.mlx_ptr); //тоже нужно
 	return (0);
 
 
@@ -165,7 +167,7 @@ int				main(int argc, char **argv)
 ////	map[1].y0 = 200;
 ////	map[0].x0 = 300;
 ////	map[0].y0 = 350;
-//
+
 //	map[0].mlx_ptr = mlx_init(); //нужно
 //	map[0].win_ptr = mlx_new_window(map[0].mlx_ptr, 900, 900, "Lejatb"); //создает окно
 //	mlx_string_put(map[0].mlx_ptr, map[0].win_ptr, 100, 200, 0xfaebd7, str);
