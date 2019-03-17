@@ -6,13 +6,13 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/17 00:28:56 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/17 14:57:44 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-#include <stdio.h>
 
+/* Image faster than pixel.put */
 int		ft_abs1(int x1, int x0)
 {
 	int 	res;
@@ -130,73 +130,90 @@ static void iso(int *x, int *y, int z) // аффиннская херня
 	*y = -z + (previous_x + previous_y) * (int)0.50000019433;
 }
 
-int				main()
+int				main(int argc, char **argv)
 {
-	char buff[200];
-	int fd = open("/Users/mlurker/Desktop/fdf/test/basictest.fdf", O_RDONLY);
-	ssize_t r = read(fd, &buff, 200);
-	char *point;
-	point = ft_strdup(buff);
-//	ft_strcpy(point, buff);
-	t_map *map;
-	char *str = "Sosatb";
-	int k[2] = {70, 75};
-	int j[2] = {70, 75};
-	int i = 0;
-	map = (t_map *) malloc(sizeof(*map) * 10);
-//	map[1].x0 = 400;
-//	map[1].y0 = 200;
-//	map[0].x0 = 300;
-//	map[0].y0 = 350;
+	int			fd;
+	int 		num;
+//	char 		*coordinates;
+	t_field		field;
 
-	map[0].mlx_ptr = mlx_init(); //нужно
-	map[0].win_ptr = mlx_new_window(map[0].mlx_ptr, 900, 900, "Lejatb"); //создает окно
-	mlx_string_put(map[0].mlx_ptr, map[0].win_ptr, 100, 200, 0xfaebd7, str);
+	if (!(fdf_open(argc, argv, &fd)))
+		return (0);
+	if (!(fdf_read(&fd, &num, &field)))
+		return (0);
+//	if (!(figure = (t_figure*)malloc(sizeof(*figure) * (num + 1))) || \
+//		!(map_size = (int*)malloc(sizeof(*map_size) * 2)))
+//		return (0);
+//	if (!(fillit_validate(figure, &tetriminos, num)))
+	return (0);
 
-	mlx_pixel_put(map[0].mlx_ptr, map[0].win_ptr, map[1].x1, map[1].y1, 0xFFFFFF); //set pixel
 
+
+//	char buff[200];
+//	int fd = open("/Users/mlurker/Desktop/fdf/test/basictest.fdf", O_RDONLY);
+//	ssize_t r = read(fd, &buff, 200);
+//	char *point;
+//	point = ft_strdup(buff);
+////	ft_strcpy(point, buff);
+//	t_map *map;
+//	char *str = "Sosatb";
+//	int k[2] = {70, 75};
+//	int j[2] = {70, 75};
+//	int i = 0;
+//	map = (t_map *) malloc(sizeof(*map) * 10);
+////	map[1].x0 = 400;
+////	map[1].y0 = 200;
+////	map[0].x0 = 300;
+////	map[0].y0 = 350;
+//
+//	map[0].mlx_ptr = mlx_init(); //нужно
+//	map[0].win_ptr = mlx_new_window(map[0].mlx_ptr, 900, 900, "Lejatb"); //создает окно
+//	mlx_string_put(map[0].mlx_ptr, map[0].win_ptr, 100, 200, 0xfaebd7, str);
+//
+//	mlx_pixel_put(map[0].mlx_ptr, map[0].win_ptr, map[1].x1, map[1].y1, 0xFFFFFF); //set pixel
+//
+////	while (i < 2)
+////	{
+////		plot_line(map, 1);
+////		i++;
+////	}
+//
+//	i = 0;
+//	int x = 100;
+//	int y = 100;
+//	while (*point != '\0')
+//	{
+//		while (*point != '\n')		// тут я пытаюсь записватьь координаты
+//		{
+//			if (*point != ' ')
+//			{
+//				map[i].x0 = x;
+//				map[i].y0 = y;
+//				map[i].z = *point;
+//				point++;
+//				x += 50;
+//				mlx_pixel_put(map[0].mlx_ptr, map[0].win_ptr, map[i].x0, map[i].y0, 0x5f9ea0);
+//			}
+//			point++;;
+//		}
+//		y += 50;
+//		x = 100;
+//		i++;
+//		point++;
+//	}
+////	i = 0;
+////	while (i < 4)
+////	{
+////		iso(&map[i].x0, &map[i].y0, map[i].z);
+////		i++;
+////	}
+//	i = 0;
 //	while (i < 2)
 //	{
-//		plot_line(map, 1);
+////		mlx_string_put(map[0].mlx_ptr, map[0].win_ptr, 600, 200- 10 * i, 0x6b8e23, "check_");
+//		plot_line(map, i);
 //		i++;
 //	}
-
-	i = 0;
-	int x = 100;
-	int y = 100;
-	while (*point != '\0')
-	{
-		while (*point != '\n')		// тут я пытаюсь записватьь координаты
-		{
-			if (*point != ' ')
-			{
-				map[i].x0 = x;
-				map[i].y0 = y;
-				map[i].z = *point;
-				point++;
-				x += 50;
-				mlx_pixel_put(map[0].mlx_ptr, map[0].win_ptr, map[i].x0, map[i].y0, 0x5f9ea0);
-			}
-			point++;;
-		}
-		y += 50;
-		x = 100;
-		i++;
-		point++;
-	}
-//	i = 0;
-//	while (i < 4)
-//	{
-//		iso(&map[i].x0, &map[i].y0, map[i].z);
-//		i++;
-//	}
-	i = 0;
-	while (i < 2)
-	{
-//		mlx_string_put(map[0].mlx_ptr, map[0].win_ptr, 600, 200- 10 * i, 0x6b8e23, "check_");
-		plot_line(map, i);
-		i++;
-	}
-	mlx_loop(map[0].mlx_ptr); //тоже нужно
-	return (0);
+//	mlx_loop(map[0].mlx_ptr); //тоже нужно
+//	return (0);
 }

@@ -76,4 +76,4 @@ add_executable(fdf
 		libft/ft_sqrt_up.c
 		libft/ft_power.c
 		includes/fdf.h
-		src/main.c)
+		src/main.c src/fdf_open_n_read.c src/fdf_field.c src/fdf_plot_lines.c)

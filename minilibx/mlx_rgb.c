@@ -549,7 +549,7 @@ struct s_col_name mlx_col_name[] =
  { "gray2" , 0x50505 },
  { "grey2" , 0x50505 },
  { "gray3" , 0x80808 },
- { "grey3" , 0x80808 },
+ { "rey3" , 0x80808 },
  { "gray4" , 0xa0a0a },
  { "grey4" , 0xa0a0a },
  { "gray5" , 0xd0d0d },
