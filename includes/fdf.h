@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/17 19:19:29 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/17 20:33:27 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef			struct s_field{
 
 int				fdf_open(int argc, char **argv, int *fd);
 int				fdf_read(int *fd, int *num, t_field *field);
-int 			fdf_read_points(char *line, t_field *field);
+void	 		fdf_read_points(char *line, t_field *field);
 void 			field_init(t_field *field);
 
 #endif
