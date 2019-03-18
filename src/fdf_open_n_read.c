@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 14:27:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/18 18:52:33 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/18 20:55:31 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,21 @@ int				fdf_open(int argc, char **argv, int *fd)
 int				fdf_read(int *fd, int *num, t_field *field)
 {
 	char		*line;
-	char		*pars;
 	t_list_p	*list_p;
-//	t_list_p	*head;
 
 	if (!(list_p = (t_list_p*)malloc(sizeof(t_list_p))))
 		return (0);
-//	head = list_p;
 	field_init(field);
 	field->height = 0;
 	while (get_next_line(*fd, &line) > 0)
 	{
 		if (field->height == 0)
 			field->width = ft_count_words(line, ' ');
-		field->height++;
 		printf("%s\n", line);
-		list_p->points = (t_point*)malloc(sizeof(t_point) * field->width);
-		fdf_read_points(line, list_p->points, field);
-		printf("%d\n", (list_p->points)[10].z);
-//		printf("%d\n", (head->points)[10].z);
-		list_p->next_p = list_p;
+		list_p->next_p = fdf_read_points(line, list_p, field);
+		field->height++;
+		list_p->prev = list_p;
+		list_p = list_p->next_p;
 		free(line);
 	}
 	field->points = ft_peresapis(field, list_p);
@@ -67,9 +62,8 @@ t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 	{
 		while (w >= 0)
 		{
-			printf("\n");
-			printf("%d\n", (list_p->points)[w].n);
-			printf("%d\n", (list_p->points)[w].z);
+			printf("%d-", (list_p->points)[w].n);
+			printf("%d,  ", (list_p->points)[w].z);
 			point[w * h - 1].n = (list_p->points)[w].n;
 			point[w * h - 1].x = (list_p->points)[w].x;
 			point[w * h - 1].y = (list_p->points)[w].y;
@@ -77,37 +71,35 @@ t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 //			point[w * h].color = (list_p->points)[w].color;
 			w--;
 		}
+		printf("\n");
 		list_p = list_p->prev;
-		w = field->width;
+		w = field->width - 1;
 		h--;
 	}
 	return (point);
 }
 
-void 		fdf_read_points(char *line, t_point *point, t_field *field)
+t_list_p 		*fdf_read_points(char *line, t_list_p *list, t_field *field)
 {
 	/* */
 	int			i;
-//	t_point		*p;
 	char		**array;
 
 	array = ft_strsplit(line, ' ');
-//	point = (t_point*)malloc(sizeof(t_point) * field->width);
-//	p = (t_point *)malloc(sizeof(t_point) * (field->width + 1));
 	i = 0;
-//	if (!(field->points))
-//		field->points = (t_point*)malloc(sizeof(t_point) * (field->height * field->width));
+	list->points = (t_point*)malloc(sizeof(t_point) * field->width);
 	while (i < field->width)
 	{
-		point[i].n = i * field->height;
-		point[i].x = i;
-		point[i].y = field->height;
-		point[i].z = ft_atoi(array[i]);
-		if (field->max_depth < point[i].z)
-			field->max_depth = point[i].z;
+		(list->points)[i].n = i + (field->height * field->width);
+		list->points[i].x = i;
+		list->points[i].y = field->height;
+		list->points[i].z = ft_atoi(array[i]);
+		if (field->max_depth < list->points[i].z)
+			field->max_depth = list->points[i].z;
 //		p[i].color = find_color();
 		i++;
 	}
+	return (list);
 }
 
 //int				fdf_read(int *fd, int *num, char **coordinates)
