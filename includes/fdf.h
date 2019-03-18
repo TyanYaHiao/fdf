@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/17 20:33:27 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/18 17:53:48 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "../libft/libft.h"
 # include <stdio.h> // DELETE THIS!
 
-typedef			struct s_map{
+typedef struct	s_map{
 	int 		x0;
 	int 		x1;
 	int 		y0;
@@ -32,18 +32,25 @@ typedef			struct s_map{
 	void		*img_ptr;
 }				t_map;
 
-typedef			struct s_point{
-	int 		n;
+typedef struct	s_point{
+	int			n;
 	int			x;
-	int 		y;
-	int 		z;
-	int 		color;
+	int			y;
+	int			z;
+	int			color;
 }				t_point;
 
-typedef			struct s_field{
+typedef struct		s_list_p
+{
+	t_point			*points;
+	struct s_list_p	*prev;
+	struct s_list_p	*next_p;
+}					t_list_p;
+
+typedef struct	s_field{
 	int			height;
-	int 		width;
-	int 		max_depth;
+	int			width;
+	int			max_depth;
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*img_ptr;
@@ -52,7 +59,8 @@ typedef			struct s_field{
 
 int				fdf_open(int argc, char **argv, int *fd);
 int				fdf_read(int *fd, int *num, t_field *field);
-void	 		fdf_read_points(char *line, t_field *field);
-void 			field_init(t_field *field);
+void			fdf_read_points(char *line, t_point *point, t_field *field);
+void			field_init(t_field *field);
+t_point			*ft_peresapis(t_field *field, t_list_p *list_p);
 
 #endif
