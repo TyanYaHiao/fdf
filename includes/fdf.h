@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/19 20:11:48 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/19 21:54:46 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include "../libft/libft.h"
 # include <math.h>
 # include <stdio.h> // DELETE THIS!
+
+# define DELTA(a,b) a-b;
 
 typedef struct	s_point{
 	double			n;
@@ -49,6 +51,6 @@ void			fdf_read_points(char *line, t_list_p *point, t_field *field);
 void			field_init(t_field *field);
 t_point			*ft_peresapis(t_field *field, t_list_p *list_p);
 
-void			connect_pxl(t_field field, int i, int check);
+void			connect_pxl(t_field field, int i);
 
 #endif

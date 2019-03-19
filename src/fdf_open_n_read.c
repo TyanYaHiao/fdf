@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 14:27:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/19 21:03:07 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/19 21:03:15 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int				fdf_read(int *fd, int *num, t_field *field)
 		if (field->height == 0)
 			field->width = ft_count_words(line, ' ');
 //		printf("%s\n", line);
-		list_p->points = (t_point*)malloc(sizeof(t_point) * field->width + 1);
+		list_p->points = (t_point*)malloc(sizeof(t_point) * field->width + 1); // выделение памяти для массива поинтов листе
 		fdf_read_points(line, list_p, field);
 		field->height++;
-		list_p->next_p = (t_list_p*)malloc(sizeof(t_list_p));
-		list_p = list_p->next_p;
+		list_p->next_p = (t_list_p*)malloc(sizeof(t_list_p)); // выделение памяти для следующего листа
+		list_p = list_p->next_p; // переход к следующему листу
 		free(line);
 	}
 	field->points = ft_peresapis(field, head);
@@ -58,37 +58,33 @@ int				fdf_read(int *fd, int *num, t_field *field)
 
 t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 {
-	t_point *point = (t_point*)malloc(sizeof(*point) * (field->width * field->height));
-	int h = field->height;
+	t_point *point = (t_point*)malloc(sizeof(*point) * (field->width * field->height)); // выделение памяти для массива поинтов в основной структуре
+	int h = field->height; // перезапись ширины и высоты, чтобы их можо было модифицировать без изменений в структуре
 	int w = field->width;
-	int x = 70 * w;
+	int x = 70 * w; // начало отрисовки картинки, будем расчитывать в зависимости от ширины экрана
 	int y = 20 * h;
-	int i = 1;
-	while (h > 0)
+	int i = 1; // начина отсчет фигур с единицы чтобы не было проблема со сбивкой по концам строк :)
+	while (h > 0) // пока не закончились строки ...
 	{
-		while (w > 0)
+		while (w > 0) // пока не закончились элементы в строке ...
 		{
-//			printf("|  Z{%d}  ", list_p->points[i].z);
 			point[i].n = i;
 			point[i].x = x;
 			point[i].y = y;
-			point[i].z = 1;
-//			printf("|  Z{%f}  ", point[i].z);
-//			point[i].z = (list_p->points)[i].z * 5;
+			point[i].z = 1; // временная строка для координаты z, пока я н6 починила запись из листа
+//			point[i].z = (list_p->points)[i].z * 5; //реальная строка для записи координаты z
 //			point[w * h].color = (list_p->points)[w].color;
 			w--;
-//			printf("[%d]%d: %d - %d", i, point[i].n, point[i].x, point[i].y);
-			x += 40;
+			x += 40; // шаг расставления координат х
 			i++;
 		}
 		printf("\n");
-		list_p = list_p->next_p;
+		list_p = list_p->next_p; // переход к следующей сроке в листах
 		w = field->width;
-		y += 40;
-		x = 70 * w;
+		y += 40;  // шаг координат у
+		x = 70 * w; // сбрасывание к началу
 		h--;
 	}
-//	point
 	return (point);
 }
 
@@ -99,7 +95,7 @@ void 		fdf_read_points(char *line, t_list_p *list, t_field *field)
 
 	array = ft_strsplit(line, ' ');
 	i = 1;
-	while (i < field->width)
+	while (i < field->width) // записывание из лайна в лист данных. по хоже не нужно записывать х и у потому что их вставляем в зависимости от ширины и длины
 	{
 		(list->points)[i].n = i + (field->height * field->width);
 		list->points[i].x = i;
@@ -107,7 +103,6 @@ void 		fdf_read_points(char *line, t_list_p *list, t_field *field)
 		list->points[i].z = ft_atoi(array[i - 1]);
 		if (field->max_depth < list->points[i].z)
 			field->max_depth = list->points[i].z;
-//		printf("Z{%f}  ", list->points[i].z);
 //		p[i].color = find_color();
 		i++;
 	}

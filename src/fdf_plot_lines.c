@@ -6,27 +6,19 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 17:56:02 by mlurker           #+#    #+#             */
-/*   Updated: 2019/03/19 21:24:10 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/19 21:54:05 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-double		ft_delta(double x1, double x0)
-{
-	return (x1 - x0);
-}
-
-
 void	plot_line_low(t_field field, t_point *map, int i, int j)
 {
-	double delx = ft_delta(map[j].x, map[i].x);
-	double dely = ft_delta(map[j].y, map[i].y);
+	double delx = DELTA(map[j].x, map[i].x);
+	double dely = DELTA(map[j].y, map[i].y);
 	double D;
 	double x1 = map[i].x;
 	double y1 = map[i].y;
-	double x2 = map[j].x;
-	double y2 = map[j].y;
 	double yi = 1;
 	if (dely < 0)
 	{
@@ -34,7 +26,7 @@ void	plot_line_low(t_field field, t_point *map, int i, int j)
 		dely *= -1;
 	}
 	D = 2 * dely - delx;
-	while (x1 <= x2)
+	while (x1 <= map[j].x)
 	{
 		mlx_pixel_put(field.mlx_ptr, field.win_ptr, x1, y1, 0xafeeee); // голубые линии
 		if (D > 0)
@@ -47,15 +39,13 @@ void	plot_line_low(t_field field, t_point *map, int i, int j)
 	}
 }
 
-void	plot_line_high(t_field field, t_point *map, int i, int j)
+void	plot_line_high(t_field field, t_point *map, int i, int j) // алгоритм брезенхема с вики
 {
-	double delx = ft_delta(map[j].x, map[i].x);
-	double dely = ft_delta(map[j].y, map[i].y);
+	double delx = DELTA(map[j].x, map[i].x);
+	double dely = DELTA(map[j].y, map[i].y);
 	double D;
 	double x1 = map[i].x;
 	double y1 = map[i].y;
-	double x2 = map[j].x;
-	double y2 = map[j].y;
 	double xi = 1;
 	if (delx < 0)
 	{
@@ -63,7 +53,7 @@ void	plot_line_high(t_field field, t_point *map, int i, int j)
 		delx *= -1;
 	}
 	D = 2 * delx - dely;
-	while (y1 <= y2)
+	while (y1 <= map[j].y)
 	{
 		mlx_pixel_put(field.mlx_ptr, field.win_ptr, x1, y1, 0x6b8e23); // зеленые линии
 		if (D > 0)
@@ -76,11 +66,11 @@ void	plot_line_high(t_field field, t_point *map, int i, int j)
 	}
 }
 
-void	plot_line(t_field field, t_point *map, int i, int j, int check) // модифицированный алгоритм отрисовки линий
+void	plot_line(t_field field, t_point *map, int i, int j) // модифицированный алгоритм отрисовки линий (брезенхема)
 {
-	double delx = ft_delta(map[j].x, map[i].x);
-	double dely = ft_delta(map[j].y, map[i].y);
-	if (dely < delx)
+	double delx = DELTA(map[j].x, map[i].x); // написала дифайн для нахождения дельты иксов
+	double dely = DELTA(map[j].y, map[i].y);
+	if (dely < delx) // проверки на то, кто где стоит, чтобы праивльно рисовать линию и передавать агументы в нужном порядке
 	{
 		if (map[i].x > map[j].x)
 			plot_line_low(field, map, j, i);
@@ -96,18 +86,18 @@ void	plot_line(t_field field, t_point *map, int i, int j, int check) // моди
 	}
 }
 
-void	connect_pxl(t_field field, int i, int check)
+void	connect_pxl(t_field field, int i)
 {
-	if (i % (field.width * field.height) != 0)
+	if (i % (field.width * field.height) != 0) // если это не последняя точку, то от нее нужно рисовать линии
 	{
-		if ((field.height) * (field.width) - i < field.width)
-			plot_line(field, field.points, i, i + 1, check);
-		else if ((i % (field.width)) == 0 && i != 0)
-			plot_line(field, field.points, i, i + field.width, check);
-		else
+		if ((field.height) * (field.width) - i < field.width) // проверка на нижние точки
+			plot_line(field, field.points, i, i + 1); // если это они, то рисуем только вбок
+		else if ((i % (field.width)) == 0 && i != 0) // проверка на боковые точки
+			plot_line(field, field.points, i, i + field.width); // если это они, то рисуем только вниз
+		else // если не крайние точки рисуем :
 		{
-			plot_line(field, field.points, i, i + field.width, check);
-			plot_line(field, field.points, i, i + 1, check);
+			plot_line(field, field.points, i, i + field.width); // вниз
+			plot_line(field, field.points, i, i + 1); // вбок
 		}
 	}
 }
