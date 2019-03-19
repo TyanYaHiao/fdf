@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/19 05:47:30 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/19 18:27:51 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 # include <stdio.h> // DELETE THIS!
 
 typedef struct	s_point{
-	int			n;
-	int			x;
-	int			y;
-	int			z;
+	double			n;
+	double			x;
+	double			y;
+	double			z;
 	int			color;
 }				t_point;
 
@@ -35,7 +35,7 @@ typedef struct		s_list_p{
 typedef struct	s_field{
 	int			height;
 	int			width;
-	int			max_depth;
+	double			max_depth;
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*img_ptr;
@@ -44,10 +44,10 @@ typedef struct	s_field{
 
 int				fdf_open(int argc, char **argv, int *fd);
 int				fdf_read(int *fd, int *num, t_field *field);
-void			fdf_read_points(char *line, t_list_p *point, t_field *field);
+t_point			*fdf_read_points(char *line, t_field *field);
 void			field_init(t_field *field);
-t_point			*ft_peresapis(t_field *field, t_list_p *list_p);
+void			ft_peresapis(t_field *field, t_list_p *list_p);
 
-void			connect_pxl(t_field field, int i, int check);
+void			connect_pxl(t_field field, int i, double check);
 
 #endif

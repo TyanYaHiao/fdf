@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/19 06:19:45 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/19 20:02:51 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int				main(int argc, char **argv)
 //	if (!(fillit_validate(figure, &tetriminos, num)))
 //	field_init(&field);
 	int i = 1;
-	int check = 0;
+	int check = 1;
 	while (i < field.width * field.height)
 	{
 		connect_pxl(field, i, check);
