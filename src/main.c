@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/19 21:50:50 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/19 22:23:49 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ static void iso(double *x, double *y, double z) // функция для изм�
 	*y = -z + (previous_x + previous_y) * sin(0.523599);
 }
 
+int close1(void *param)
+{
+	(void)param;
+	exit(0);
+	return (0);
+}
+
 int event(int button, int x, int y, void *param)
 {
 	printf("%d %d\n", x, y); // это работает, потому что написала ксюша
@@ -32,9 +39,11 @@ int event(int button, int x, int y, void *param)
 
 int mouse_release(int button, int x, int y, void *param)
 {
-	button = 4;
-	y *= 4;     //это штука тоже непонятно как работает, потому что я писала, я в шоке
-	x *= 4;
+	if (button == 4)
+	{
+		y *= 4;     //это штука тоже непонятно как работает, потому что я писала, я в шоке
+		x *= 4;
+	}
 	return (0);
 }
 
@@ -70,7 +79,7 @@ int				main(int argc, char **argv)
 
 	i = 0;
 	while (i++ <= field.width * field.height) // дебажный вайл для получения новых, измененных координат после iso
-		printf("{N(%f): X(%f) - Y(%f)}  \n", field.points[i].n, field.points[i].x, field.points[i].y);
+		printf("{N(%f): X(%f) - Y(%f)} - Z{%f}\n", field.points[i].n, field.points[i].x, field.points[i].y, field.points[i].z);
 
 	i = 0;
 	while (i++ < field.width * field.height) // отрисовка всех точек с карты
@@ -78,7 +87,8 @@ int				main(int argc, char **argv)
 
 	mlx_hook(field.win_ptr, 4, 0, event, 0); // неведомая штука, с помощью которой потом будем использвать клаву и мыш (кродеться)
 											// хук ивент - в терминале выводят икс и игрик координаты, на которые ты ткнул мышью в окошке
-	mlx_hook(field.win_ptr, 6, 0, mouse_move, 0);
+//	mlx_hook(field.win_ptr, 6, 0, mouse_release(4, 0, 0, 0), 0);
+//	mlx_hook(field.win_ptr, 17, 0, close1, 0);
 	mlx_loop(field.mlx_ptr); //тоже нужно
 	return (0);
 }

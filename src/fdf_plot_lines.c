@@ -6,7 +6,7 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 17:56:02 by mlurker           #+#    #+#             */
-/*   Updated: 2019/03/19 21:54:05 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/19 23:10:36 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,3 +101,23 @@ void	connect_pxl(t_field field, int i)
 		}
 	}
 }
+
+//void	plot(t_field field, int i, int j)
+//{
+//	double x1 = field.points[i].x;
+//	double x2 = field.points[j].x;
+//	double y1 = field.points[i].y;
+//	double y2 = field.points[j].y;
+//
+//	if (x2 < x1)
+//	{
+//		x1 = field.points[j].x;
+//		x2 = field.points[i].x;
+//		y1 = field.points[j].y;
+//		y2 = field.points[i].y;
+//	}
+//	double dx = DELTA(x2, x1);
+//	double dy = DELTA(y2, y1);
+//	double grad = dy / dy;
+
+//}
