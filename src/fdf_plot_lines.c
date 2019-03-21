@@ -6,7 +6,7 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 17:56:02 by mlurker           #+#    #+#             */
-/*   Updated: 2019/03/19 23:10:36 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/21 17:09:38 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	plot_line_low(t_field field, t_point *map, int i, int j)
 	D = 2 * dely - delx;
 	while (x1 <= map[j].x)
 	{
-		mlx_pixel_put(field.mlx_ptr, field.win_ptr, x1, y1, 0xafeeee); // голубые линии
+		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)x1, (int)y1, 0xafeeee); // голубые линии
 		if (D > 0)
 		{
 			y1 += yi;
@@ -53,9 +53,11 @@ void	plot_line_high(t_field field, t_point *map, int i, int j) // алгорит
 		delx *= -1;
 	}
 	D = 2 * delx - dely;
+//	char *d = ft_itoa(D);
+//	mlx_string_put(field.mlx_ptr, field.win_ptr, x1, y1, 0x6b8e23, d);
 	while (y1 <= map[j].y)
 	{
-		mlx_pixel_put(field.mlx_ptr, field.win_ptr, x1, y1, 0x6b8e23); // зеленые линии
+		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)x1, (int)y1, 0x6b8e23); // зеленые линии
 		if (D > 0)
 		{
 			x1 += xi;
