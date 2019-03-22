@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/21 16:21:02 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/22 18:38:06 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int				fdf_read(int *fd, int *num, t_field *field);
 void			fdf_read_points(char *line, t_list_p *point, t_field *field);
 void			field_init(t_field *field);
 t_point			*ft_peresapis(t_field *field, t_list_p *list_p);
-
+void			ft_move_key(int keycode, t_field *fdf);
 void			connect_pxl(t_field field, int i);
 
 #endif

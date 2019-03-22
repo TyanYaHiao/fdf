@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/22 16:15:02 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/22 18:40:41 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,19 @@ int mouse_release(int button, int x, int y, void *param)
 //	return (0);
 }
 
+int key_press(int keycode, t_field *fdf)
+{
+	if (keycode == 124 || keycode == 125 || keycode == 123 || keycode == 126 || keycode == 69)
+		ft_move_key(keycode, fdf);
+//	if (keycode == 69)
+}
+
 
 int mouse_move(int x, int y, void *param)
 {
 //	if (x)
-	printf("%d %d\n", x, y);
+//	mlx_pixel_put(field.mlx_ptr, field.win_ptr, x, y, 0xafeeee);
+//	printf("%d %d\n", x, y);
 	// я хз что это, можешь посмотреть в кук буке для фдф (форум интры), я не разобралась
 }
 
@@ -102,11 +110,12 @@ int				main(int argc, char **argv)
 	while (i++ < field.width * field.height) // отрисовка всех точек с карты
 		connect_pxl(field, i);
 
-	mlx_hook(field.win_ptr, 4, 0, event, 0); // неведомая штука, с помощью которой потом будем использвать клаву и мыш (кродеться)
+//	mlx_hook(field.win_ptr, 4, 0, event, 0); // неведомая штука, с помощью которой потом будем использвать клаву и мыш (кродеться)
 											// хук ивент - в терминале выводят икс и игрик координаты, на которые ты ткнул мышью в окошке
 //	mlx_hook(field.win_ptr, 5, 0, mouse_release(4, (int)field.points[2].x, (int)field.points[2].y, 0), 0);
-//	mlx_hook(field.win_ptr, 6, 0, mouse_move, 0);
+//	mlx_hook(field.win_ptr, 6, 0, mouse_move(field.points[i].x, field.points[i].y,&field), 0);
 //	mlx_hook(field.win_ptr, 17, 0, close1, 0);
+	mlx_hook(field.win_ptr, 2, 0, key_press, &field);
 	mlx_loop(field.mlx_ptr); //тоже нужно
 	return (0);
 }
