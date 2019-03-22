@@ -11,6 +11,7 @@ add_executable(fdf
 		minilibx/libmlx.a
 		libft/libft.h
 		libft/ft_atoi.c
+		libft/ft_atoi_hex.c
 		libft/ft_bzero.c
 		libft/ft_count_words.c
 		libft/ft_isalnum.c

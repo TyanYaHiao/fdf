@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 14:27:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/22 18:52:28 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/22 21:58:24 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ int				fdf_read(int *fd, int *num, t_field *field)
 	{
 		if (field->height == 0)
 			field->width = ft_count_words(line, ' ');
-//		printf("%s\n", line);
-		list_p->points = (t_point*)malloc(sizeof(t_point) * field->width + 1); // выделение памяти для массива поинтов листе
+		list_p->points = (t_point*)malloc(sizeof(t_point) * (field->width + 1)); // выделение памяти для массива поинтов листе
 		fdf_read_points(line, list_p, field);
 		field->height++;
 		list_p->next_p = (t_list_p*)malloc(sizeof(t_list_p)); // выделение памяти для следующего листа
@@ -52,17 +51,16 @@ int				fdf_read(int *fd, int *num, t_field *field)
 	}
 	field->points = ft_peresapis(field, head);
 	close(*fd);
-//	printf("\nWidth: %d\nHeight: %d", field->width, field->height);
 	return (1);
 }
 
 t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 {
-	t_point *point = (t_point*)malloc(sizeof(*point) * (field->width * field->height)); // выделение памяти для массива поинтов в основной структуре
+	t_point *point = (t_point*)malloc(sizeof(*point) * ((field->width + 1) * (field->height + 1))); // выделение памяти для массива поинтов в основной структуре
 	int h = field->height; // перезапись ширины и высоты, чтобы их можо было модифицировать без изменений в структуре
 	int w = field->width;
-	int x = 15 * w; // начало отрисовки картинки, будем расчитывать в зависимости от ширины экрана
-	int y =  5 * h;
+	double x =  10 * w; // начало отрисовки картинки, будем расчитывать в зависимости от ширины экрана
+	double y = 10 * h;
 	int w1 = 1;
 	int i = 1; // начина отсчет фигур с единицы чтобы не было проблема со сбивкой по концам строк :)
 	while (h > 0) // пока не закончились строки ...
@@ -73,32 +71,32 @@ t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 			point[i].x = x;
 			point[i].y = y;
 //			point[i].z = 1; // временная строка для координаты z, пока я н6 починила запись из листа
-			point[i].z = (list_p->points)[w1].z * 7; //реальная строка для записи координаты z
-//			point[w * h].color = (list_p->points)[w].color;
+			point[i].z = (list_p->points)[w1].z * 4; //реальная строка для записи координаты z
+			point[i].color = (list_p->points)[w1].color;
+			printf("%d\n", point[i].color);
 			w--;
 			w1++;
-			x += 50; // шаг расставления координат х
+			x += 20; // шаг расставления координат х
 			i++;
 		}
 		w1 = 1;
-		printf("\n");
 		list_p = list_p->next_p; // переход к следующей сроке в листах
 		w = field->width;
-		y += 50;  // шаг координат у
-		x = 15 * w; // сбрасывание к началу
+		y += 20;  // шаг координат у
+		x = 10 * w; // сбрасывание к началу
 		h--;
 	}
 	return (point);
 }
 
-void 		fdf_read_points(char *line, t_list_p *list, t_field *field)
+void		fdf_read_points(char *line, t_list_p *list, t_field *field)
 {
 	int			i;
 	char		**array;
 
 	array = ft_strsplit(line, ' ');
 	i = 1;
-	while (i < field->width) // записывание из лайна в лист данных. по хоже не нужно записывать х и у потому что их вставляем в зависимости от ширины и длины
+	while (i <= field->width) // записывание из лайна в лист данных. по хоже не нужно записывать х и у потому что их вставляем в зависимости от ширины и длины
 	{
 		(list->points)[i].n = i + (field->height * field->width);
 		list->points[i].x = i;
@@ -106,9 +104,29 @@ void 		fdf_read_points(char *line, t_list_p *list, t_field *field)
 		list->points[i].z = ft_atoi(array[i - 1]);
 		if (field->max_depth < list->points[i].z)
 			field->max_depth = list->points[i].z;
-//		p[i].color = find_color();
+		list->points[i].color = fdf_find_color(array[i - 1]);
+//		printf("%d\n", list->points[i].color);
 		i++;
 	}
+}
+
+int			fdf_find_color(char *str)
+{
+	char	*color_string;
+	int		color;
+
+	color_string = strchr(str, ',');
+	if (!color_string)
+	{
+		return (DEFAULT_COLOR);
+	}
+	color = ft_atoi_hex(color_string + 1);
+	if (color >= 0)
+	{
+//		printf("HYI: %d", color);
+		return (color);
+	}
+	return (DEFAULT_COLOR);
 }
 
 //int				fdf_read(int *fd, int *num, char **coordinates)

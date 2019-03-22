@@ -100,4 +100,6 @@ int					get_next_line(const int fd, char **line);
 size_t				ft_power(int num, int power_level);
 int					ft_sqrt_up(int num);
 
+int					ft_atoi_hex(char *str);
+
 #endif

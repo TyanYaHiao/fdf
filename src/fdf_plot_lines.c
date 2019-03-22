@@ -6,7 +6,7 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 17:56:02 by mlurker           #+#    #+#             */
-/*   Updated: 2019/03/22 15:03:32 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/22 21:32:54 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void line(t_field field, t_point *map, int i, int j)
 	double x1 = map[i].x;
 	double y1 = map[i].y;
 	for(;;){
-		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)x1, (int)y1, 0xafeeee);
+		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)x1, (int)y1, field.points[i].color);
 		if (x1==map[j].x && y1==map[j].y) break;
 		e2 = err;
 		if (e2 >-dx) { err -= dy; x1 += sx; }

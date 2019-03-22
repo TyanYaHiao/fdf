@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/22 18:40:41 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/22 21:59:14 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void iso(double *x, double *y, double z) // функция для изм�
 
 	previous_x = *x;
 	previous_y = *y;
-	*x = (previous_x - previous_y) * cos(0.523599);
-	*y = -z + (previous_x + previous_y) * sin(0.523599);
+	*x = (previous_x - previous_y) * cos(0.6);
+	*y = -z + (previous_x + previous_y) * sin(0.6);
 }
 
 int event(int button, int x, int y, void *param)
@@ -43,16 +43,31 @@ int mouse_release(int button, int x, int y, void *param)
 
 int key_press(int keycode, t_field *fdf)
 {
-	if (keycode == 124 || keycode == 125 || keycode == 123 || keycode == 126 || keycode == 69)
+	if (keycode == 124 || keycode == 125 || keycode == 123 || keycode == 126 || keycode == 69 || keycode == 78)
 		ft_move_key(keycode, fdf);
-//	if (keycode == 69)
 }
 
 
-int mouse_move(int x, int y, void *param)
+int mouse_press(int button, int x, int y, t_field *fdf)
 {
-//	if (x)
-//	mlx_pixel_put(field.mlx_ptr, field.win_ptr, x, y, 0xafeeee);
+	int i = 0;
+	mlx_clear_window((*fdf).mlx_ptr, (*fdf).win_ptr);
+	if (button == 1)
+	{
+		while (i++ < (*fdf).width * (*fdf).height)
+			(*fdf).points[i].x *= 2;
+		i = 0;
+		while (i++ < (*fdf).width * (*fdf).height)
+			connect_pxl((*fdf), i);
+	}
+	if (button == 2)
+	{
+		while (i++ < (*fdf).width * (*fdf).height)
+			(*fdf).points[i].x /= 2;
+		i = 0;
+		while (i++ < (*fdf).width * (*fdf).height)
+			connect_pxl((*fdf), i);
+	}
 //	printf("%d %d\n", x, y);
 	// я хз что это, можешь посмотреть в кук буке для фдф (форум интры), я не разобралась
 }
@@ -97,13 +112,6 @@ int				main(int argc, char **argv)
 	}
 
 	i = 0;
-	while (i++ < field.width * field.height) // дебажный вайл для получения новых, измененных координат после iso
-	{
-		printf("{X(%d)",(int) field.points[i].x);
-		printf(" -  Y(%f)\n", field.points[i].y);
-	}
-
-	i = 0;
 //	while (i++ < field.width * field.height) // дебажный вайл для получения новых, измененных координат после iso
 //		printf("{N/(%f): X(%f) - Y(%f)} - Z{%f}\n", field.points[i].n, field.points[i].x, field.points[i].y, field.points[i].z);
 
@@ -112,8 +120,7 @@ int				main(int argc, char **argv)
 
 //	mlx_hook(field.win_ptr, 4, 0, event, 0); // неведомая штука, с помощью которой потом будем использвать клаву и мыш (кродеться)
 											// хук ивент - в терминале выводят икс и игрик координаты, на которые ты ткнул мышью в окошке
-//	mlx_hook(field.win_ptr, 5, 0, mouse_release(4, (int)field.points[2].x, (int)field.points[2].y, 0), 0);
-//	mlx_hook(field.win_ptr, 6, 0, mouse_move(field.points[i].x, field.points[i].y,&field), 0);
+//	mlx_hook(field.win_ptr, 4, 0, mouse_press, &field);
 //	mlx_hook(field.win_ptr, 17, 0, close1, 0);
 	mlx_hook(field.win_ptr, 2, 0, key_press, &field);
 	mlx_loop(field.mlx_ptr); //тоже нужно
