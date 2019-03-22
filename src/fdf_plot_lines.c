@@ -6,66 +6,43 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 17:56:02 by mlurker           #+#    #+#             */
-/*   Updated: 2019/03/21 17:09:38 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/22 15:03:32 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void	plot_line_low(t_field field, t_point *map, int i, int j)
+double ft_abs2(double x0, double x1)
 {
-	double delx = DELTA(map[j].x, map[i].x);
-	double dely = DELTA(map[j].y, map[i].y);
-	double D;
-	double x1 = map[i].x;
-	double y1 = map[i].y;
-	double yi = 1;
-	if (dely < 0)
-	{
-		yi = -1;
-		dely *= -1;
-	}
-	D = 2 * dely - delx;
-	while (x1 <= map[j].x)
-	{
-		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)x1, (int)y1, 0xafeeee); // голубые линии
-		if (D > 0)
-		{
-			y1 += yi;
-			D -= 2 * delx;
-		}
-		D += 2 * dely;
-		x1++;
-	}
+	double d = x1 - x0;
+	if (d < 0)
+		return (-1 * d);
+	return (d);
 }
 
-void	plot_line_high(t_field field, t_point *map, int i, int j) // алгоритм брезенхема с вики
+void line(t_field field, t_point *map, int i, int j)
 {
-	double delx = DELTA(map[j].x, map[i].x);
-	double dely = DELTA(map[j].y, map[i].y);
-	double D;
+	double dx = ft_abs2(map[j].x, map[i].x);
+	double dy = ft_abs2(map[j].y, map[i].y);
+	double sx = 1;
+	double sy = 1;
+	if (map[i].x > map[j].x)
+		sx = -1;
+	if (map[i].y > map[j].y)
+		sy = -1;
+	double err = (dx>dy ? dx : -dy)/2, e2;
+
 	double x1 = map[i].x;
 	double y1 = map[i].y;
-	double xi = 1;
-	if (delx < 0)
-	{
-		xi = -1;
-		delx *= -1;
+	for(;;){
+		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)x1, (int)y1, 0xafeeee);
+		if (x1==map[j].x && y1==map[j].y) break;
+		e2 = err;
+		if (e2 >-dx) { err -= dy; x1 += sx; }
+		if (e2 < dy) { err += dx; y1 += sy; }
 	}
-	D = 2 * delx - dely;
-//	char *d = ft_itoa(D);
-//	mlx_string_put(field.mlx_ptr, field.win_ptr, x1, y1, 0x6b8e23, d);
-	while (y1 <= map[j].y)
-	{
-		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)x1, (int)y1, 0x6b8e23); // зеленые линии
-		if (D > 0)
-		{
-			x1 += xi;
-			D -= 2 * dely;
-		}
-		D += 2 * delx;
-		y1++;
-	}
+
+
 }
 
 void	plot_line(t_field field, t_point *map, int i, int j) // модифицированный алгоритм отрисовки линий (брезенхема)
@@ -75,16 +52,16 @@ void	plot_line(t_field field, t_point *map, int i, int j) // модифицир�
 	if (dely < delx) // проверки на то, кто где стоит, чтобы праивльно рисовать линию и передавать агументы в нужном порядке
 	{
 		if (map[i].x > map[j].x)
-			plot_line_low(field, map, j, i);
+			line(field, map, j, i);
 		else
-			plot_line_low(field, map, i, j); // вниз вправо
+			line(field, map, i, j); // вниз вправо
 	}
 	else
 	{
 		if (map[i].y > map[j].y)
-			plot_line_high(field, map, j, i);
+			line(field, map, j, i);
 		else
-			plot_line_high(field, map, i, j); // вниз влево
+			line(field, map, i, j); // вниз влево
 	}
 }
 
@@ -122,4 +99,93 @@ void	connect_pxl(t_field field, int i)
 //	double dy = DELTA(y2, y1);
 //	double grad = dy / dy;
 
+//}
+
+
+//void	plot_line_high(t_field field, t_point *map, int i, int j) // алгоритм брезенхема с вики
+//{
+//
+//	double delx = DELTA(map[j].x, map[i].x);
+//	double dely = DELTA(map[j].y, map[i].y);
+//	double D;
+//	double x1 = map[i].x;
+//	double y1 = map[i].y;
+//	double xi = 1;
+//	if (delx < 0)
+//	{
+//		xi = -1;
+//		delx *= -1;
+//	}
+//	D = 2 * delx - dely;
+////	char *d = ft_itoa(D);
+////	mlx_string_put(field.mlx_ptr, field.win_ptr, x1, y1, 0x6b8e23, d);
+//	while (y1 <= map[j].y)
+//	{
+//		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)x1, (int)y1, 0x6b8e23); // зеленые линии
+//		if (D > 0)
+//		{
+//			x1 += xi;
+//			D -= 2 * dely;
+//		}
+//		D += 2 * delx;
+//		y1++;
+//	}
+//}
+
+//void	plot_line_low(t_field field, t_point *map, int i, int j)
+//{
+//	double delx = DELTA(map[j].x, map[i].x);
+//	double dely = DELTA(map[j].y, map[i].y);
+//	double D;
+//	double x1 = map[i].x;
+//	double y1 = map[i].y;
+//	double yi = 1;
+//	if (dely < 0)
+//	{
+//		yi = -1;
+//		dely *= -1;
+//	}
+//	D = 2 * dely - delx;
+//	while (x1 <= map[j].x)
+//	{
+//		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)x1, (int)y1, 0xafeeee); // голубые линии
+//		if (D > 0)
+//		{
+//			y1 += yi;
+//			D -= 2 * delx;
+//		}
+//		D += 2 * dely;
+//		x1++;
+//	}
+//}
+
+//void	plot_line_low(t_field field, t_point *map, int i, int j)
+//{
+//	double delx = DELTA(map[j].x, map[i].x);
+//	double dely = DELTA(map[j].y, map[i].y);
+//	double w = delx;
+//	double h = dely;
+//	if (delx < dely)
+//	{
+//		h = delx;
+//		w = dely;
+//	}
+//
+//	double tstep = 1;
+//	double x1 = map[i].x;
+//	double y1 = map[i].y;
+//	if (x1 > map[j].x)
+//		tstep = -1;
+//	double v = w / 2;
+//	while (y1 <= map[j].y)
+//	{
+//		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)x1, (int)y1, 0xafeeee); // голубые линии
+//		v += h;
+//		if (v >= w)
+//		{
+//			x1 += tstep;
+//			v -= w;
+//		}
+//		y1++;
+//	}
 //}

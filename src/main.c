@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/21 17:51:14 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/22 16:15:02 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,6 @@ static void iso(double *x, double *y, double z) // функция для изм�
 	*y = -z + (previous_x + previous_y) * sin(0.523599);
 }
 
-int close1(void *param)
-{
-	(void)param;
-	exit(0);
-	return (0);
-}
-
 int event(int button, int x, int y, void *param)
 {
 	printf("%d %d\n", x, y); // это работает, потому что написала ксюша
@@ -39,16 +32,20 @@ int event(int button, int x, int y, void *param)
 
 int mouse_release(int button, int x, int y, void *param)
 {
-	if (button == 4)
+
 	{
+		printf("%d %d\n", x, y);
 		y *= 4;     //это штука тоже непонятно как работает, потому что я писала, я в шоке
 		x *= 4;
 	}
-	return (0);
+//	return (0);
 }
+
 
 int mouse_move(int x, int y, void *param)
 {
+//	if (x)
+	printf("%d %d\n", x, y);
 	// я хз что это, можешь посмотреть в кук буке для фдф (форум интры), я не разобралась
 }
 
@@ -105,9 +102,10 @@ int				main(int argc, char **argv)
 	while (i++ < field.width * field.height) // отрисовка всех точек с карты
 		connect_pxl(field, i);
 
-//	mlx_hook(field.win_ptr, 4, 0, event, 0); // неведомая штука, с помощью которой потом будем использвать клаву и мыш (кродеться)
+	mlx_hook(field.win_ptr, 4, 0, event, 0); // неведомая штука, с помощью которой потом будем использвать клаву и мыш (кродеться)
 											// хук ивент - в терминале выводят икс и игрик координаты, на которые ты ткнул мышью в окошке
-//	mlx_hook(field.win_ptr, 6, 0, mouse_release(4, 0, 0, 0), 0);
+//	mlx_hook(field.win_ptr, 5, 0, mouse_release(4, (int)field.points[2].x, (int)field.points[2].y, 0), 0);
+//	mlx_hook(field.win_ptr, 6, 0, mouse_move, 0);
 //	mlx_hook(field.win_ptr, 17, 0, close1, 0);
 	mlx_loop(field.mlx_ptr); //тоже нужно
 	return (0);
