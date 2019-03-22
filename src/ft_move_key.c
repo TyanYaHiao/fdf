@@ -18,7 +18,7 @@ void 	ft_move_key(int keycode, t_field *fdf)
 	if (keycode == 126)
 	{
 		while (i++ < (*fdf).width * (*fdf).height)
-			(*fdf).points[i].y -= 5;
+			(*fdf).points[i].y -= 25;
 		i = 0;
 		while (i++ < (*fdf).width * (*fdf).height)
 			connect_pxl((*fdf), i);
@@ -34,7 +34,7 @@ void 	ft_move_key(int keycode, t_field *fdf)
 	if (keycode == 123)
 	{
 		while (i++ < (*fdf).width * (*fdf).height)
-			(*fdf).points[i].x -= 5;
+			(*fdf).points[i].x -= 35;
 		i = 0;
 		while (i++ < (*fdf).width * (*fdf).height)
 			connect_pxl((*fdf), i);

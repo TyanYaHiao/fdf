@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 14:27:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/22 21:58:24 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/23 00:04:36 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,22 @@ int				fdf_read(int *fd, int *num, t_field *field)
 	return (1);
 }
 
+void		ft_place(t_field *field)
+{
+	double x0 = field->points[1].x;
+	double y0 = field->points[1].y;
+	iso(&x0, &y0, field->points[1].z);
+	field->x0 = x0;
+	field->y0 = y0;
+}
+
 t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 {
 	t_point *point = (t_point*)malloc(sizeof(*point) * ((field->width + 1) * (field->height + 1))); // выделение памяти для массива поинтов в основной структуре
 	int h = field->height; // перезапись ширины и высоты, чтобы их можо было модифицировать без изменений в структуре
 	int w = field->width;
-	double x =  10 * w; // начало отрисовки картинки, будем расчитывать в зависимости от ширины экрана
-	double y = 10 * h;
+	double x = w; // начало отрисовки картинки, будем расчитывать в зависимости от ширины экрана
+	double y = h;
 	int w1 = 1;
 	int i = 1; // начина отсчет фигур с единицы чтобы не было проблема со сбивкой по концам строк :)
 	while (h > 0) // пока не закончились строки ...
@@ -76,16 +85,17 @@ t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 			printf("%d\n", point[i].color);
 			w--;
 			w1++;
-			x += 20; // шаг расставления координат х
+			x += 15; // шаг расставления координат х
 			i++;
 		}
 		w1 = 1;
 		list_p = list_p->next_p; // переход к следующей сроке в листах
 		w = field->width;
-		y += 20;  // шаг координат у
-		x = 10 * w; // сбрасывание к началу
+		y += 15;  // шаг координат у
+		x = w; // сбрасывание к началу
 		h--;
 	}
+//	ft_place(field);
 	return (point);
 }
 

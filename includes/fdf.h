@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/22 21:32:54 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/22 23:47:15 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdio.h> // DELETE THIS!
 
 # define DELTA(a,b) a-b;
-# define DEFAULT_COLOR 0xFF6469
+# define DEFAULT_COLOR 0x6b6b6b
 
 typedef struct	s_point{
 	double			n;
@@ -37,9 +37,11 @@ typedef struct		s_list_p{
 }					t_list_p;
 
 typedef struct	s_field{
+	double		x0;
+	double		y0;
 	int			height;
 	int			width;
-	double			max_depth;
+	double		max_depth;
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*img_ptr;
@@ -50,9 +52,10 @@ int				fdf_open(int argc, char **argv, int *fd);
 int				fdf_read(int *fd, int *num, t_field *field);
 void			fdf_read_points(char *line, t_list_p *point, t_field *field);
 void			field_init(t_field *field);
-t_point			*ft_peresapis(t_field *field, t_list_p *list_p);
+t_point			*ft_peresapis(t_field *field, t_list_p *head);
 void			ft_move_key(int keycode, t_field *fdf);
 void			connect_pxl(t_field field, int i);
 int				fdf_find_color(char *str);
+void			iso(double *x, double *y, double z);
 
 #endif
