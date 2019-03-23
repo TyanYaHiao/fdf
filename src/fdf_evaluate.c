@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_field.c                                        :+:      :+:    :+:   */
+/*   fdf_evaluate.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/17 15:20:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/23 17:03:31 by fsmith           ###   ########.fr       */
+/*   Created: 2019/03/23 20:28:21 by fsmith            #+#    #+#             */
+/*   Updated: 2019/03/23 20:28:21 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void			fdf_field_init(t_field *initiated_field)
+void		fdf_isometry(double *x, double *y, double z) // функция для изменения координат из 3д в 2д, взято с форума интры кук бук, работает нормально
 {
-	initiated_field->height = 0;
-	initiated_field->width = 0;
-	initiated_field->max_depth = 0;
-	initiated_field->mlx_ptr = mlx_init();
-	initiated_field->win_ptr = mlx_new_window(initiated_field->mlx_ptr,
-			WINDOW_W, WINDOW_H, "Fil de Fer");
-//	initiated_field->img_ptr = 0; // what is it?
-//	initiated_field->points = 0; // ??
+	double previous_x;
+	double previous_y;
+
+	previous_x = *x;
+	previous_y = *y;
+	*x = ft_round_double((previous_x - previous_y) * cos(0.523599));
+	*y = ft_round_double(-z + (previous_x + previous_y) * sin(0.523599));
 }
+

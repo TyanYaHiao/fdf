@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 19:47:55 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/22 22:07:43 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/23 17:03:28 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@ int		ft_atoi_hex(char *str)
 	i = 2;
 	num = 0;
 	while (str[i] != '\0' && ((str[i] >= '0' && str[i] <= '9')
-							  || (str[i] >= 'A' && str[i] <= 'F')))
+		|| (str[i] >= 'A' && str[i] <= 'F') || (str[i] >= 'a' && str[i] <= 'f')))
 	{
-		if ((str[i] >= '0' && str[i] <= '9'))
+		if (str[i] >= '0' && str[i] <= '9')
 			num = num * 16 + str[i] - '0';
-		else
+		else if (str[i] >= 'A' && str[i] <= 'F')
 			num = num * 16 + str[i] - 'A' + 10;
+		else
+			num = num * 16 + str[i] - 'a' + 10;
 		i++;
 	}
 	return (num);

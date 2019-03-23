@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 14:27:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/23 16:56:15 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/23 20:24:31 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int				fdf_read(int *fd, int *num, t_field *field)
 
 	if (!(list_p = (t_list_p*)malloc(sizeof(t_list_p))))
 		return (0);
-	field_init(field);
+	fdf_field_init(field);
 	field->height = 0;
 	head = list_p;
 	while (get_next_line(*fd, &line) > 0)
@@ -60,18 +60,31 @@ void		ft_place(t_field *field)
 {
 	double x0 = field->points[1].x;
 	double y0 = field->points[1].y;
-	iso(&x0, &y0, field->points[1].z);
+	fdf_isometry(&x0, &y0, field->points[1].z);
 	field->x0 = x0;
 	field->y0 = y0;
 }
 
-void		ft_star_val(double *step, t_field *field) //
+/*
+** step[0] - step
+** step[1] - X start_pos
+** step[2] - Y start_pos
+** step[3] - reserved for Z
+*/
+
+void		fdf_start_values(double *step, t_field *field)
 {
-	if ((H_WIN - 500) / (field->height) < (W_WIN) - 500 / (field->width))
-		step[0] = (H_WIN - 500) / (field->height - 1);
-	step[0] = (W_WIN - 500) / (field->width  - 1);
-	step[1] = (W_WIN - (step[0] * (field->width - 1))) / 2; // начало отрисовки картинки, будем расчитывать в зависимости от ширины экрана
-	step[2] = (H_WIN - (step[0] * (field->height - 1))) / 2;
+	double	h_step;
+	double 	w_step;
+
+	h_step = (WINDOW_H - WINDOW_BORDER) / (field->height);
+	w_step = (WINDOW_W - WINDOW_BORDER) / (field->width);
+	if (h_step <= w_step)
+		step[0] = h_step;
+	else
+		step[0] = w_step;
+	step[1] = (WINDOW_W - (step[0] * (field->width - 1))) / 2;
+	step[2] = (WINDOW_H - (step[0] * (field->height - 1))) / 2;
 }
 
 t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
@@ -84,8 +97,8 @@ t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 
 	w = field->width;
 	h = field->height;
-	step = (double*)malloc(sizeof(double) * 4); // step[0] = step, step[1] = star x, step[2] = start y, step[3] = сoef z;
-	ft_star_val(step, field);
+	step = (double*)malloc(sizeof(double) * 4);
+	fdf_start_values(step, field);
 	i = 1;
 	double x = step[1];
 	w1 = 1;
@@ -148,7 +161,6 @@ int			fdf_find_color(char *str)
 	color = ft_atoi_hex(color_string + 1);
 	if (color >= 0)
 	{
-//		printf("HYI: %d", color);
 		return (color);
 	}
 	return (DEFAULT_COLOR);

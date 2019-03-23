@@ -6,7 +6,7 @@
 /*   By: fsmith <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 19:27:25 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/02 17:32:19 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/23 20:22:46 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,7 @@ size_t				ft_power(int num, int power_level);
 int					ft_sqrt_up(int num);
 
 int					ft_atoi_hex(char *str);
+double				ft_round_double(double x);
+double				ft_abs_double(double x0, double x1);
 
 #endif

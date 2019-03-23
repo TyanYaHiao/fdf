@@ -6,24 +6,16 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 17:56:02 by mlurker           #+#    #+#             */
-/*   Updated: 2019/03/22 21:32:54 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/23 20:40:38 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-double ft_abs2(double x0, double x1)
+void fdf_plot_line(t_field field, t_point *map, int i, int j)
 {
-	double d = x1 - x0;
-	if (d < 0)
-		return (-1 * d);
-	return (d);
-}
-
-void line(t_field field, t_point *map, int i, int j)
-{
-	double dx = ft_abs2(map[j].x, map[i].x);
-	double dy = ft_abs2(map[j].y, map[i].y);
+	double dx = ft_abs_double(map[j].x, map[i].x);
+	double dy = ft_abs_double(map[j].y, map[i].y);
 	double sx = 1;
 	double sy = 1;
 	if (map[i].x > map[j].x)
@@ -41,42 +33,40 @@ void line(t_field field, t_point *map, int i, int j)
 		if (e2 >-dx) { err -= dy; x1 += sx; }
 		if (e2 < dy) { err += dx; y1 += sy; }
 	}
-
-
 }
 
-void	plot_line(t_field field, t_point *map, int i, int j) // модифицированный алгоритм отрисовки линий (брезенхема)
+void	fdf_set_line(t_field field, t_point *map, int i, int j) // модифицированный алгоритм отрисовки линий (брезенхема)
 {
 	double delx = DELTA(map[j].x, map[i].x); // написала дифайн для нахождения дельты иксов
 	double dely = DELTA(map[j].y, map[i].y);
 	if (dely < delx) // проверки на то, кто где стоит, чтобы праивльно рисовать линию и передавать агументы в нужном порядке
 	{
 		if (map[i].x > map[j].x)
-			line(field, map, j, i);
+			fdf_plot_line(field, map, j, i);
 		else
-			line(field, map, i, j); // вниз вправо
+			fdf_plot_line(field, map, i, j); // вниз вправо
 	}
 	else
 	{
 		if (map[i].y > map[j].y)
-			line(field, map, j, i);
+			fdf_plot_line(field, map, j, i);
 		else
-			line(field, map, i, j); // вниз влево
+			fdf_plot_line(field, map, i, j); // вниз влево
 	}
 }
 
-void	connect_pxl(t_field field, int i)
+void	fdf_plot_image(t_field field, int i)
 {
 	if (i % (field.width * field.height) != 0) // если это не последняя точку, то от нее нужно рисовать линии
 	{
 		if ((field.height) * (field.width) - i < field.width) // проверка на нижние точки
-			plot_line(field, field.points, i, i + 1); // если это они, то рисуем только вбок
+			fdf_set_line(field, field.points, i, i + 1); // если это они, то рисуем только вбок
 		else if ((i % (field.width)) == 0 && i != 0) // проверка на боковые точки
-			plot_line(field, field.points, i, i + field.width); // если это они, то рисуем только вниз
+			fdf_set_line(field, field.points, i, i + field.width); // если это они, то рисуем только вниз
 		else // если не крайние точки рисуем :
 		{
-			plot_line(field, field.points, i, i + field.width); // вниз
-			plot_line(field, field.points, i, i + 1); // вбок
+			fdf_set_line(field, field.points, i, i + field.width); // вниз
+			fdf_set_line(field, field.points, i, i + 1); // вбок
 		}
 	}
 }
