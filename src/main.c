@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/22 23:37:29 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/23 15:38:43 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,22 +94,15 @@ int				main(int argc, char **argv)
 		return (0);
 	if (!(fdf_read(&fd, &num, &field)))
 		return (0);
-//	if (!(figure = (t_figure*)malloc(sizeof(*figure) * (num + 1))) || \
-//		!(map_size = (int*)malloc(sizeof(*map_size) * 2)))
-//		return (0);
-//	if (!(fillit_validate(figure, &tetriminos, num)))
-//	field_init(&field);
 	int i = 0;
-//	while (i++ < field.width * field.height)
-//		connect_pxl(field, i);
 
 	i = 0;
-	while (i++ < field.width * field.height) // прежде чем отрисовывать фигуру из 3д в 2д все ее точки нужно модифицировать
-	{
-		iso(&field.points[i].x, &field.points[i].y, field.points[i].z);
-		ft_okrogli_x(&field.points[i].x);
-		ft_okrogli_x(&field.points[i].y);
-	}
+//	while (i++ < field.width * field.height) // прежде чем отрисовывать фигуру из 3д в 2д все ее точки нужно модифицировать
+//	{
+//		iso(&field.points[i].x, &field.points[i].y, field.points[i].z);
+//		ft_okrogli_x(&field.points[i].x);
+//		ft_okrogli_x(&field.points[i].y);
+//	}
 
 	i = 0;
 //	while (i++ < field.width * field.height) // дебажный вайл для получения новых, измененных координат после iso

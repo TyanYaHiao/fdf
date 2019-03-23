@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/22 23:47:15 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/23 15:32:02 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@
 
 # define DELTA(a,b) a-b;
 # define DEFAULT_COLOR 0x6b6b6b
+# define H_WIN 1500
+# define W_WIN 2000
 
-typedef struct	s_point{
+typedef struct	s_point {
 	double			n;
 	double			x;
 	double			y;
@@ -31,12 +33,12 @@ typedef struct	s_point{
 	int			color;
 }				t_point;
 
-typedef struct		s_list_p{
+typedef struct		s_list_p {
 	t_point			*points;
 	struct s_list_p	*next_p;
 }					t_list_p;
 
-typedef struct	s_field{
+typedef struct	s_field {
 	double		x0;
 	double		y0;
 	int			height;

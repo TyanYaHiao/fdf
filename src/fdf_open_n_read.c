@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 14:27:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/23 00:04:36 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/03/23 16:56:15 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int				fdf_read(int *fd, int *num, t_field *field)
 	char		*line;
 	t_list_p	*list_p;
 	t_list_p	*head;
+	t_point		*point;
 
 	if (!(list_p = (t_list_p*)malloc(sizeof(t_list_p))))
 		return (0);
@@ -49,6 +50,7 @@ int				fdf_read(int *fd, int *num, t_field *field)
 		list_p = list_p->next_p; // переход к следующему листу
 		free(line);
 	}
+	field->points = (t_point*)malloc(sizeof(*point) * ((field->width + 1) * (field->height + 1)));
 	field->points = ft_peresapis(field, head);
 	close(*fd);
 	return (1);
@@ -63,40 +65,53 @@ void		ft_place(t_field *field)
 	field->y0 = y0;
 }
 
+void		ft_star_val(double *step, t_field *field) //
+{
+	if ((H_WIN - 500) / (field->height) < (W_WIN) - 500 / (field->width))
+		step[0] = (H_WIN - 500) / (field->height - 1);
+	step[0] = (W_WIN - 500) / (field->width  - 1);
+	step[1] = (W_WIN - (step[0] * (field->width - 1))) / 2; // начало отрисовки картинки, будем расчитывать в зависимости от ширины экрана
+	step[2] = (H_WIN - (step[0] * (field->height - 1))) / 2;
+}
+
 t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 {
-	t_point *point = (t_point*)malloc(sizeof(*point) * ((field->width + 1) * (field->height + 1))); // выделение памяти для массива поинтов в основной структуре
-	int h = field->height; // перезапись ширины и высоты, чтобы их можо было модифицировать без изменений в структуре
-	int w = field->width;
-	double x = w; // начало отрисовки картинки, будем расчитывать в зависимости от ширины экрана
-	double y = h;
-	int w1 = 1;
-	int i = 1; // начина отсчет фигур с единицы чтобы не было проблема со сбивкой по концам строк :)
-	while (h > 0) // пока не закончились строки ...
+	double *step;
+	int h;
+	int w;
+	int w1;
+	int i;
+
+	w = field->width;
+	h = field->height;
+	step = (double*)malloc(sizeof(double) * 4); // step[0] = step, step[1] = star x, step[2] = start y, step[3] = сoef z;
+	ft_star_val(step, field);
+	i = 1;
+	double x = step[1];
+	w1 = 1;
+	while (h > 0)
 	{
-		while (w > 0) // пока не закончились элементы в строке ...
+		while (w > 0)
 		{
-			point[i].n = i;
-			point[i].x = x;
-			point[i].y = y;
-//			point[i].z = 1; // временная строка для координаты z, пока я н6 починила запись из листа
-			point[i].z = (list_p->points)[w1].z * 4; //реальная строка для записи координаты z
-			point[i].color = (list_p->points)[w1].color;
-			printf("%d\n", point[i].color);
+			field->points[i].n = i;
+			field->points[i].x = x;
+			field->points[i].y = step[2];
+			field->points[i].z = (list_p->points)[w1].z * 4;
+			field->points[i].color = (list_p->points)[w1].color;
 			w--;
 			w1++;
-			x += 15; // шаг расставления координат х
+			x += step[0];
+			printf("%f\n", step[1]);
 			i++;
 		}
 		w1 = 1;
-		list_p = list_p->next_p; // переход к следующей сроке в листах
+		list_p = list_p->next_p;
 		w = field->width;
-		y += 15;  // шаг координат у
-		x = w; // сбрасывание к началу
+		step[2] += step[0];
+		x = step[1];
 		h--;
 	}
-//	ft_place(field);
-	return (point);
+	return (field->points);
 }
 
 void		fdf_read_points(char *line, t_list_p *list, t_field *field)
@@ -138,20 +153,3 @@ int			fdf_find_color(char *str)
 	}
 	return (DEFAULT_COLOR);
 }
-
-//int				fdf_read(int *fd, int *num, char **coordinates)
-//{
-//	int			number;
-//	char		buff[545];
-//
-//	number = (int)read(*fd, buff, 545);
-//	*coordinates = ft_strdup(buff);
-//	*num = ((number + 2) / 21);
-//	if (((number + 2) % 21) != 1)
-//	{
-//		ft_putendl("error");
-//		return (0);
-//	}
-//	(*coordinates)[number] = '\0';
-//	return (1);
-//}
