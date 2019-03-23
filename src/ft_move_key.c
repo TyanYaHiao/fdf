@@ -1,48 +1,11 @@
 
 #include "../includes/fdf.h"
 
-//void	fdf_scale_image(int keycode, t_field *fdf)
-//{
-//
-//}
-
-void 	fdf_move_key(int keycode, t_field *fdf)
+void		fdf_scale_image(int keycode, t_field *fdf)
 {
-	int i = 0;
+	int 	i;
 
-	mlx_clear_window((*fdf).mlx_ptr, (*fdf).win_ptr);
-	if (keycode == 124)
-	{
-		while (i++ < (*fdf).width * (*fdf).height)
-			(*fdf).points[i].x += MOVE_STEP_X;
-		i = 0;
-		while (i++ < (*fdf).width * (*fdf).height)
-			fdf_plot_image((*fdf), i);
-	}
-	if (keycode == 126)
-	{
-		while (i++ < (*fdf).width * (*fdf).height)
-			(*fdf).points[i].y -= MOVE_STEP_Y;
-		i = 0;
-		while (i++ < (*fdf).width * (*fdf).height)
-			fdf_plot_image((*fdf), i);
-	}
-	if (keycode == 125)
-	{
-		while (i++ < (*fdf).width * (*fdf).height)
-			(*fdf).points[i].y += MOVE_STEP_Y;
-		i = 0;
-		while (i++ < (*fdf).width * (*fdf).height)
-			fdf_plot_image((*fdf), i);
-	}
-	if (keycode == 123)
-	{
-		while (i++ < (*fdf).width * (*fdf).height)
-			(*fdf).points[i].x -= MOVE_STEP_X;
-		i = 0;
-		while (i++ < (*fdf).width * (*fdf).height)
-			fdf_plot_image((*fdf), i);
-	}
+	i = 0;
 	if (keycode == 69)
 	{
 		while (i++ < (*fdf).width * (*fdf).height)
@@ -54,7 +17,7 @@ void 	fdf_move_key(int keycode, t_field *fdf)
 		while (i++ < (*fdf).width * (*fdf).height)
 			fdf_plot_image((*fdf), i);
 	}
-	if (keycode == 78)
+	else if (keycode == 78)
 	{
 		while (i++ < (*fdf).width * (*fdf).height)
 		{
@@ -67,10 +30,63 @@ void 	fdf_move_key(int keycode, t_field *fdf)
 	}
 }
 
-int key_press(int keycode, t_field *fdf)
+void		fdf_move_x(int keycode, t_field *fdf)
 {
-	if (keycode == 124 || keycode == 125 || keycode == 123 || keycode == 126 || keycode == 69 || keycode == 78)
-		fdf_move_key(keycode, fdf);
+	int 	i;
+
+	i = 0;
+	if (keycode == 124)
+	{
+		while (i++ < (*fdf).width * (*fdf).height)
+			(*fdf).points[i].x += MOVE_STEP_X;
+		i = 0;
+		while (i++ < (*fdf).width * (*fdf).height)
+			fdf_plot_image((*fdf), i);
+	}
+	else if (keycode == 123)
+	{
+		while (i++ < (*fdf).width * (*fdf).height)
+			(*fdf).points[i].x -= MOVE_STEP_X;
+		i = 0;
+		while (i++ < (*fdf).width * (*fdf).height)
+			fdf_plot_image((*fdf), i);
+	}
+}
+
+void		fdf_move_y(int keycode, t_field *fdf)
+{
+	int 	i;
+
+	i = 0;
+	if (keycode == 125)
+	{
+		while (i++ < (*fdf).width * (*fdf).height)
+			(*fdf).points[i].y += MOVE_STEP_Y;
+		i = 0;
+		while (i++ < (*fdf).width * (*fdf).height)
+			fdf_plot_image((*fdf), i);
+	}
+	else if (keycode == 126)
+	{
+		while (i++ < (*fdf).width * (*fdf).height)
+			(*fdf).points[i].y -= MOVE_STEP_Y;
+		i = 0;
+		while (i++ < (*fdf).width * (*fdf).height)
+			fdf_plot_image((*fdf), i);
+	}
+}
+
+void 	fdf_move_key(int keycode, t_field *fdf)
+{
+	int i = 0;
+
+	mlx_clear_window((*fdf).mlx_ptr, (*fdf).win_ptr);
+	if (keycode == 124 || keycode == 123)
+		fdf_move_x(keycode, fdf);
+	if (keycode == 125 || keycode == 126)
+		fdf_move_y(keycode, fdf);
+	if (keycode == 69 || keycode == 78)
+		fdf_scale_image(keycode, fdf);
 }
 
 int mouse_press(int button, int x, int y, t_field *fdf)
