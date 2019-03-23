@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/23 20:50:56 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/23 21:21:51 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define WINDOW_H		1400
 # define WINDOW_W		1800
 # define WINDOW_BORDER	50
+# define MOVE_STEP_X	25
+# define MOVE_STEP_Y	25
 
 typedef struct	s_point {
 	double			n;
@@ -57,7 +59,7 @@ int				fdf_read(int *fd, int *num, t_field *field);
 void			fdf_read_points(char *line, t_list_p *point, t_field *field);
 void			fdf_field_init(t_field *field);
 t_point			*ft_peresapis(t_field *field, t_list_p *head);
-void			ft_move_key(int keycode, t_field *fdf);
+void			fdf_move_key(int keycode, t_field *fdf);
 void			fdf_plot_image(t_field field, int i);
 void			fdf_set_line(t_field field, t_point *map, int i, int j);
 void			fdf_plot_line(t_field field, t_point *map, int i, int j);

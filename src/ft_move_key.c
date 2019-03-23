@@ -1,8 +1,12 @@
 
 #include "../includes/fdf.h"
 
+//void	fdf_scale_image(int keycode, t_field *fdf)
+//{
+//
+//}
 
-void 	ft_move_key(int keycode, t_field *fdf)
+void 	fdf_move_key(int keycode, t_field *fdf)
 {
 	int i = 0;
 
@@ -10,7 +14,7 @@ void 	ft_move_key(int keycode, t_field *fdf)
 	if (keycode == 124)
 	{
 		while (i++ < (*fdf).width * (*fdf).height)
-			(*fdf).points[i].x += 15;
+			(*fdf).points[i].x += MOVE_STEP_X;
 		i = 0;
 		while (i++ < (*fdf).width * (*fdf).height)
 			fdf_plot_image((*fdf), i);
@@ -18,7 +22,7 @@ void 	ft_move_key(int keycode, t_field *fdf)
 	if (keycode == 126)
 	{
 		while (i++ < (*fdf).width * (*fdf).height)
-			(*fdf).points[i].y -= 25;
+			(*fdf).points[i].y -= MOVE_STEP_Y;
 		i = 0;
 		while (i++ < (*fdf).width * (*fdf).height)
 			fdf_plot_image((*fdf), i);
@@ -26,7 +30,7 @@ void 	ft_move_key(int keycode, t_field *fdf)
 	if (keycode == 125)
 	{
 		while (i++ < (*fdf).width * (*fdf).height)
-			(*fdf).points[i].y += 15;
+			(*fdf).points[i].y += MOVE_STEP_Y;
 		i = 0;
 		while (i++ < (*fdf).width * (*fdf).height)
 			fdf_plot_image((*fdf), i);
@@ -34,7 +38,7 @@ void 	ft_move_key(int keycode, t_field *fdf)
 	if (keycode == 123)
 	{
 		while (i++ < (*fdf).width * (*fdf).height)
-			(*fdf).points[i].x -= 35;
+			(*fdf).points[i].x -= MOVE_STEP_X;
 		i = 0;
 		while (i++ < (*fdf).width * (*fdf).height)
 			fdf_plot_image((*fdf), i);
@@ -66,7 +70,7 @@ void 	ft_move_key(int keycode, t_field *fdf)
 int key_press(int keycode, t_field *fdf)
 {
 	if (keycode == 124 || keycode == 125 || keycode == 123 || keycode == 126 || keycode == 69 || keycode == 78)
-		ft_move_key(keycode, fdf);
+		fdf_move_key(keycode, fdf);
 }
 
 int mouse_press(int button, int x, int y, t_field *fdf)
@@ -102,11 +106,10 @@ int event(int button, int x, int y, void *param)
 
 int mouse_release(int button, int x, int y, void *param)
 {
-
 	{
 		printf("%d %d\n", x, y);
 		y *= 4;     //это штука тоже непонятно как работает, потому что я писала, я в шоке
 		x *= 4;
 	}
-//	return (0);
+	return (0);
 }
