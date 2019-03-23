@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 14:27:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/23 20:24:31 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/23 20:51:44 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 			w--;
 			w1++;
 			x += step[0];
-			printf("%f\n", step[1]);
+//			printf("%f\n", step[1]);
 			i++;
 		}
 		w1 = 1;

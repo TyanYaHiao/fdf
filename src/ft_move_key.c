@@ -76,7 +76,19 @@ void		fdf_move_y(int keycode, t_field *fdf)
 	}
 }
 
-void 	fdf_move_key(int keycode, t_field *fdf)
+void		fdf_plot_isometry(int keycode, t_field *field)
+{
+	int		i;
+
+	i = 0;
+	while (i++ < field->width * field->height)
+		fdf_isometry(&field->points[i].x, &field->points[i].y, field->points[i].z);
+	i = 0;
+	while (i++ < field->width * field->height)
+		fdf_plot_image(*field, i);
+}
+
+void 		fdf_move_key(int keycode, t_field *fdf)
 {
 	int i = 0;
 
@@ -87,6 +99,8 @@ void 	fdf_move_key(int keycode, t_field *fdf)
 		fdf_move_y(keycode, fdf);
 	if (keycode == 69 || keycode == 78)
 		fdf_scale_image(keycode, fdf);
+	if (keycode == 49)
+		fdf_plot_isometry(keycode, fdf);
 }
 
 int mouse_press(int button, int x, int y, t_field *fdf)

@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/23 21:50:04 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/23 21:57:59 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int				main(int argc, char **argv)
 	if (!(fdf_read(&fd, &num, &field)))
 		return (0);
 
-	/* 2D to 3D modification */
-	i = 0;
-	while (i++ < field.width * field.height)
-		fdf_isometry(&field.points[i].x, &field.points[i].y, field.points[i].z);
+//	/* 2D to 3D modification */
+//	i = 0;
+//	while (i++ < field.width * field.height)
+//		fdf_isometry(&field.points[i].x, &field.points[i].y, field.points[i].z);
 
 //	/* Debug fdf isometry */
 //	i = 0;
