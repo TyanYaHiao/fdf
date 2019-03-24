@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 14:27:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/24 15:55:56 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/24 18:51:59 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int				fdf_open(int argc, char **argv, int *fd)
 	return (1);
 }
 
-int				fdf_read(int *fd, int *num, t_field *field)
+int				fdf_read(int *fd, int *num, t_field *field, char *map_name)
 {
 	char		*line;
 	t_list_p	*list_p;
@@ -38,11 +38,17 @@ int				fdf_read(int *fd, int *num, t_field *field)
 		return (0);
 	fdf_field_init(field);
 	field->height = 0;
+	field->map_name = map_name;
 	head = list_p;
 	while (get_next_line(*fd, &line) > 0)
 	{
 		if (field->height == 0)
 			field->width = ft_count_words(line, ' ');
+		else if (ft_count_words(line, ' ') != field->width)
+		{
+			ft_putstr("Invalid map");
+			return (0);
+		}
 		list_p->points = (t_point*)malloc(sizeof(t_point) * (field->width + 1)); // выделение памяти для массива поинтов листе
 		fdf_read_points(line, list_p, field);
 		field->height++;
@@ -60,7 +66,7 @@ void		ft_place(t_field *field)
 {
 	double x0 = field->points[1].x;
 	double y0 = field->points[1].y;
-	fdf_isometry(&x0, &y0, field->points[1].z);
+	fdf_isometry(&x0, &y0, field->points[1].z, field->angle_x);
 	field->x0 = x0;
 	field->y0 = y0;
 }
@@ -110,9 +116,10 @@ void		fdf_read_points(char *line, t_list_p *list, t_field *field)
 	int			i;
 	char		**array;
 
+	/* Need to add some checks to colors and extra symbols */
 	array = ft_strsplit(line, ' ');
 	i = 1;
-	while (i <= field->width) // записывание из лайна в лист данных. по хоже не нужно записывать х и у потому что их вставляем в зависимости от ширины и длины
+	while (i <= field->width)
 	{
 		(list->points)[i].n = i + (field->height * field->width);
 		list->points[i].x = i;

@@ -6,7 +6,7 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 17:56:02 by mlurker           #+#    #+#             */
-/*   Updated: 2019/03/23 20:40:38 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/24 17:03:42 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,5 @@ void	fdf_plot_image(t_field field)
 			}
 		}
 	}
+	mlx_string_put(field.mlx_ptr, field.win_ptr, 10, 10, 0xcdcd, field.map_name);
 }

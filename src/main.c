@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/24 16:19:24 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/24 17:07:52 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int				main(int argc, char **argv)
 
 	if (!(fdf_open(argc, argv, &fd)))
 		return (0);
-	if (!(fdf_read(&fd, &num, &field)))
+	if (!(fdf_read(&fd, &num, &field, argv[1])))
 		return (0);
 
 //	/* Debug fdf isometry */
@@ -35,7 +35,6 @@ int				main(int argc, char **argv)
 
 	/* Plotting image */
 	fdf_plot_image(field);
-
 //	mlx_hook(field.win_ptr, 4, 0, event, 0); // неведомая штука, с помощью которой потом будем использвать клаву и мыш (кродеться)
 											// хук ивент - в терминале выводят икс и игрик координаты, на которые ты ткнул мышью в окошке
 //	mlx_hook(field.win_ptr, 4, 0, mouse_press, &field);

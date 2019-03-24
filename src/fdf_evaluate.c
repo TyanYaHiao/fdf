@@ -6,21 +6,54 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 20:28:21 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/24 16:23:37 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/24 19:58:17 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void		fdf_isometry(double *x, double *y, double z) // функция для изменения координат из 3д в 2д, взято с форума интры кук бук, работает нормально
+void		fdf_isometry(double *x, double *y, double z, double angle) // функция для изменения координат из 3д в 2д, взято с форума интры кук бук, работает нормально
 {
 	double previous_x;
 	double previous_y;
 
 	previous_x = *x;
 	previous_y = *y;
-	*x = ft_round_double((previous_x - previous_y) * cos(0.523599));
-	*y = ft_round_double(-z + (previous_x + previous_y) * sin(0.523599));
+	*x = ft_round_double((previous_x - previous_y) * cos(angle));
+	*y = ft_round_double(-z + (previous_x + previous_y) * sin(angle));
+}
+
+void		fdf_rotate_x_eval(double *x, double *y, double *z, double angle)
+{
+	double previous_y;
+	double previous_z;
+
+	previous_y = *y;
+	previous_z = *z;
+	*y = ft_round_double(previous_y * cos(angle) + previous_z * sin(angle));
+	*z = ft_round_double(-previous_y * sin(angle) + previous_z * cos(angle));
+}
+
+void		fdf_rotate_y_eval(double *x, double *y, double *z, double angle)
+{
+	double previous_x;
+	double previous_z;
+
+	previous_x = *x;
+	previous_z = *z;
+	*x = ft_round_double(previous_x * cos(angle) + previous_z * sin(angle));
+	*z = ft_round_double(-previous_x * sin(angle) + previous_z * cos(angle));
+}
+
+void		fdf_rotate_z_eval(double *x, double *y, double *z, double angle)
+{
+	double previous_x;
+	double previous_y;
+
+	previous_x = *x;
+	previous_y = *y;
+	*x = ft_round_double(previous_x * cos(angle) - previous_y * sin(angle));
+	*y = ft_round_double(previous_x * sin(angle) + previous_y * cos(angle));
 }
 
 /*
