@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:20:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/24 19:10:12 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/24 20:08:20 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void			fdf_field_init(t_field *initiated_field)
 	initiated_field->angle_x = 0;
 	initiated_field->angle_y = 0;
 	initiated_field->angle_z = 0;
+	initiated_field->offset_x = 0;
+	initiated_field->offset_y = 0;
 	initiated_field->mlx_ptr = mlx_init();
 	initiated_field->win_ptr = mlx_new_window(initiated_field->mlx_ptr,
 			WINDOW_W, WINDOW_H, "Fil de Fer");
@@ -42,6 +44,8 @@ t_field			fdf_field_copy(t_field field1)
 	field2.angle_x = field1.angle_x;
 	field2.angle_y = field1.angle_y;
 	field2.angle_z = field1.angle_z;
+	field2.offset_x = field1.offset_x;
+	field2.offset_y = field1.offset_y;
 	field2.map_name = field1.map_name;
 	field2.width = field1.width;
 	field2.height = field1.height;

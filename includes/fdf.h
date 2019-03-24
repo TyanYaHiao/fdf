@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/24 20:00:11 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/24 21:10:44 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define WINDOW_BORDER	50
 # define MOVE_STEP_X	25
 # define MOVE_STEP_Y	25
+# define ANGLE_STEP		0.04
 # define Z_COEFF		3
 
 typedef struct	s_point {
@@ -49,6 +50,8 @@ typedef struct	s_field {
 	double 		angle_x;
 	double 		angle_y;
 	double 		angle_z;
+	int 		offset_x;
+	int 		offset_y;
 	int			height;
 	int			width;
 	double		max_depth;
@@ -78,10 +81,15 @@ void			fdf_scale_image(int keycode, t_field *fdf);
 void			fdf_move_x(int keycode, t_field *fdf);
 void			fdf_move_y(int keycode, t_field *fdf);
 void 			fdf_move_key(int keycode, t_field *fdf);
-void			fdf_center_image(t_field *field);
+void			fdf_center_image(t_field *field, int *offset_x, int *offset_y);
+void			fdf_evaluate(t_field *fdf);
 void			fdf_rotate_x_eval(double *x, double *y, double *z, double angle);
 void			fdf_rotate_z_eval(double *x, double *y, double *z, double angle);
 void			fdf_rotate_y_eval(double *x, double *y, double *z, double angle);
+void			fdf_rotate_x(int keycode, t_field *fdf);
+void			fdf_rotate_y(int keycode, t_field *fdf);
+void			fdf_rotate_z(int keycode, t_field *fdf);
+void			fdf_plot_isometry(int keycode, t_field *fdf);
 t_field			fdf_field_copy(t_field field);
 
 #endif
