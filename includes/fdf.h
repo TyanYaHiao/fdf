@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/23 21:50:04 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/24 16:19:07 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define WINDOW_BORDER	50
 # define MOVE_STEP_X	25
 # define MOVE_STEP_Y	25
+# define Z_COEFF		1
 
 typedef struct	s_point {
 	double			n;
@@ -59,7 +60,8 @@ int				fdf_read(int *fd, int *num, t_field *field);
 void			fdf_read_points(char *line, t_list_p *point, t_field *field);
 void			fdf_field_init(t_field *field);
 t_point			*ft_peresapis(t_field *field, t_list_p *head);
-void			fdf_plot_image(t_field field, int i);
+void			fdf_plot_image(t_field field);
+void			fdf_move_to_center(t_field *fdf);
 void			fdf_set_line(t_field field, t_point *map, int i, int j);
 void			fdf_plot_line(t_field field, t_point *map, int i, int j);
 int				fdf_find_color(char *str);
@@ -72,5 +74,6 @@ void			fdf_scale_image(int keycode, t_field *fdf);
 void			fdf_move_x(int keycode, t_field *fdf);
 void			fdf_move_y(int keycode, t_field *fdf);
 void 			fdf_move_key(int keycode, t_field *fdf);
+void			fdf_center_image(t_field *field);
 
 #endif

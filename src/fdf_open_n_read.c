@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 14:27:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/23 20:51:44 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/24 15:55:56 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,28 +65,6 @@ void		ft_place(t_field *field)
 	field->y0 = y0;
 }
 
-/*
-** step[0] - step
-** step[1] - X start_pos
-** step[2] - Y start_pos
-** step[3] - reserved for Z
-*/
-
-void		fdf_start_values(double *step, t_field *field)
-{
-	double	h_step;
-	double 	w_step;
-
-	h_step = (WINDOW_H - WINDOW_BORDER) / (field->height);
-	w_step = (WINDOW_W - WINDOW_BORDER) / (field->width);
-	if (h_step <= w_step)
-		step[0] = h_step;
-	else
-		step[0] = w_step;
-	step[1] = (WINDOW_W - (step[0] * (field->width - 1))) / 2;
-	step[2] = (WINDOW_H - (step[0] * (field->height - 1))) / 2;
-}
-
 t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 {
 	double *step;
@@ -109,7 +87,7 @@ t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 			field->points[i].n = i;
 			field->points[i].x = x;
 			field->points[i].y = step[2];
-			field->points[i].z = (list_p->points)[w1].z * 4;
+			field->points[i].z = (list_p->points)[w1].z * Z_COEFF;
 			field->points[i].color = (list_p->points)[w1].color;
 			w--;
 			w1++;
