@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:37:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/24 21:10:06 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/25 20:11:13 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void		fdf_scale_image(int keycode, t_field *fdf)
 	{
 		while (i++ < (*fdf).width * (*fdf).height)
 		{
-			(*fdf).points[i].x *= 2;
-			(*fdf).points[i].y *= 2;
+			(*fdf).points_mem[i].x *= 2;
+			(*fdf).points_mem[i].y *= 2;
 		}
 		fdf_plot_image(*fdf);
 	}
@@ -30,8 +30,8 @@ void		fdf_scale_image(int keycode, t_field *fdf)
 	{
 		while (i++ < (*fdf).width * (*fdf).height)
 		{
-			(*fdf).points[i].x /= 2;
-			(*fdf).points[i].y /= 2;
+			(*fdf).points_mem[i].x /= 2;
+			(*fdf).points_mem[i].y /= 2;
 		}
 		fdf_plot_image(*fdf);
 	}
@@ -42,7 +42,7 @@ void 		fdf_move_key(int keycode, t_field *fdf)
 	int i = 0;
 
 	/* Clear window probably need to move inside move functions */
-	if (keycode == 34 || keycode == 49 || keycode == 53 || keycode == 69
+	if (keycode == 17 || keycode == 34 || keycode == 49 || keycode == 53 || keycode == 69
 		|| keycode == 78 || keycode == 83 || keycode == 84 || keycode == 85
 		|| keycode == 86 || keycode == 88 || keycode == 89 || keycode == 91
 		|| keycode == 92 || keycode == 123 || keycode == 124
@@ -59,6 +59,8 @@ void 		fdf_move_key(int keycode, t_field *fdf)
 			fdf_move_to_center(fdf);
 		if (keycode == 34)
 			fdf_plot_isometry(keycode, fdf);
+		if (keycode == 17)
+			fdf_plot_top_view(keycode, fdf);
 		if (keycode == 53)
 			exit(0);
 		if (keycode == 84 || keycode == 91)
@@ -77,13 +79,13 @@ int mouse_press(int button, int x, int y, t_field *fdf)
 	if (button == 1)
 	{
 		while (i++ < (*fdf).width * (*fdf).height)
-			(*fdf).points[i].x *= 2;
+			(*fdf).points_mem[i].x *= 2;
 		fdf_plot_image(*fdf);
 	}
 	if (button == 2)
 	{
 		while (i++ < (*fdf).width * (*fdf).height)
-			(*fdf).points[i].x /= 2;
+			(*fdf).points_mem[i].x /= 2;
 		fdf_plot_image(*fdf);
 	}
 //	printf("%d %d\n", x, y);

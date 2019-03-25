@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/24 21:10:44 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/25 19:53:50 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,22 @@ typedef struct		s_list_p {
 }					t_list_p;
 
 typedef struct	s_field {
-	double		x0;
-	double		y0;
+	double		x0;				// what is it???
+	double		y0;				// what is it???
 	double 		angle_x;
 	double 		angle_y;
 	double 		angle_z;
-	int 		offset_x;
-	int 		offset_y;
-	int			height;
-	int			width;
-	double		max_depth;
+	int 		offset_x;		// image offset on X
+	int 		offset_y;		// image offset on Y
+	int			width;			// number of points on X
+	int			height;			// number of points on Y
+	double		max_depth;		// think about it!
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*img_ptr;
 	char 		*map_name;
-	t_point		*points;
+	t_point		*points_mem;	// original array
+	t_point		*points_out;	// array for output
 }				t_field;
 
 int				fdf_open(int argc, char **argv, int *fd);
@@ -81,7 +82,7 @@ void			fdf_scale_image(int keycode, t_field *fdf);
 void			fdf_move_x(int keycode, t_field *fdf);
 void			fdf_move_y(int keycode, t_field *fdf);
 void 			fdf_move_key(int keycode, t_field *fdf);
-void			fdf_center_image(t_field *field, int *offset_x, int *offset_y);
+void			fdf_center_image(t_field *field);
 void			fdf_evaluate(t_field *fdf);
 void			fdf_rotate_x_eval(double *x, double *y, double *z, double angle);
 void			fdf_rotate_z_eval(double *x, double *y, double *z, double angle);
@@ -90,6 +91,9 @@ void			fdf_rotate_x(int keycode, t_field *fdf);
 void			fdf_rotate_y(int keycode, t_field *fdf);
 void			fdf_rotate_z(int keycode, t_field *fdf);
 void			fdf_plot_isometry(int keycode, t_field *fdf);
-t_field			fdf_field_copy(t_field field);
+void			fdf_plot_top_view(int keycode, t_field *fdf);
+void			fdf_points_copy(t_field *field);
+void			fdf_field_info(t_field field);
+//t_field			fdf_field_copy(t_field field);
 
 #endif

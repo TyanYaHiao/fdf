@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/24 17:07:52 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/25 19:20:36 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int				main(int argc, char **argv)
 //	mlx_hook(field.win_ptr, 4, 0, event, 0); // неведомая штука, с помощью которой потом будем использвать клаву и мыш (кродеться)
 											// хук ивент - в терминале выводят икс и игрик координаты, на которые ты ткнул мышью в окошке
 //	mlx_hook(field.win_ptr, 4, 0, mouse_press, &field);
-//	mlx_hook(field.win_ptr, 17, 0, close1, 0);
+	mlx_hook(field.win_ptr, 17, 0, close, 0);
 	mlx_hook(field.win_ptr, 2, 0, fdf_move_key, &field);
 	mlx_loop(field.mlx_ptr); //тоже нужно
 	return (0);

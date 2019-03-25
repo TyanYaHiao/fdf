@@ -27,7 +27,7 @@ void fdf_plot_line(t_field field, t_point *map, int i, int j)
 	double x1 = map[i].x;
 	double y1 = map[i].y;
 	for(;;){
-		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)x1, (int)y1, field.points[i].color);
+		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)x1, (int)y1, field.points_out[i].color);
 		if (x1==map[j].x && y1==map[j].y) break;
 		e2 = err;
 		if (e2 >-dx) { err -= dy; x1 += sx; }
@@ -65,15 +65,16 @@ void	fdf_plot_image(t_field field)
 		if (i % (field.width * field.height) != 0) // если это не последняя точку, то от нее нужно рисовать линии
 		{
 			if ((field.height) * (field.width) - i < field.width) // проверка на нижние точки
-				fdf_set_line(field, field.points, i, i + 1); // если это они, то рисуем только вбок
+				fdf_set_line(field, field.points_out, i, i + 1); // если это они, то рисуем только вбок
 			else if ((i % (field.width)) == 0 && i != 0) // проверка на боковые точки
-				fdf_set_line(field, field.points, i, i + field.width); // если это они, то рисуем только вниз
+				fdf_set_line(field, field.points_out, i, i + field.width); // если это они, то рисуем только вниз
 			else // если не крайние точки рисуем :
 			{
-				fdf_set_line(field, field.points, i, i + field.width); // вниз
-				fdf_set_line(field, field.points, i, i + 1); // вбок
+				fdf_set_line(field, field.points_out, i, i + field.width); // вниз
+				fdf_set_line(field, field.points_out, i, i + 1); // вбок
 			}
 		}
 	}
 	mlx_string_put(field.mlx_ptr, field.win_ptr, 10, 10, 0xcdcd, field.map_name);
+	fdf_field_info(field);
 }

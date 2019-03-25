@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:20:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/24 20:08:20 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/25 20:01:01 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,28 @@ void			fdf_field_init(t_field *initiated_field)
 //	initiated_field->points = 0; // ??
 }
 
-t_field			fdf_field_copy(t_field field1)
+void			fdf_points_copy(t_field *field)
 {
-	t_field		field2;
 	int 		i;
 
-	field2.points = (t_point*)malloc(sizeof(t_point) * ((field1.width + 1) * (field1.height + 1)));
 	i = 0;
-	while (i < (field1.width + 1) * (field1.height + 1))
+	while (i < (field->width + 1) * (field->height + 1))
 	{
-		field2.points[i] = field1.points[i];
+		field->points_out[i] = field->points_mem[i];
 		i++;
 	}
-	field2.angle_x = field1.angle_x;
-	field2.angle_y = field1.angle_y;
-	field2.angle_z = field1.angle_z;
-	field2.offset_x = field1.offset_x;
-	field2.offset_y = field1.offset_y;
-	field2.map_name = field1.map_name;
-	field2.width = field1.width;
-	field2.height = field1.height;
-	field2.max_depth = field1.max_depth;
-	field2.img_ptr = field1.img_ptr;
-	field2.win_ptr = field1.win_ptr;
-	field2.mlx_ptr = field1.mlx_ptr;
-	field2.x0 = field2.x0;
-	field2.y0 = field2.y0;
-	return (field2);
+}
+
+void			fdf_field_info(t_field field)
+{
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 10, 0xcdcd, "Offset x:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 10, 0xcdcd, ft_itoa(field.offset_x));
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 30, 0xcdcd, "Offset y:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 30, 0xcdcd, ft_itoa(field.offset_y));
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 50, 0xcdcd, "X angle:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 50, 0xcdcd, ft_itoa(field.angle_x * 180 / M_PI));
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 70, 0xcdcd, "Y angle:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 70, 0xcdcd, ft_itoa(field.angle_y * 180 / M_PI));
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 90, 0xcdcd, "Z angle:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 90, 0xcdcd, ft_itoa(field.angle_z * 180 / M_PI));
 }

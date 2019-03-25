@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 20:28:21 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/24 21:22:56 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/25 19:46:52 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ void		fdf_evaluate(t_field *fdf)
 	i = 0;
 	while (i++ < fdf->width * fdf->height)
 	{
-		fdf_rotate_x_eval(&fdf->points[i].x, &fdf->points[i].y,
-						  &fdf->points[i].z, fdf->angle_x);
-		fdf_rotate_y_eval(&fdf->points[i].x, &fdf->points[i].y,
-						  &fdf->points[i].z, fdf->angle_y);
-		fdf_rotate_z_eval(&fdf->points[i].x, &fdf->points[i].y,
-						  &fdf->points[i].z, fdf->angle_z);
-		fdf->points[i].x += fdf->offset_x;
-		fdf->points[i].y += fdf->offset_y;
+		fdf_rotate_x_eval(&fdf->points_out[i].x, &fdf->points_out[i].y,
+						  &fdf->points_out[i].z, fdf->angle_x);
+		fdf_rotate_y_eval(&fdf->points_out[i].x, &fdf->points_out[i].y,
+						  &fdf->points_out[i].z, fdf->angle_y);
+		fdf_rotate_z_eval(&fdf->points_out[i].x, &fdf->points_out[i].y,
+						  &fdf->points_out[i].z, fdf->angle_z);
+		fdf->points_out[i].x += fdf->offset_x;
+		fdf->points_out[i].y += fdf->offset_y;
 	}
 }
 
@@ -96,7 +96,8 @@ void		fdf_start_values(double *step, t_field *field)
 	step[2] = (WINDOW_H - (step[0] * (field->height - 1))) / 2;
 }
 
-void		fdf_center_image(t_field *field, int *offset_x, int *offset_y)
+/* Brings image to the center in MEMORY */
+void		fdf_center_image(t_field *field)
 {
 	int 	i;
 	int 	step_x;
@@ -104,15 +105,15 @@ void		fdf_center_image(t_field *field, int *offset_x, int *offset_y)
 
 //	printf("height = %f\nwidth = %f\n", field->points[field->width * field->height].y - field->points[1].y,
 //		   field->points[field->width * field->height].x - field->points[1].x);
-	step_y = (WINDOW_H - (field->points[field->width * field->height].y\
-			- field->points[1].y)) / 2 - field->points[1].y;
-	step_x = (WINDOW_W - (field->points[field->width * field->height].x\
-			- field->points[1].x)) / 2 - field->points[1].x;
+	step_y = (WINDOW_H - (field->points_out[field->width * field->height].y\
+			- field->points_out[1].y)) / 2 - field->points_out[1].y;
+	step_x = (WINDOW_W - (field->points_out[field->width * field->height].x\
+			- field->points_out[1].x)) / 2 - field->points_out[1].x;
 	i = 0;
 	while (i++ < field->width * field->height)
 	{
-		(*field).points[i].x += step_x;
-		(*field).points[i].y += step_y;
+		(*field).points_out[i].x += step_x + field->offset_x;
+		(*field).points_out[i].y += step_y + field->offset_y;
 	}
 }
 

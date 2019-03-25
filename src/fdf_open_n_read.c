@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 14:27:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/24 18:51:59 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/25 19:26:06 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int				fdf_read(int *fd, int *num, t_field *field, char *map_name)
 	t_list_p	*list_p;
 	t_list_p	*head;
 	t_point		*point;
+	int 		i;
 
 	if (!(list_p = (t_list_p*)malloc(sizeof(t_list_p))))
 		return (0);
@@ -56,17 +57,20 @@ int				fdf_read(int *fd, int *num, t_field *field, char *map_name)
 		list_p = list_p->next_p; // переход к следующему листу
 		free(line);
 	}
-	field->points = (t_point*)malloc(sizeof(*point) * ((field->width + 1) * (field->height + 1)));
-	field->points = ft_peresapis(field, head);
+	field->points_mem = (t_point*)malloc(sizeof(*point) * ((field->width + 1) * (field->height + 1)));
+	field->points_out = (t_point*)malloc(sizeof(*point) * ((field->width + 1) * (field->height + 1)));
+	field->points_mem = ft_peresapis(field, head);
+	fdf_points_copy(field);
 	close(*fd);
 	return (1);
 }
 
+/* Не нашел, где функция используется */
 void		ft_place(t_field *field)
 {
-	double x0 = field->points[1].x;
-	double y0 = field->points[1].y;
-	fdf_isometry(&x0, &y0, field->points[1].z, field->angle_x);
+	double x0 = field->points_mem[1].x;
+	double y0 = field->points_mem[1].y;
+	fdf_isometry(&x0, &y0, field->points_mem[1].z, field->angle_x);
 	field->x0 = x0;
 	field->y0 = y0;
 }
@@ -90,11 +94,11 @@ t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 	{
 		while (w > 0)
 		{
-			field->points[i].n = i;
-			field->points[i].x = x;
-			field->points[i].y = step[2];
-			field->points[i].z = (list_p->points)[w1].z * Z_COEFF;
-			field->points[i].color = (list_p->points)[w1].color;
+			field->points_mem[i].n = i;
+			field->points_mem[i].x = x;
+			field->points_mem[i].y = step[2];
+			field->points_mem[i].z = (list_p->points)[w1].z * Z_COEFF;
+			field->points_mem[i].color = (list_p->points)[w1].color;
 			w--;
 			w1++;
 			x += step[0];
@@ -108,7 +112,7 @@ t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 		x = step[1];
 		h--;
 	}
-	return (field->points);
+	return (field->points_mem);
 }
 
 void		fdf_read_points(char *line, t_list_p *list, t_field *field)
