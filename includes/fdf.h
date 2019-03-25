@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/25 19:53:50 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/25 21:53:47 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct	s_field {
 	double 		angle_z;
 	int 		offset_x;		// image offset on X
 	int 		offset_y;		// image offset on Y
+	int 		coeff_z;		// coefficient of depth
 	int			width;			// number of points on X
 	int			height;			// number of points on Y
 	double		max_depth;		// think about it!
@@ -79,17 +80,15 @@ int 			mouse_press(int button, int x, int y, t_field *fdf);
 int				event(int button, int x, int y, void *param);
 int 			mouse_release(int button, int x, int y, void *param);
 void			fdf_scale_image(int keycode, t_field *fdf);
-void			fdf_move_x(int keycode, t_field *fdf);
-void			fdf_move_y(int keycode, t_field *fdf);
+void			fdf_move(int keycode, t_field *fdf);
 void 			fdf_move_key(int keycode, t_field *fdf);
 void			fdf_center_image(t_field *field);
 void			fdf_evaluate(t_field *fdf);
 void			fdf_rotate_x_eval(double *x, double *y, double *z, double angle);
 void			fdf_rotate_z_eval(double *x, double *y, double *z, double angle);
 void			fdf_rotate_y_eval(double *x, double *y, double *z, double angle);
-void			fdf_rotate_x(int keycode, t_field *fdf);
-void			fdf_rotate_y(int keycode, t_field *fdf);
-void			fdf_rotate_z(int keycode, t_field *fdf);
+void			fdf_change_depth(int keycode, t_field *fdf);
+void			fdf_rotate(int keycode, t_field *fdf);
 void			fdf_plot_isometry(int keycode, t_field *fdf);
 void			fdf_plot_top_view(int keycode, t_field *fdf);
 void			fdf_points_copy(t_field *field);

@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:37:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/25 20:11:13 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/25 21:57:13 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,15 @@ void 		fdf_move_key(int keycode, t_field *fdf)
 	int i = 0;
 
 	/* Clear window probably need to move inside move functions */
-	if (keycode == 17 || keycode == 34 || keycode == 49 || keycode == 53 || keycode == 69
-		|| keycode == 78 || keycode == 83 || keycode == 84 || keycode == 85
-		|| keycode == 86 || keycode == 88 || keycode == 89 || keycode == 91
-		|| keycode == 92 || keycode == 123 || keycode == 124
-		|| keycode == 125 || keycode == 126)
+	if (keycode == 6 || keycode == 7 || keycode == 17 || keycode == 34 || keycode == 49 || keycode == 53 ||
+		keycode == 69 || keycode == 78 || keycode == 83 || keycode == 84 ||
+		keycode == 85 || keycode == 86 || keycode == 88 || keycode == 89 ||
+		keycode == 91 || keycode == 92 || keycode == 123 || keycode == 124 ||
+		keycode == 125 || keycode == 126)
 	{
 		mlx_clear_window((*fdf).mlx_ptr, (*fdf).win_ptr);
-		if (keycode == 124 || keycode == 123)
-			fdf_move_x(keycode, fdf);
-		if (keycode == 125 || keycode == 126)
-			fdf_move_y(keycode, fdf);
+		if (keycode == 123 || keycode == 124 || keycode == 125 || keycode == 126)
+			fdf_move(keycode, fdf);
 		if (keycode == 69 || keycode == 78)
 			fdf_scale_image(keycode, fdf);
 		if (keycode == 49)
@@ -61,14 +59,13 @@ void 		fdf_move_key(int keycode, t_field *fdf)
 			fdf_plot_isometry(keycode, fdf);
 		if (keycode == 17)
 			fdf_plot_top_view(keycode, fdf);
+		if (keycode == 6 || keycode == 7)
+			fdf_change_depth(keycode, fdf);
 		if (keycode == 53)
 			exit(0);
-		if (keycode == 84 || keycode == 91)
-			fdf_rotate_x(keycode, fdf);
-		if (keycode == 86 || keycode == 88)
-			fdf_rotate_y(keycode, fdf);
-		if (keycode == 83 || keycode == 85 || keycode == 89 || keycode == 92)
-			fdf_rotate_z(keycode, fdf);
+		if (keycode == 84 || keycode == 91 || keycode == 86 || keycode == 88
+		|| keycode == 83 || keycode == 85 || keycode == 89 || keycode == 92)
+			fdf_rotate(keycode, fdf);
 	}
 }
 

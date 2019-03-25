@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 20:28:21 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/25 19:46:52 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/25 21:48:51 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,52 +26,81 @@ void		fdf_isometry(double *x, double *y, double z, double angle) // функци
 void		fdf_evaluate(t_field *fdf)
 {
 	int 	i;
+	double	prev_x;
+	double	prev_y;
+	double	prev_z;
 
 	i = 0;
 	while (i++ < fdf->width * fdf->height)
 	{
+		fdf->points_out[i].z *= fdf->coeff_z;
 		fdf_rotate_x_eval(&fdf->points_out[i].x, &fdf->points_out[i].y,
 						  &fdf->points_out[i].z, fdf->angle_x);
 		fdf_rotate_y_eval(&fdf->points_out[i].x, &fdf->points_out[i].y,
 						  &fdf->points_out[i].z, fdf->angle_y);
 		fdf_rotate_z_eval(&fdf->points_out[i].x, &fdf->points_out[i].y,
 						  &fdf->points_out[i].z, fdf->angle_z);
+//		prev_x = fdf->points_out[i].x;
+//		prev_y = fdf->points_out[i].y;
+//		prev_z = fdf->points_out[i].z;
+//		fdf->points_out[i].x = ft_round_double(prev_x * (cos(fdf->angle_x) * cos(fdf->angle_z) - sin(fdf->angle_x) * cos(fdf->angle_y) * sin(fdf->angle_z))
+//				+ prev_y * (sin(fdf->angle_x) * cos(fdf->angle_z) + cos(fdf->angle_x) * cos(fdf->angle_y) * sin(fdf->angle_z))
+//				+ prev_z * (sin(fdf->angle_y) * sin(fdf->angle_z)));
+//		fdf->points_out[i].y = ft_round_double(prev_x * (-sin(fdf->angle_x) * cos(fdf->angle_y) * cos(fdf->angle_z) - cos(fdf->angle_x) * sin(fdf->angle_z))
+//				+ prev_y * (cos(fdf->angle_x) * cos(fdf->angle_y) * cos(fdf->angle_z) - sin(fdf->angle_x) * sin(fdf->angle_z))
+//				+ prev_z * (sin(fdf->angle_y) * cos(fdf->angle_z)));
+//		fdf->points_out[i].z = ft_round_double(prev_x * (sin(fdf->angle_x) * sin(fdf->angle_y))
+//				+ prev_y * (-cos(fdf->angle_x) * sin(fdf->angle_y))
+//				+ prev_z * (cos(fdf->angle_y)));
+
 		fdf->points_out[i].x += fdf->offset_x;
 		fdf->points_out[i].y += fdf->offset_y;
+
+//		prev_x * (cos(fdf->angle_x) * cos(fdf->angle_z) - sin(fdf->angle_x) * sin(fdf->angle_y) * sin(fdf->angle_z))
+//		prev_y * (-cos(fdf->angle_x) * sin(fdf->angle_z) - sin(fdf->angle_x) * cos(fdf->angle_y) * cos(fdf->angle_z))
+//		prev_z * (sin(fdf->angle_x) * sin(fdf->angle_y))
+//
+//		prev_x * (sin(fdf->angle_x) * cos(fdf->angle_z) + cos(fdf->angle_x) * cos(fdf->angle_y) * sin(fdf->angle_z))
+//		prev_y * (-sin(fdf->angle_x) * sin(fdf->angle_x) + cos(fdf->angle_x) * cos(fdf->angle_y) * cos(fdf->angle_z))
+//		prev_z * (-cos(fdf->angle_x) * sin(fdf->angle_y))
+//
+//		prev_x * (sin(fdf->angle_y) * sin(fdf->angle_z))
+//		prev_y * (sin(fdf->angle_y) * cos(fdf->angle_z))
+//		prev_z * (cos(fdf->angle_y))
 	}
 }
 
 void		fdf_rotate_x_eval(double *x, double *y, double *z, double angle)
 {
-	double previous_y;
-	double previous_z;
+	double prev_y;
+	double prev_z;
 
-	previous_y = *y;
-	previous_z = *z;
-	*y = ft_round_double(previous_y * cos(angle) + previous_z * sin(angle));
-	*z = ft_round_double(-previous_y * sin(angle) + previous_z * cos(angle));
+	prev_y = *y;
+	prev_z = *z;
+	*y = ft_round_double(prev_y * cos(angle) + prev_z * sin(angle));
+	*z = ft_round_double(-prev_y * sin(angle) + prev_z * cos(angle));
 }
 
 void		fdf_rotate_y_eval(double *x, double *y, double *z, double angle)
 {
-	double previous_x;
-	double previous_z;
+	double prev_x;
+	double prev_z;
 
-	previous_x = *x;
-	previous_z = *z;
-	*x = ft_round_double(previous_x * cos(angle) + previous_z * sin(angle));
-	*z = ft_round_double(-previous_x * sin(angle) + previous_z * cos(angle));
+	prev_x = *x;
+	prev_z = *z;
+	*x = ft_round_double(prev_x * cos(angle) + prev_z * sin(angle));
+	*z = ft_round_double(-prev_x * sin(angle) + prev_z * cos(angle));
 }
 
 void		fdf_rotate_z_eval(double *x, double *y, double *z, double angle)
 {
-	double previous_x;
-	double previous_y;
+	double prev_x;
+	double prev_y;
 
-	previous_x = *x;
-	previous_y = *y;
-	*x = ft_round_double(previous_x * cos(angle) - previous_y * sin(angle));
-	*y = ft_round_double(previous_x * sin(angle) + previous_y * cos(angle));
+	prev_x = *x;
+	prev_y = *y;
+	*x = ft_round_double(prev_x * cos(angle) - prev_y * sin(angle));
+	*y = ft_round_double(prev_x * sin(angle) + prev_y * cos(angle));
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:20:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/25 20:01:01 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/25 22:08:00 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ void			fdf_field_info(t_field field)
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 10, 0xcdcd, ft_itoa(field.offset_x));
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 30, 0xcdcd, "Offset y:");
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 30, 0xcdcd, ft_itoa(field.offset_y));
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 50, 0xcdcd, "X angle:");
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 50, 0xcdcd, ft_itoa(field.angle_x * 180 / M_PI));
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 70, 0xcdcd, "Y angle:");
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 70, 0xcdcd, ft_itoa(field.angle_y * 180 / M_PI));
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 90, 0xcdcd, "Z angle:");
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 90, 0xcdcd, ft_itoa(field.angle_z * 180 / M_PI));
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 50, 0xcdcd, "Deepness:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 50, 0xcdcd, ft_itoa(field.coeff_z));
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 70, 0xcdcd, "X angle:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 70, 0xcdcd, ft_itoa(field.angle_x * 180 / M_PI));
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 90, 0xcdcd, "Y angle:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 90, 0xcdcd, ft_itoa(field.angle_y * 180 / M_PI));
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 110, 0xcdcd, "Z angle:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 110, 0xcdcd, ft_itoa(field.angle_z * 180 / M_PI));
 }

@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 14:27:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/25 19:26:06 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/25 21:55:41 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int				fdf_read(int *fd, int *num, t_field *field, char *map_name)
 	field->points_mem = (t_point*)malloc(sizeof(*point) * ((field->width + 1) * (field->height + 1)));
 	field->points_out = (t_point*)malloc(sizeof(*point) * ((field->width + 1) * (field->height + 1)));
 	field->points_mem = ft_peresapis(field, head);
+	field->coeff_z = Z_COEFF;
 	fdf_points_copy(field);
 	close(*fd);
 	return (1);
@@ -97,7 +98,7 @@ t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 			field->points_mem[i].n = i;
 			field->points_mem[i].x = x;
 			field->points_mem[i].y = step[2];
-			field->points_mem[i].z = (list_p->points)[w1].z * Z_COEFF;
+			field->points_mem[i].z = (list_p->points)[w1].z;
 			field->points_mem[i].color = (list_p->points)[w1].color;
 			w--;
 			w1++;
