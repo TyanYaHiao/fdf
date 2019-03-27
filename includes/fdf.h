@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/25 21:53:47 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/27 18:49:20 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define MOVE_STEP_X	25
 # define MOVE_STEP_Y	25
 # define ANGLE_STEP		0.04
-# define Z_COEFF		3
+# define Z_COEFF		-3
 
 typedef struct	s_point {
 	double			n;
@@ -84,9 +84,6 @@ void			fdf_move(int keycode, t_field *fdf);
 void 			fdf_move_key(int keycode, t_field *fdf);
 void			fdf_center_image(t_field *field);
 void			fdf_evaluate(t_field *fdf);
-void			fdf_rotate_x_eval(double *x, double *y, double *z, double angle);
-void			fdf_rotate_z_eval(double *x, double *y, double *z, double angle);
-void			fdf_rotate_y_eval(double *x, double *y, double *z, double angle);
 void			fdf_change_depth(int keycode, t_field *fdf);
 void			fdf_rotate(int keycode, t_field *fdf);
 void			fdf_plot_isometry(int keycode, t_field *fdf);
