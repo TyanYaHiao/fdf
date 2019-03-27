@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 20:36:40 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/25 22:04:19 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/27 21:26:58 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,41 @@
 
 void		fdf_move(int keycode, t_field *fdf)
 {
-	if (keycode == 124)
+	if (keycode == KEY_NUM_RIGHT)
 		fdf->offset_x += MOVE_STEP_X;
-	else if (keycode == 123)
+	else if (keycode == KEY_NUM_LEFT)
 		fdf->offset_x -= MOVE_STEP_X;
-	else if (keycode == 125)
+	else if (keycode == KEY_NUM_DOWN)
 		fdf->offset_y += MOVE_STEP_Y;
-	else if (keycode == 126)
+	else if (keycode == KEY_NUM_UP)
 		fdf->offset_y -= MOVE_STEP_Y;
 	fdf_points_copy(fdf);
 	fdf_evaluate(fdf);
 	fdf_center_image(fdf);
-//	printf("move: x = %f__y = %f\n", (*fdf).points[40].x, (*fdf).points[40].y);
-//	printf("movestep: x = %d__y = %d\n", fdf->offset_x, fdf->offset_y);
 	fdf_plot_image(*fdf);
 }
 
 void		fdf_change_depth(int keycode, t_field *fdf)
 {
-	if (keycode == 6)
+	if (keycode == KEY_Z)
 		fdf->coeff_z += 1;
-	else if (keycode == 7)
+	else if (keycode == KEY_X)
 		fdf->coeff_z -= 1;
+	fdf_points_copy(fdf);
+	fdf_evaluate(fdf);
+	fdf_center_image(fdf);
+	fdf_plot_image(*fdf);
+}
+
+void		fdf_scale_image(int mode, int keycode, t_field *fdf)
+{
+	if ((mode == KEYBOARD && keycode == KEY_PLUS)
+	|| (mode == MOUSE && keycode == MOUSE_SCROLL_UP))
+		fdf->scale *= 1.2;
+	else if ((mode == KEYBOARD && keycode == KEY_MINUS)
+	|| (mode == MOUSE && keycode == MOUSE_SCROLL_DOWN))
+		fdf->scale /= 1.2;
+//	printf("%d",mode);
 	fdf_points_copy(fdf);
 	fdf_evaluate(fdf);
 	fdf_center_image(fdf);

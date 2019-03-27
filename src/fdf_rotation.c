@@ -14,17 +14,17 @@
 
 void		fdf_rotate(int keycode, t_field *fdf)
 {
-	if (keycode == 84)
+	if (keycode == KEY_NUM_2)
 		fdf->angle_x -= ANGLE_STEP;
-	else if (keycode == 91)
+	else if (keycode == KEY_NUM_8)
 		fdf->angle_x += ANGLE_STEP;
-	else if (keycode == 86)
+	else if (keycode == KEY_NUM_4)
 		fdf->angle_y -= ANGLE_STEP;
-	else if (keycode == 88)
+	else if (keycode == KEY_NUM_6)
 		fdf->angle_y += ANGLE_STEP;
-	else if (keycode == 83 || keycode == 89)
+	else if (keycode == KEY_NUM_1 || keycode == KEY_NUM_7)
 		fdf->angle_z += ANGLE_STEP;
-	else if (keycode == 85 || keycode == 92)
+	else if (keycode == KEY_NUM_3 || keycode == KEY_NUM_9)
 		fdf->angle_z -= ANGLE_STEP;
 	fdf_points_copy(fdf);
 	fdf_evaluate(fdf);

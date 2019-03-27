@@ -40,6 +40,7 @@ int				fdf_read(int *fd, int *num, t_field *field, char *map_name)
 	fdf_field_init(field);
 	field->height = 0;
 	field->map_name = map_name;
+	field->scale = 1;
 	head = list_p;
 	while (get_next_line(*fd, &line) > 0)
 	{

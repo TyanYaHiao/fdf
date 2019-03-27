@@ -6,12 +6,13 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 20:28:21 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/27 19:05:26 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/27 20:32:15 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
+/* Не нашел, где функция используется */
 void		fdf_isometry(double *x, double *y, double z, double angle) // функция для изменения координат из 3д в 2д, взято с форума интры кук бук, работает нормально
 {
 	double previous_x;
@@ -34,9 +35,9 @@ void		fdf_evaluate(t_field *fdf)
 	while (i++ < fdf->width * fdf->height)
 	{
 		fdf->points_out[i].z *= fdf->coeff_z;
-		prev_x = fdf->points_out[i].x;
-		prev_y = fdf->points_out[i].y;
-		prev_z = fdf->points_out[i].z;
+		prev_x = fdf->points_out[i].x * fdf->scale;
+		prev_y = fdf->points_out[i].y * fdf->scale;
+		prev_z = fdf->points_out[i].z * fdf->scale;
 		fdf->points_out[i].x = ft_round_double(prev_x * (cos(fdf->angle_y) * cos(fdf->angle_z))
 				- prev_y * (sin(fdf->angle_x) * sin(fdf->angle_y) * cos(fdf->angle_z) + cos(fdf->angle_x) * sin(fdf->angle_z))
 				+ prev_z * (cos(fdf->angle_x) * sin(fdf->angle_y) * cos(fdf->angle_z) - sin(fdf->angle_x) * sin(fdf->angle_z)));
