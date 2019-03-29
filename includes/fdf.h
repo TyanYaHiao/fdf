@@ -41,6 +41,7 @@
 # define KEY_Z				6
 # define KEY_X				7
 # define KEY_I				34
+# define KEY_U				32
 # define KEY_T				17
 # define KEY_SPACE			49
 # define KEY_PLUS			69
@@ -122,6 +123,7 @@ void			fdf_plot_front_view(int keycode, t_field *fdf);
 void			fdf_plot_side_view(int keycode, t_field *fdf);
 void			fdf_points_copy(t_field *field);
 void			fdf_field_info(t_field field);
+void			fdf_real_isometry(int keycode, t_field *fdf);
 //t_field			fdf_field_copy(t_field field);
 
 #endif

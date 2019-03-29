@@ -48,7 +48,6 @@ void		fdf_scale_image(int mode, int keycode, t_field *fdf)
 	else if ((mode == KEYBOARD && keycode == KEY_MINUS)
 	|| (mode == MOUSE && keycode == MOUSE_SCROLL_DOWN))
 		fdf->scale /= 1.2;
-//	printf("%d",mode);
 	fdf_points_copy(fdf);
 	fdf_evaluate(fdf);
 	fdf_center_image(fdf);

@@ -49,7 +49,7 @@ void			fdf_field_info(t_field field)
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 30, 0xcdcd, "Offset y:");
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 30, 0xcdcd, ft_itoa(field.offset_y));
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 50, 0xcdcd, "Scale:");
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 50, 0xcdcd, ft_itoa(field.scale));
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 50, 0xcdcd, ft_itoa(field.scale * 100));
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 70, 0xcdcd, "Deepness:");
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 70, 0xcdcd, ft_itoa(-field.coeff_z));
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 90, 0xcdcd, "X angle:");
