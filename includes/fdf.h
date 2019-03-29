@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/27 21:25:04 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/29 22:45:22 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@
 # define ANGLE_STEP			0.04
 # define Z_COEFF			-3
 
+# define TRUE				1
+# define FALSE				0
 # define KEYBOARD			1
 # define MOUSE				2
 # define MOUSE_SCROLL_UP	4
 # define MOUSE_SCROLL_DOWN	5
+# define MOUSE_BUTTON_MID	3
 # define KEY_ESC			53
 # define KEY_F				3
 # define KEY_S				1
@@ -59,6 +62,15 @@
 # define KEY_NUM_LEFT		123
 # define KEY_NUM_RIGHT		124
 
+typedef struct  s_curr {
+	double      x;
+	double      y;
+	double      dx;
+	double      dy;
+	double      sx;
+	double      sy;
+	int        color;
+}        		t_curr;
 
 typedef struct	s_point {
 	double			n;
@@ -72,6 +84,11 @@ typedef struct		s_list_p {
 	t_point			*points;
 	struct s_list_p	*next_p;
 }					t_list_p;
+
+typedef struct	s_control {
+	int			shift;
+	int 		mouse_button_mid;
+}				t_control;
 
 typedef struct	s_field {
 	double		x0;				// what is it???
@@ -90,6 +107,8 @@ typedef struct	s_field {
 	void		*win_ptr;
 	void		*img_ptr;
 	char 		*map_name;
+	t_curr		*current;
+	t_control	*control;		// struct for control
 	t_point		*points_mem;	// original array
 	t_point		*points_out;	// array for output
 }				t_field;
@@ -108,10 +127,10 @@ void			fdf_isometry(double *x, double *y, double z, double angle);
 void			fdf_start_values(double *step, t_field *field);
 void 			fdf_mouse_press(int button, int x, int y, t_field *fdf);
 int				event(int button, int x, int y, void *param);
-int 			fdf_mouse_release(int button, int x, int y, void *param);
-int				fdf_mouse_move(int x, int y, void *param);
+void 			fdf_mouse_release(int button, int x, int y, t_field *fdf);
+void			fdf_mouse_move(int button, int x, int y, t_field *fdf);
 void			fdf_scale_image(int mode, int keycode, t_field *fdf);
-void			fdf_move(int keycode, t_field *fdf);
+void			fdf_move(int mode, int keycode, t_field *fdf);
 void 			fdf_move_key(int keycode, t_field *fdf);
 void			fdf_center_image(t_field *field);
 void			fdf_evaluate(t_field *fdf);

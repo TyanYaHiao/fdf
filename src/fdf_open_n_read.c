@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 14:27:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/25 21:55:41 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/29 21:52:36 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,12 @@ int				fdf_read(int *fd, int *num, t_field *field, char *map_name)
 		list_p = list_p->next_p; // переход к следующему листу
 		free(line);
 	}
-	field->points_mem = (t_point*)malloc(sizeof(*point) * ((field->width + 1) * (field->height + 1)));
-	field->points_out = (t_point*)malloc(sizeof(*point) * ((field->width + 1) * (field->height + 1)));
+	field->points_mem = (t_point*)malloc(sizeof(t_point) * ((field->width + 1) * (field->height + 1)));
+	field->points_out = (t_point*)malloc(sizeof(t_point) * ((field->width + 1) * (field->height + 1)));
+	field->control = (t_control*)malloc(sizeof(t_control) * 1);
 	field->points_mem = ft_peresapis(field, head);
 	field->coeff_z = Z_COEFF;
+	field->current = (t_curr*)malloc(sizeof(*(field->current)));
 	fdf_points_copy(field);
 	close(*fd);
 	return (1);
