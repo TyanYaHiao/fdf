@@ -6,13 +6,13 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:37:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/29 19:11:17 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/30 17:49:27 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void 		fdf_move_key(int keycode, t_field *fdf)
+void 		fdf_keyboard_press(int keycode, t_field *fdf)
 {
 	/* Clear window probably need to move inside move functions */
 	if (keycode == 6 || keycode == 7 || keycode == 17 || keycode == 34 || keycode == 49 || keycode == 53 ||
@@ -44,9 +44,22 @@ void 		fdf_move_key(int keycode, t_field *fdf)
 			exit(0);
 		if (keycode == KEY_NUM_1 || keycode == KEY_NUM_2 || keycode == KEY_NUM_3 || keycode == KEY_NUM_4
 		|| keycode == KEY_NUM_6 || keycode == KEY_NUM_7 || keycode == KEY_NUM_8 || keycode == KEY_NUM_9)
-			fdf_rotate(keycode, fdf);
+			fdf_rotate(KEYBOARD, keycode, fdf);
 	}
+	if (keycode == KEY_CTRL_LEFT)
+		fdf->control->key_ctrl = TRUE;
+	if (keycode == KEY_SHIFT_LEFT)
+		fdf->control->key_shift = TRUE;
 }
+
+void 		fdf_keyboard_release(int keycode, t_field *fdf)
+{
+	if (keycode == KEY_CTRL_LEFT)
+		fdf->control->key_ctrl = FALSE;
+	if (keycode == KEY_SHIFT_LEFT)
+		fdf->control->key_shift = FALSE;
+}
+
 
 int event(int button, int x, int y, void *param)
 {

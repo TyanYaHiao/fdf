@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/29 22:45:22 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/30 17:53:03 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define MOUSE_SCROLL_DOWN	5
 # define MOUSE_BUTTON_MID	3
 # define KEY_ESC			53
+# define KEY_CTRL_LEFT		256
+# define KEY_SHIFT_LEFT		257
 # define KEY_F				3
 # define KEY_S				1
 # define KEY_Z				6
@@ -86,7 +88,10 @@ typedef struct		s_list_p {
 }					t_list_p;
 
 typedef struct	s_control {
-	int			shift;
+	int 		prev_x;
+	int 		prev_y;
+	int			key_ctrl;
+	int 		key_shift;
 	int 		mouse_button_mid;
 }				t_control;
 
@@ -128,14 +133,15 @@ void			fdf_start_values(double *step, t_field *field);
 void 			fdf_mouse_press(int button, int x, int y, t_field *fdf);
 int				event(int button, int x, int y, void *param);
 void 			fdf_mouse_release(int button, int x, int y, t_field *fdf);
-void			fdf_mouse_move(int button, int x, int y, t_field *fdf);
+void			fdf_mouse_move(int x, int y, t_field *fdf);
 void			fdf_scale_image(int mode, int keycode, t_field *fdf);
 void			fdf_move(int mode, int keycode, t_field *fdf);
-void 			fdf_move_key(int keycode, t_field *fdf);
+void 			fdf_keyboard_press(int keycode, t_field *fdf);
+void 			fdf_keyboard_release(int keycode, t_field *fdf);
 void			fdf_center_image(t_field *field);
 void			fdf_evaluate(t_field *fdf);
 void			fdf_change_depth(int keycode, t_field *fdf);
-void			fdf_rotate(int keycode, t_field *fdf);
+void			fdf_rotate(int mode, int keycode, t_field *fdf);
 void			fdf_plot_isometry(int keycode, t_field *fdf);
 void			fdf_plot_top_view(int keycode, t_field *fdf);
 void			fdf_plot_front_view(int keycode, t_field *fdf);
