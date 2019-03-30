@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/30 17:31:45 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/30 19:23:02 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int				main(int argc, char **argv)
 	mlx_hook(field.win_ptr, 6, 0, fdf_mouse_move, &field);
 	mlx_hook(field.win_ptr, 17, 0, close, 0);
 	mlx_hook(field.win_ptr, 2, 0, fdf_keyboard_press, &field);
+	mlx_hook(field.win_ptr, 3, 0, fdf_keyboard_release, &field);
 	mlx_loop(field.mlx_ptr); //тоже нужно
 	return (0);
 }

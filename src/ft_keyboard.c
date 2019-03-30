@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:37:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/30 17:49:27 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/30 17:53:03 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,17 @@ void 		fdf_keyboard_press(int keycode, t_field *fdf)
 void 		fdf_keyboard_release(int keycode, t_field *fdf)
 {
 	if (keycode == KEY_CTRL_LEFT)
+	{
 		fdf->control->key_ctrl = FALSE;
+		fdf->control->prev_y = 0;
+		fdf->control->prev_x = 0;
+	}
 	if (keycode == KEY_SHIFT_LEFT)
+	{
 		fdf->control->key_shift = FALSE;
+		fdf->control->prev_y = 0;
+		fdf->control->prev_x = 0;
+	}
 }
 
 

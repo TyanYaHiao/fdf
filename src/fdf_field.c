@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:20:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/30 18:12:35 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/30 19:51:57 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ void			fdf_field_init(t_field *initiated_field)
 	initiated_field->angle_z = 0;
 	initiated_field->offset_x = 0;
 	initiated_field->offset_y = 0;
-//	initiated_field->control->prev_x = 0;
-//	initiated_field->control->prev_y = 0;
-//	initiated_field->control->mouse_button_mid = FALSE;
-//	initiated_field->control->shift = FALSE;
+	initiated_field->control = (t_control*)malloc(sizeof(t_control));
+	initiated_field->control->prev_x = 0;
+	initiated_field->control->prev_y = 0;
+	initiated_field->control->mouse_button_mid = FALSE;
+	initiated_field->control->key_shift = FALSE;
+	initiated_field->control->key_ctrl = FALSE;
 	initiated_field->mlx_ptr = mlx_init();
 	initiated_field->win_ptr = mlx_new_window(initiated_field->mlx_ptr,
 			WINDOW_W, WINDOW_H, "Fil de Fer");
