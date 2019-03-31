@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/31 19:36:42 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/31 19:36:57 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int					fdf_read(int *fd, int *num, t_field *field, char *map_name);
 void				fdf_read_points(char *line, t_list_p *point, t_field *field);
 
 t_point				*ft_peresapis(t_field *field, t_list_p *head);
-void				fdf_plot_image(t_field field);
+void				fdf_plot_image(t_field *field);
 void				fdf_move_to_center(t_field *fdf);
 void				fdf_set_line(t_field field, int i, int j);
 int					fdf_find_color(char *str);

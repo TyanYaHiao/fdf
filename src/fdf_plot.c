@@ -6,13 +6,13 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 17:56:02 by mlurker           #+#    #+#             */
-/*   Updated: 2019/03/31 19:33:01 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/31 19:39:11 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-double percent(double start, double end, double current)
+double		percent(double start, double end, double current)
 {
 	double placement;
 	double distance;
@@ -22,12 +22,12 @@ double percent(double start, double end, double current)
 	return ((distance == 0) ? 1.0 : (placement / distance));
 }
 
-int get_light(double start, double end, double percentage)
+int			get_light(double start, double end, double percentage)
 {
 	return ((int)((1 - percentage) * start + percentage * end));
 }
 
-int get_color(t_field field, int start_index, int end_index)
+int			get_color(t_field field, int start_index, int end_index)
 {
 	int     red;
 	int     green;
@@ -46,7 +46,7 @@ int get_color(t_field field, int start_index, int end_index)
 	return ((red << 16) | (green << 8) | blue);
 }
 
-void fdf_init_curr(t_field field, int start_index, int end_index)
+void		fdf_init_curr(t_field field, int start_index, int end_index)
 {
 	field.current->x = START_POINT.x;
 	field.current->y = START_POINT.y;
@@ -89,25 +89,25 @@ void		fdf_set_line(t_field field, int start_index, int end_index)
 	}
 }
 
-void	fdf_plot_image(t_field field)
+void		fdf_plot_image(t_field *field)
 {
-	int i;
+	int 	i;
 
 	i = 0;
-	while (i++ < field.width * field.height)
+	while (i++ < field->width * field->height)
 	{
-		if (i % (field.width * field.height) != 0) // если это не последняя точку, то от нее нужно рисовать линии
+		if (i % (field->width * field->height) != 0) // если это не последняя точку, то от нее нужно рисовать линии
 		{
-			if ((field.height) * (field.width) - i < field.width) // проверка на нижние точки
-				fdf_set_line(field, i, i + 1); // если это они, то рисуем только вбок
-			else if ((i % (field.width)) == 0 && i != 0) // проверка на боковые точки
-				fdf_set_line(field, i, i + field.width); // если это они, то рисуем только вниз
+			if ((field->height) * (field->width) - i < field->width) // проверка на нижние точки
+				fdf_set_line(*field, i, i + 1); // если это они, то рисуем только вбок
+			else if ((i % (field->width)) == 0 && i != 0) // проверка на боковые точки
+				fdf_set_line(*field, i, i + field->width); // если это они, то рисуем только вниз
 			else // если не крайние точки рисуем :
 			{
-				fdf_set_line(field, i, i + field.width); // вниз
-				fdf_set_line(field, i, i + 1); // вбок
+				fdf_set_line(*field, i, i + field->width); // вниз
+				fdf_set_line(*field, i, i + 1); // вбок
 			}
 		}
 	}
-	fdf_field_info(field);
+	fdf_field_info(*field);
 }

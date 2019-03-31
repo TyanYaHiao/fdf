@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 20:35:13 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/31 18:45:09 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/31 18:45:12 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ void		fdf_rotate(int mode, int keycode, t_field *fdf)
 	fdf_points_copy(fdf);
 	fdf_evaluate(fdf);
 	fdf_center_image(fdf);
-	fdf_plot_image(*fdf);
+	fdf_plot_image(fdf);
 }
