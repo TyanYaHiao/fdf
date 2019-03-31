@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/31 14:45:09 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/31 19:36:42 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,11 @@
 # include <stdio.h> // DELETE THIS!
 
 # define DELTA(a,b) a-b;
+# define START_POINT field.points_out[start_index]
+# define END_POINT field.points_out[end_index]
 
 # define DEFAULT_COLOR		0x6b6b6b
+# define TEXT_COLOR			0x00cdcd
 # define WINDOW_H			1400
 # define WINDOW_W			1800
 # define WINDOW_BORDER		50
@@ -129,8 +132,7 @@ void				fdf_read_points(char *line, t_list_p *point, t_field *field);
 t_point				*ft_peresapis(t_field *field, t_list_p *head);
 void				fdf_plot_image(t_field field);
 void				fdf_move_to_center(t_field *fdf);
-void				fdf_set_line(t_field field, t_point *map, int i, int j);
-void				fdf_plot_line(t_field field, t_point *map, int i, int j);
+void				fdf_set_line(t_field field, int i, int j);
 int					fdf_find_color(char *str);
 void				fdf_isometry(double *x, double *y, double z, double angle);
 void				fdf_start_values(double *step, t_field *field);
