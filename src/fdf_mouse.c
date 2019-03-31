@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 20:52:06 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/30 19:54:30 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/31 14:37:35 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void		fdf_mouse_move(int x, int y, t_field *fdf)
 			fdf->control->prev_y = y;
 		if (fdf->control->key_shift == FALSE && fdf->control->key_ctrl == FALSE)
 		{
-			fdf->angle_y += ANGLE_STEP * (x - fdf->control->prev_x) / 10;
-			fdf->angle_x += ANGLE_STEP * (y - fdf->control->prev_y) / 10;
+			fdf->angle_y -= ANGLE_STEP * (x - fdf->control->prev_x) / 10;
+			fdf->angle_x -= ANGLE_STEP * (y - fdf->control->prev_y) / 10;
 			fdf->control->prev_x = x;
 			fdf->control->prev_y = y;
 		}

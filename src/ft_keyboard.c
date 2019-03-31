@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:37:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/30 17:53:03 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/03/31 14:40:08 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void 		fdf_keyboard_press(int keycode, t_field *fdf)
 		keycode == 69 || keycode == 78 || keycode == 83 || keycode == 84 ||
 		keycode == 85 || keycode == 86 || keycode == 88 || keycode == 89 ||
 		keycode == 91 || keycode == 92 || keycode == 123 || keycode == 124 ||
-		keycode == 125 || keycode == 126 || keycode == KEY_S || keycode == KEY_F || keycode == KEY_U)
+		keycode == 125 || keycode == 126 || keycode == KEY_S || keycode == KEY_F)
 	{
 		mlx_clear_window((*fdf).mlx_ptr, (*fdf).win_ptr);
 		if (keycode == KEY_NUM_LEFT || keycode == KEY_NUM_RIGHT || keycode == KEY_NUM_DOWN || keycode == KEY_NUM_UP)
@@ -30,8 +30,6 @@ void 		fdf_keyboard_press(int keycode, t_field *fdf)
 			fdf_move_to_center(fdf);
 		if (keycode == KEY_I)
 			fdf_plot_isometry(keycode, fdf);
-		if (keycode == KEY_U)
-			fdf_real_isometry(keycode, fdf);
 		if (keycode == KEY_T)
 			fdf_plot_top_view(keycode, fdf);
 		if (keycode == KEY_F)
@@ -66,11 +64,4 @@ void 		fdf_keyboard_release(int keycode, t_field *fdf)
 		fdf->control->prev_y = 0;
 		fdf->control->prev_x = 0;
 	}
-}
-
-
-int event(int button, int x, int y, void *param)
-{
-	printf("%d %d\n", x, y); // это работает, потому что написала ксюша
-	return (0);
 }
