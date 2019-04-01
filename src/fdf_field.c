@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:20:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/01 14:35:20 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/01 21:47:02 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void			fdf_field_init(t_field *initiated_field)
 	initiated_field->mlx_ptr = mlx_init();
 	initiated_field->win_ptr = mlx_new_window(initiated_field->mlx_ptr,
 			WINDOW_W, WINDOW_H, "Fil de Fer");
+	fdf_menu_init(&initiated_field->menu);
 //	initiated_field->img_ptr = mlx_new_image(initiated_field->mlx_ptr, WINDOW_W, WINDOW_H);
 //	initiated_field->image = (int*)mlx_get_data_addr(initiated_field->img_ptr, &initiated_field->bpp, &initiated_field->s_line, &initiated_field->endian);
 //	initiated_field->bpp /= 4;
@@ -67,4 +68,5 @@ void			fdf_field_info(t_field field)
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 110, TEXT_COLOR, ft_itoa(field.angle_y * 180 / M_PI));
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 130, TEXT_COLOR, "Z angle:");
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 130, TEXT_COLOR, ft_itoa(field.angle_z * 180 / M_PI));
+	fdf_plot_menu(field);
 }

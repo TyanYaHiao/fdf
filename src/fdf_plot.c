@@ -6,7 +6,7 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 17:56:02 by mlurker           #+#    #+#             */
-/*   Updated: 2019/04/01 14:45:03 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/01 21:06:00 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void		fdf_init_curr(t_field field, int start_index, int end_index)
 		field.current->sy = -1;
 }
 
+
+
 void		fdf_set_line(t_field field, int start_index, int end_index)
 {
 	double 	err;
@@ -73,7 +75,8 @@ void		fdf_set_line(t_field field, int start_index, int end_index)
 		err = -(field.current->dy) / 2;
 	while (field.current->x != END_POINT.x || field.current->y != END_POINT.y)
 	{
-		if (field.current->x >= 0 && field.current->x < WINDOW_W && field.current->y >= 0 && field.current->y < WINDOW_H)
+		if (field.current->x >= 0 && field.current->x < WINDOW_W
+		&& field.current->y >= 0 && field.current->y < WINDOW_H)
 			*(int*)(field.image + (int)field.current->x * 4 + (int)field.current->y * field.s_line) = get_color(field, start_index, end_index);
 		else
 			break ;
@@ -97,7 +100,7 @@ void		fdf_plot_image(t_field *field)
 
 	mlx_clear_window(field->mlx_ptr, field->win_ptr);
 	field->img_ptr = mlx_new_image(field->mlx_ptr, WINDOW_W, WINDOW_H);
-	field->image = (int*)mlx_get_data_addr(field->img_ptr, &field->bpp, &field->s_line, &field->endian);
+	field->image = mlx_get_data_addr(field->img_ptr, &field->bpp, &field->s_line, &field->endian);
 	i = 0;
 	while (i++ < field->width * field->height)
 	{

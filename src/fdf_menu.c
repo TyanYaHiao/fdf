@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchrn.c                                       :+:      :+:    :+:   */
+/*   fdf_menu.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/13 15:10:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/01 19:54:58 by fsmith           ###   ########.fr       */
+/*   Created: 2019/04/01 21:35:56 by fsmith            #+#    #+#             */
+/*   Updated: 2019/04/01 21:57:41 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/fdf.h"
 
-size_t			ft_strchrn(const char *s, int c)
+void		fdf_menu_init(t_menu *menu)
 {
-	size_t		i;
+	menu->width = 400;
+	menu->height = 700;
+	menu->x = WINDOW_W - menu->width - 30;
+	menu->y = 30;
+	menu->name = "menu";
+}
 
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == c)
-			return (i);
-		i++;
-	}
-	return (-1);
+void		fdf_plot_menu(t_field field)
+{
+
 }

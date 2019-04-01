@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/01 17:46:14 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/01 21:43:22 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,23 @@ typedef struct		s_point {
 	int				color;
 }					t_point;
 
+typedef struct		s_button {
+	int				x;
+	int 			y;
+	int 			width;
+	int				height;
+	char 			*name;
+}					t_button;
+
+typedef struct		s_menu {
+	int				x;
+	int 			y;
+	int 			width;
+	int				height;
+	char 			*name;
+	t_button		*button;
+}					t_menu;
+
 typedef struct		s_list_p {
 	t_point			*points;
 	struct s_list_p	*next_p;
@@ -126,6 +143,7 @@ typedef struct		s_field {
 	int				s_line;
 	int				endian;
 	char			*map_name;
+	t_menu			menu;
 	t_curr			*current;
 	t_control		*control;		// struct for control
 	t_point			*points_mem;	// original array
@@ -167,5 +185,7 @@ void				fdf_change_color(int keycode, t_field *fdf);
 int					get_color(t_field field, int start_index, int end_index);
 void				fdf_real_isometry(int keycode, t_field *fdf);
 void				fdf_rainbow(t_field *fdf, int keycode);
+void				fdf_menu_init(t_menu *menu);
+void				fdf_plot_menu(t_field field);
 
 #endif
