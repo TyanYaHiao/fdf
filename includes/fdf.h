@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/01 14:31:17 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/01 17:46:14 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define START_POINT field.points_out[start_index]
 # define END_POINT field.points_out[end_index]
 
+//# define DEFAULT_COLOR		0x7F8000
 # define DEFAULT_COLOR		0x6b6b6b
 # define TEXT_COLOR			0x00cdcd
 # define WINDOW_H			1400
@@ -51,6 +52,13 @@
 # define KEY_I				34
 # define KEY_U				32
 # define KEY_T				17
+# define KEY_R				15
+# define KEY_G				5
+# define KEY_B				11
+# define KEY_Q				12
+# define KEY_W				13
+# define KEY_J				38
+# define KEY_K				40
 # define KEY_SPACE			49
 # define KEY_PLUS			69
 # define KEY_MINUS			78
@@ -101,10 +109,10 @@ typedef struct		s_control {
 }					t_control;
 
 typedef struct		s_field {
-	double				angle_x;
-	double				angle_y;
-	double				angle_z;
-	double				scale;
+	double			angle_x;
+	double			angle_y;
+	double			angle_z;
+	double			scale;
 	int				offset_x;		// image offset on X
 	int				offset_y;		// image offset on Y
 	int				coeff_z;		// coefficient of depth
@@ -155,9 +163,9 @@ void				fdf_plot_isometry(int keycode, t_field *fdf);
 void				fdf_plot_top_view(int keycode, t_field *fdf);
 void				fdf_plot_front_view(int keycode, t_field *fdf);
 void				fdf_plot_side_view(int keycode, t_field *fdf);
-
-
+void				fdf_change_color(int keycode, t_field *fdf);
+int					get_color(t_field field, int start_index, int end_index);
 void				fdf_real_isometry(int keycode, t_field *fdf);
-
+void				fdf_rainbow(t_field *fdf, int keycode);
 
 #endif

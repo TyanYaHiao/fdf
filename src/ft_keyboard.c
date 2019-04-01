@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:37:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/01 14:31:17 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/01 17:46:14 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void		fdf_keyboard_press(int keycode, t_field *fdf)
 {
 	/* Clear window probably need to move inside move functions */
 	if (keycode == 6 || keycode == 7 || keycode == 17 || keycode == 34 || keycode == 49 || keycode == 53 ||
-		keycode == 69 || keycode == 78 || keycode == 83 || keycode == 84 ||
-		keycode == 85 || keycode == 86 || keycode == 88 || keycode == 89 ||
-		keycode == 91 || keycode == 92 || keycode == 123 || keycode == 124 ||
-		keycode == 125 || keycode == 126 || keycode == KEY_S || keycode == KEY_F)
+		keycode == 69 || keycode == 78 || keycode == 83 || keycode == 84 || keycode == 15 || keycode == 5 ||
+		keycode == 85 || keycode == 86 || keycode == 88 || keycode == 89 || keycode == 11 || keycode == 12 ||
+		keycode == 91 || keycode == 92 || keycode == 123 || keycode == 124 || keycode == 13 || keycode == 38 ||
+		keycode == 125 || keycode == 126 || keycode == KEY_S || keycode == KEY_F || keycode == 40)
 	{
 		mlx_clear_window((*fdf).mlx_ptr, (*fdf).win_ptr);
 		if (keycode == KEY_NUM_LEFT || keycode == KEY_NUM_RIGHT || keycode == KEY_NUM_DOWN || keycode == KEY_NUM_UP)
@@ -43,6 +43,11 @@ void		fdf_keyboard_press(int keycode, t_field *fdf)
 		if (keycode == KEY_NUM_1 || keycode == KEY_NUM_2 || keycode == KEY_NUM_3 || keycode == KEY_NUM_4
 		|| keycode == KEY_NUM_6 || keycode == KEY_NUM_7 || keycode == KEY_NUM_8 || keycode == KEY_NUM_9)
 			fdf_rotate(KEYBOARD, keycode, fdf);
+		if (keycode == KEY_B || keycode == KEY_G || keycode == KEY_R || keycode == KEY_Q)
+			fdf_change_color(keycode, fdf);
+		if (keycode == KEY_K || keycode == KEY_J)
+			fdf_rainbow(fdf, keycode);
+
 	}
 	if (keycode == KEY_CTRL_LEFT)
 		fdf->control->key_ctrl = TRUE;
