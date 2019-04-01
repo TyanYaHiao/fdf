@@ -1,31 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_open_n_read.c                                  :+:      :+:    :+:   */
+/*   fdf_read.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/17 14:27:44 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/25 21:55:41 by fsmith           ###   ########.fr       */
+/*   Created: 2019/03/31 14:46:58 by fsmith            #+#    #+#             */
+/*   Updated: 2019/03/31 14:50:45 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-
-int				fdf_open(int argc, char **argv, int *fd)
-{
-	if (argc < 2)
-	{
-		ft_putendl("Usage: ./fdf source_file.fdf");
-		return (0);
-	}
-	if ((*fd = open(argv[1], O_RDONLY)) == -1)
-	{
-		ft_putendl("error");
-		return (0);
-	}
-	return (1);
-}
 
 int				fdf_read(int *fd, int *num, t_field *field, char *map_name)
 {
@@ -38,9 +23,7 @@ int				fdf_read(int *fd, int *num, t_field *field, char *map_name)
 	if (!(list_p = (t_list_p*)malloc(sizeof(t_list_p))))
 		return (0);
 	fdf_field_init(field);
-	field->height = 0;
 	field->map_name = map_name;
-	field->scale = 1;
 	head = list_p;
 	while (get_next_line(*fd, &line) > 0)
 	{
@@ -58,23 +41,13 @@ int				fdf_read(int *fd, int *num, t_field *field, char *map_name)
 		list_p = list_p->next_p; // переход к следующему листу
 		free(line);
 	}
-	field->points_mem = (t_point*)malloc(sizeof(*point) * ((field->width + 1) * (field->height + 1)));
-	field->points_out = (t_point*)malloc(sizeof(*point) * ((field->width + 1) * (field->height + 1)));
+	field->points_mem = (t_point*)malloc(sizeof(t_point) * ((field->width + 1) * (field->height + 1)));
+	field->points_out = (t_point*)malloc(sizeof(t_point) * ((field->width + 1) * (field->height + 1)));
 	field->points_mem = ft_peresapis(field, head);
-	field->coeff_z = Z_COEFF;
+	field->current = (t_curr*)malloc(sizeof(*(field->current))); //чутка разобраться
 	fdf_points_copy(field);
 	close(*fd);
 	return (1);
-}
-
-/* Не нашел, где функция используется */
-void		ft_place(t_field *field)
-{
-	double x0 = field->points_mem[1].x;
-	double y0 = field->points_mem[1].y;
-	fdf_isometry(&x0, &y0, field->points_mem[1].z, field->angle_x);
-	field->x0 = x0;
-	field->y0 = y0;
 }
 
 t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
@@ -104,7 +77,6 @@ t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 			w--;
 			w1++;
 			x += step[0];
-//			printf("%f\n", step[1]);
 			i++;
 		}
 		w1 = 1;
@@ -131,10 +103,7 @@ void		fdf_read_points(char *line, t_list_p *list, t_field *field)
 		list->points[i].x = i;
 		list->points[i].y = field->height;
 		list->points[i].z = ft_atoi(array[i - 1]);
-		if (field->max_depth < list->points[i].z)
-			field->max_depth = list->points[i].z;
 		list->points[i].color = fdf_find_color(array[i - 1]);
-//		printf("%d\n", list->points[i].color);
 		i++;
 	}
 }

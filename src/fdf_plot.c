@@ -6,75 +6,120 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 17:56:02 by mlurker           #+#    #+#             */
-/*   Updated: 2019/03/24 17:03:42 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/01 14:14:19 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void fdf_plot_line(t_field field, t_point *map, int i, int j)
+double		percent(double start, double end, double current)
 {
-	double dx = ft_abs_double(map[j].x, map[i].x);
-	double dy = ft_abs_double(map[j].y, map[i].y);
-	double sx = 1;
-	double sy = 1;
-	if (map[i].x > map[j].x)
-		sx = -1;
-	if (map[i].y > map[j].y)
-		sy = -1;
-	double err = (dx>dy ? dx : -dy)/2, e2;
+	double placement;
+	double distance;
 
-	double x1 = map[i].x;
-	double y1 = map[i].y;
-	for(;;){
-		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)x1, (int)y1, field.points_out[i].color);
-		if (x1==map[j].x && y1==map[j].y) break;
-		e2 = err;
-		if (e2 >-dx) { err -= dy; x1 += sx; }
-		if (e2 < dy) { err += dx; y1 += sy; }
-	}
+	placement = current - start;
+	distance = end - start;
+	return ((distance == 0) ? 1.0 : (placement / distance));
 }
 
-void	fdf_set_line(t_field field, t_point *map, int i, int j) // модифицированный алгоритм отрисовки линий (брезенхема)
+int			get_light(double start, double end, double percentage)
 {
-	double delx = DELTA(map[j].x, map[i].x); // написала дифайн для нахождения дельты иксов
-	double dely = DELTA(map[j].y, map[i].y);
-	if (dely < delx) // проверки на то, кто где стоит, чтобы праивльно рисовать линию и передавать агументы в нужном порядке
-	{
-		if (map[i].x > map[j].x)
-			fdf_plot_line(field, map, j, i);
-		else
-			fdf_plot_line(field, map, i, j); // вниз вправо
-	}
+	return ((int)((1 - percentage) * start + percentage * end));
+}
+
+int			get_color(t_field field, int start_index, int end_index)
+{
+	int     red;
+	int     green;
+	int     blue;
+	double  percentage;
+
+	if (field.current->color == END_POINT.color)
+		return (field.current->color);
+	if (field.current->dx > field.current->dy)
+		percentage = percent(START_POINT.x, END_POINT.x, field.current->x);
 	else
+		percentage = percent(START_POINT.y, END_POINT.y, field.current->y);
+	red = get_light((START_POINT.color >> 16) & 0xFF, (END_POINT.color >> 16) & 0xFF, percentage);
+	green = get_light((START_POINT.color >> 8) & 0xFF, (END_POINT.color >> 8) & 0xFF, percentage);
+	blue = get_light(START_POINT.color & 0xFF, END_POINT.color & 0xFF, percentage);
+	return ((red << 16) | (green << 8) | blue);
+}
+
+void		fdf_init_curr(t_field field, int start_index, int end_index)
+{
+	field.current->x = START_POINT.x;
+	field.current->y = START_POINT.y;
+	field.current->dx = ft_abs_double(END_POINT.x, START_POINT.x);
+	field.current->dy = ft_abs_double(END_POINT.y, START_POINT.y);
+	field.current->color = START_POINT.color;
+	field.current->sx = 1;
+	field.current->sy = 1;
+	if (START_POINT.x > END_POINT.x)
+		field.current->sx = -1;
+	if (START_POINT.y > END_POINT.y)
+		field.current->sy = -1;
+}
+
+void		fdf_set_line(t_field field, int start_index, int end_index)
+{
+	double 	err;
+	double	e2;
+
+	fdf_init_curr(field, start_index, end_index);
+	if (field.current->dx > field.current->dy)
+		err = field.current->dx / 2;
+	else
+		err = -(field.current->dy) / 2;
+	while (field.current->x != END_POINT.x || field.current->y != END_POINT.y)
 	{
-		if (map[i].y > map[j].y)
-			fdf_plot_line(field, map, j, i);
+		if (field.current->x >= 0 && field.current->x < WINDOW_W && field.current->y >= 0 && field.current->y < WINDOW_H)
+			*(int*)(field.image + (int)field.current->x * 4 + (int)field.current->y * field.s_line) = get_color(field, start_index, end_index);
 		else
-			fdf_plot_line(field, map, i, j); // вниз влево
+			break ;
+//		mlx_pixel_put(field.mlx_ptr, field.win_ptr, (int)field.current->x, (int)field.current->y,
+//				get_color(field, start_index, end_index));
+		e2 = err;
+		if (e2 > -(field.current->dx))
+		{
+			err -= field.current->dy;
+			field.current->x += field.current->sx;
+		}
+		if (e2 < field.current->dy)
+		{
+			err += field.current->dx;
+			field.current->y += field.current->sy;
+		}
 	}
 }
 
-void	fdf_plot_image(t_field field)
+void		fdf_plot_image(t_field *field)
 {
-	int i;
+	int 	i;
 
+	mlx_clear_window(field->mlx_ptr, field->win_ptr);
+	field->img_ptr = mlx_new_image(field->mlx_ptr, WINDOW_W, WINDOW_H);
+	field->image = (int*)mlx_get_data_addr(field->img_ptr, &field->bpp, &field->s_line, &field->endian);
+//	field->bpp /= 4;
 	i = 0;
-	while (i++ < field.width * field.height)
+	while (i++ < field->width * field->height)
 	{
-		if (i % (field.width * field.height) != 0) // если это не последняя точку, то от нее нужно рисовать линии
+		if (i % (field->width * field->height) != 0) // если это не последняя точку, то от нее нужно рисовать линии
 		{
-			if ((field.height) * (field.width) - i < field.width) // проверка на нижние точки
-				fdf_set_line(field, field.points_out, i, i + 1); // если это они, то рисуем только вбок
-			else if ((i % (field.width)) == 0 && i != 0) // проверка на боковые точки
-				fdf_set_line(field, field.points_out, i, i + field.width); // если это они, то рисуем только вниз
+			if ((field->height) * (field->width) - i < field->width) // проверка на нижние точки
+				fdf_set_line(*field, i, i + 1); // если это они, то рисуем только вбок
+			else if ((i % (field->width)) == 0 && i != 0) // проверка на боковые точки
+				fdf_set_line(*field, i, i + field->width); // если это они, то рисуем только вниз
 			else // если не крайние точки рисуем :
 			{
-				fdf_set_line(field, field.points_out, i, i + field.width); // вниз
-				fdf_set_line(field, field.points_out, i, i + 1); // вбок
+				fdf_set_line(*field, i, i + field->width); // вниз
+				fdf_set_line(*field, i, i + 1); // вбок
 			}
 		}
 	}
-	mlx_string_put(field.mlx_ptr, field.win_ptr, 10, 10, 0xcdcd, field.map_name);
-	fdf_field_info(field);
+	mlx_put_image_to_window(field->mlx_ptr, field->win_ptr, field->img_ptr, 0, 0);
+	ft_bzero(field->image, WINDOW_H * WINDOW_W);
+//	mlx_clear_window(field->mlx_ptr, field->win_ptr);
+	mlx_destroy_image(field->mlx_ptr, field->img_ptr);
+	fdf_field_info(*field);
 }

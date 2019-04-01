@@ -6,26 +6,29 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 20:36:40 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/27 21:26:58 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/01 11:03:05 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void		fdf_move(int keycode, t_field *fdf)
+void		fdf_move(int mode, int keycode, t_field *fdf)
 {
-	if (keycode == KEY_NUM_RIGHT)
-		fdf->offset_x += MOVE_STEP_X;
-	else if (keycode == KEY_NUM_LEFT)
-		fdf->offset_x -= MOVE_STEP_X;
-	else if (keycode == KEY_NUM_DOWN)
-		fdf->offset_y += MOVE_STEP_Y;
-	else if (keycode == KEY_NUM_UP)
-		fdf->offset_y -= MOVE_STEP_Y;
+	if (mode == KEYBOARD)
+	{
+		if (keycode == KEY_NUM_RIGHT)
+			fdf->offset_x += MOVE_STEP_X;
+		else if (keycode == KEY_NUM_LEFT)
+			fdf->offset_x -= MOVE_STEP_X;
+		else if (keycode == KEY_NUM_DOWN)
+			fdf->offset_y += MOVE_STEP_Y;
+		else if (keycode == KEY_NUM_UP)
+			fdf->offset_y -= MOVE_STEP_Y;
+	}
 	fdf_points_copy(fdf);
 	fdf_evaluate(fdf);
 	fdf_center_image(fdf);
-	fdf_plot_image(*fdf);
+	fdf_plot_image(fdf);
 }
 
 void		fdf_change_depth(int keycode, t_field *fdf)
@@ -37,7 +40,7 @@ void		fdf_change_depth(int keycode, t_field *fdf)
 	fdf_points_copy(fdf);
 	fdf_evaluate(fdf);
 	fdf_center_image(fdf);
-	fdf_plot_image(*fdf);
+	fdf_plot_image(fdf);
 }
 
 void		fdf_scale_image(int mode, int keycode, t_field *fdf)
@@ -48,9 +51,8 @@ void		fdf_scale_image(int mode, int keycode, t_field *fdf)
 	else if ((mode == KEYBOARD && keycode == KEY_MINUS)
 	|| (mode == MOUSE && keycode == MOUSE_SCROLL_DOWN))
 		fdf->scale /= 1.2;
-//	printf("%d",mode);
 	fdf_points_copy(fdf);
 	fdf_evaluate(fdf);
 	fdf_center_image(fdf);
-	fdf_plot_image(*fdf);
+	fdf_plot_image(fdf);
 }
