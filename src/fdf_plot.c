@@ -6,7 +6,7 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 17:56:02 by mlurker           #+#    #+#             */
-/*   Updated: 2019/04/01 21:06:00 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/02 15:36:30 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		fdf_init_curr(t_field field, int start_index, int end_index)
 
 void		fdf_set_line(t_field field, int start_index, int end_index)
 {
-	double 	err;
+	double	err;
 	double	e2;
 
 	fdf_init_curr(field, start_index, end_index);
@@ -96,7 +96,7 @@ void		fdf_set_line(t_field field, int start_index, int end_index)
 
 void		fdf_plot_image(t_field *field)
 {
-	int 	i;
+	int		i;
 
 	mlx_clear_window(field->mlx_ptr, field->win_ptr);
 	field->img_ptr = mlx_new_image(field->mlx_ptr, WINDOW_W, WINDOW_H);

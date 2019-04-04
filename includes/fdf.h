@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/01 21:43:22 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/02 18:10:21 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define MOVE_STEP_X		25
 # define MOVE_STEP_Y		25
 # define ANGLE_STEP			0.04
-# define Z_COEFF			-3
+# define Z_COEFF			3
 
 # define TRUE				1
 # define FALSE				0
@@ -104,9 +104,9 @@ typedef struct		s_button {
 }					t_button;
 
 typedef struct		s_menu {
-	int				x;
-	int 			y;
+	t_curr			*corner;
 	int 			width;
+	int				color;
 	int				height;
 	char 			*name;
 	t_button		*button;

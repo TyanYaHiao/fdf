@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 20:28:21 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/01 19:54:58 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/03 22:43:48 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,35 @@ void		fdf_evaluate(t_field *fdf)
 	i = 0;
 	while (i++ < fdf->width * fdf->height)
 	{
-		fdf->points_out[i].z *= fdf->coeff_z;
-		prev_x = fdf->points_out[i].x * fdf->scale;
-		prev_y = fdf->points_out[i].y * fdf->scale;
-		prev_z = fdf->points_out[i].z * fdf->scale;
-		fdf->points_out[i].x = ft_round_double(prev_x * (cos(fdf->angle_y) * cos(fdf->angle_z))
-			- prev_y * (sin(fdf->angle_x) * sin(fdf->angle_y) * cos(fdf->angle_z) + cos(fdf->angle_x) * sin(fdf->angle_z))
-			+ prev_z * (cos(fdf->angle_x) * sin(fdf->angle_y) * cos(fdf->angle_z) - sin(fdf->angle_x) * sin(fdf->angle_z)));
-		fdf->points_out[i].y = ft_round_double(prev_x * (cos(fdf->angle_y) * sin(fdf->angle_z))
-			+ prev_y * (cos(fdf->angle_x) * cos(fdf->angle_z) - sin(fdf->angle_x) * sin(fdf->angle_y) * sin(fdf->angle_z))
-			+ prev_z * (cos(fdf->angle_x) * sin(fdf->angle_y) * sin(fdf->angle_z) + sin(fdf->angle_x) * cos(fdf->angle_z)));
-		fdf->points_out[i].z = ft_round_double(- prev_x * sin(fdf->angle_y)
-			- prev_y * (sin(fdf->angle_x) * cos(fdf->angle_y))
-			+ prev_z * (cos(fdf->angle_x) * cos(fdf->angle_y)));
-		fdf->points_out[i].x += fdf->offset_x;
-		fdf->points_out[i].y += fdf->offset_y;
+		prev_y = fdf->points_out[i].y;
+		prev_z = fdf->points_out[i].z;
+		fdf->points_out[i].y = ft_round_double(prev_y * cos(fdf->angle_x) + prev_z * sin(fdf->angle_x));
+		fdf->points_out[i].z = ft_round_double(-prev_y * sin(fdf->angle_x) + prev_z * cos(fdf->angle_x));
+
+		prev_x = fdf->points_out[i].x;
+		prev_z = fdf->points_out[i].z;
+		fdf->points_out[i].x = ft_round_double(prev_x * cos(fdf->angle_y) + prev_z * sin(fdf->angle_y));
+		fdf->points_out[i].z = ft_round_double(-prev_x * sin(fdf->angle_y) + prev_z * cos(fdf->angle_y));
+
+		prev_x = fdf->points_out[i].x;
+		prev_y = fdf->points_out[i].y;
+		fdf->points_out[i].x = ft_round_double(prev_x * cos(fdf->angle_z) - prev_y * sin(fdf->angle_z));
+		fdf->points_out[i].y = ft_round_double(prev_x * sin(fdf->angle_z) + prev_y * cos(fdf->angle_z));
+//		fdf->points_out[i].z *= fdf->coeff_z;
+//		prev_x = fdf->points_out[i].x * fdf->scale;
+//		prev_y = fdf->points_out[i].y * fdf->scale;
+//		prev_z = fdf->points_out[i].z * fdf->scale;
+//		fdf->points_out[i].x = ft_round_double(prev_x * (cos(fdf->angle_y) * cos(fdf->angle_z))
+//			- prev_y * (sin(fdf->angle_x) * sin(fdf->angle_y) * cos(fdf->angle_z) + cos(fdf->angle_x) * sin(fdf->angle_z))
+//			+ prev_z * (cos(fdf->angle_x) * sin(fdf->angle_y) * cos(fdf->angle_z) - sin(fdf->angle_x) * sin(fdf->angle_z)));
+//		fdf->points_out[i].y = ft_round_double(prev_x * (cos(fdf->angle_y) * sin(fdf->angle_z))
+//			+ prev_y * (cos(fdf->angle_x) * cos(fdf->angle_z) - sin(fdf->angle_x) * sin(fdf->angle_y) * sin(fdf->angle_z))
+//			+ prev_z * (cos(fdf->angle_x) * sin(fdf->angle_y) * sin(fdf->angle_z) + sin(fdf->angle_x) * cos(fdf->angle_z)));
+//		fdf->points_out[i].z = ft_round_double(- prev_x * sin(fdf->angle_y)
+//			- prev_y * (sin(fdf->angle_x) * cos(fdf->angle_y))
+//			+ prev_z * (cos(fdf->angle_x) * cos(fdf->angle_y)));
+//		fdf->points_out[i].x += fdf->offset_x;
+//		fdf->points_out[i].y += fdf->offset_y;
 	}
 }
 
