@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/02 15:26:56 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/09 20:10:40 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int				main(int argc, char **argv)
 	int			fd;
 	int			num;
 	int			i;
-//	char 		*coordinates;
 	t_field		field;
 
 	if (!(fdf_open(argc, argv, &fd)))
@@ -27,8 +26,6 @@ int				main(int argc, char **argv)
 	if (!(fdf_read(&fd, &num, &field, argv[1])))
 		return (0);
 	fdf_plot_image(&field);
-//	mlx_hook(field.win_ptr, 4, 0, event, 0); // неведомая штука, с помощью которой потом будем использвать клаву и мыш (кродеться)
-											// хук ивент - в терминале выводят икс и игрик координаты, на которые ты ткнул мышью в окошке
 	mlx_hook(field.win_ptr, 4, 0, fdf_mouse_press, &field);
 	mlx_hook(field.win_ptr, 5, 0, fdf_mouse_release, &field);
 	mlx_hook(field.win_ptr, 6, 0, fdf_mouse_move, &field);

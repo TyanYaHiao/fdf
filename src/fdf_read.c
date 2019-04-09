@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 14:46:58 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/02 15:26:56 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/09 21:44:30 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int				fdf_read(int *fd, int *num, t_field *field, char *map_name)
 	char		*line;
 	t_list_p	*list_p;
 	t_list_p	*head;
-	t_point		*point;
-	int 		i;
 
 	if (!(list_p = (t_list_p*)malloc(sizeof(t_list_p))))
 		return (0);
@@ -34,36 +32,37 @@ int				fdf_read(int *fd, int *num, t_field *field, char *map_name)
 			ft_putstr("Invalid map");
 			return (0);
 		}
-		list_p->points = (t_point*)malloc(sizeof(t_point) * (field->width + 1)); // выделение памяти для массива поинтов листе
+		list_p->points = (t_point*)malloc(sizeof(t_point) * (field->width + 1));
 		fdf_read_points(line, list_p, field);
 		field->height++;
-		list_p->next_p = (t_list_p*)malloc(sizeof(t_list_p)); // выделение памяти для следующего листа
-		list_p = list_p->next_p; // переход к следующему листу
+		list_p->next_p = (t_list_p*)malloc(sizeof(t_list_p));
+		list_p = list_p->next_p;
 		free(line);
 	}
 	field->points_mem = (t_point*)malloc(sizeof(t_point) * ((field->width + 1) * (field->height + 1)));
 	field->points_out = (t_point*)malloc(sizeof(t_point) * ((field->width + 1) * (field->height + 1)));
-	field->points_mem = ft_peresapis(field, head);
-	field->current = (t_curr*)malloc(sizeof(*(field->current))); //чутка разобраться
+	field->current = (t_curr*)malloc(sizeof(*(field->current)));
+	field->points_mem = ft_write_in_points(field, head);
 	fdf_points_copy(field);
 	close(*fd);
 	return (1);
 }
 
-t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
+t_point			*ft_write_in_points(t_field *field, t_list_p *list_p)
 {
-	double *step;
-	int h;
-	int w;
-	int w1;
-	int i;
+	double		*step;
+	int			h;
+	int			w;
+	int			w1;
+	int			i;
+	double		x;
 
 	w = field->width;
 	h = field->height;
 	step = (double*)malloc(sizeof(double) * 4);
 	fdf_start_values(step, field);
 	i = 1;
-	double x = step[1];
+	x = step[1];
 	w1 = 1;
 	while (h > 0)
 	{
@@ -89,12 +88,11 @@ t_point		*ft_peresapis(t_field *field, t_list_p *list_p)
 	return (field->points_mem);
 }
 
-void		fdf_read_points(char *line, t_list_p *list, t_field *field)
+void			fdf_read_points(char *line, t_list_p *list, t_field *field)
 {
 	int			i;
 	char		**array;
 
-	/* Need to add some checks to colors and extra symbols */
 	array = ft_strsplit(line, ' ');
 	i = 1;
 	while (i <= field->width)
@@ -108,10 +106,10 @@ void		fdf_read_points(char *line, t_list_p *list, t_field *field)
 	}
 }
 
-int			fdf_find_color(char *str)
+int				fdf_find_color(char *str)
 {
-	char	*color_string;
-	int		color;
+	char		*color_string;
+	int			color;
 
 	color_string = strchr(str, ',');
 	if (!color_string)

@@ -77,4 +77,17 @@ add_executable(fdf
 		libft/ft_sqrt_up.c
 		libft/ft_power.c
 		includes/fdf.h
-		src/main.c src/fdf_read.c src/fdf_field.c src/fdf_plot.c src/ft_keyboard.c libft/ft_round_double.c src/fdf_evaluate.c libft/ft_abs_double.c src/fdf_rotation.c src/fdf_moving.c src/fdf_presets.c src/fdf_mouse.c src/fdf_open_close.c src/fdf_change_color.c src/fdf_rainbow.c src/fdf_menu.c)
+		src/main.c
+		src/fdf_read.c
+		src/fdf_field.c
+		src/fdf_plot.c
+		src/ft_keyboard.c
+		libft/ft_round_double.c
+		src/fdf_evaluate.c
+		libft/ft_abs_double.c
+		src/fdf_rotation.c
+		src/fdf_moving.c
+		src/fdf_presets.c
+		src/fdf_mouse.c
+		src/fdf_open_close.c
+		src/fdf_change_color.c)

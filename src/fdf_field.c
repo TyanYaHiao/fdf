@@ -6,37 +6,37 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:20:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/02 15:38:27 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/09 21:22:08 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void			fdf_field_init(t_field *initiated_field)
+void			fdf_field_init(t_field *init_field)
 {
-	initiated_field->height = 0;
-	initiated_field->width = 0;
-	initiated_field->scale = 0;
-	initiated_field->angle_x = 0;
-	initiated_field->angle_y = 0;
-	initiated_field->angle_z = 0;
-	initiated_field->offset_x = 0;
-	initiated_field->offset_y = 0;
-	initiated_field->scale = 1;
-	initiated_field->coeff_z = Z_COEFF;
-	initiated_field->control = (t_control*)malloc(sizeof(t_control));
-	initiated_field->control->prev_x = 0;
-	initiated_field->control->prev_y = 0;
-	initiated_field->control->mouse_button_mid = FALSE;
-	initiated_field->control->key_shift = FALSE;
-	initiated_field->control->key_ctrl = FALSE;
-	initiated_field->mlx_ptr = mlx_init();
-	initiated_field->win_ptr = mlx_new_window(initiated_field->mlx_ptr,
+	init_field->height = 0;
+	init_field->width = 0;
+	init_field->scale = 0;
+	init_field->angle_x = 0;
+	init_field->angle_y = 0;
+	init_field->angle_z = 0;
+	init_field->offset_x = 0;
+	init_field->offset_y = 0;
+	init_field->scale = 1;
+	init_field->coeff_z = Z_COEFF;
+	init_field->control = (t_control*)malloc(sizeof(t_control));
+	init_field->control->prev_x = 0;
+	init_field->control->prev_y = 0;
+	init_field->control->mouse_button_mid = FALSE;
+	init_field->control->key_shift = FALSE;
+	init_field->control->key_ctrl = FALSE;
+	init_field->mlx_ptr = mlx_init();
+	init_field->win_ptr = mlx_new_window(init_field->mlx_ptr,
 			WINDOW_W, WINDOW_H, "Fil de Fer");
-	fdf_menu_init(&initiated_field->menu);
-//	initiated_field->img_ptr = mlx_new_image(initiated_field->mlx_ptr, WINDOW_W, WINDOW_H);
-//	initiated_field->image = (int*)mlx_get_data_addr(initiated_field->img_ptr, &initiated_field->bpp, &initiated_field->s_line, &initiated_field->endian);
-//	initiated_field->bpp /= 4;
+	init_field->img_ptr = mlx_new_image(init_field->mlx_ptr, WINDOW_W,
+			WINDOW_H);
+	init_field->image = mlx_get_data_addr(init_field->img_ptr,
+			&init_field->bpp, &init_field->s_line, &init_field->endian);
 }
 
 void			fdf_points_copy(t_field *field)
@@ -68,5 +68,4 @@ void			fdf_field_info(t_field field)
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 110, TEXT_COLOR, ft_itoa(field.angle_y * 180 / M_PI));
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 130, TEXT_COLOR, "Z angle:");
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 130, TEXT_COLOR, ft_itoa(field.angle_z * 180 / M_PI));
-	fdf_plot_menu(field);
 }

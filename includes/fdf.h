@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/02 18:10:21 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/09 20:36:37 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # define START_POINT field.points_out[start_index]
 # define END_POINT field.points_out[end_index]
 
-//# define DEFAULT_COLOR		0x7F8000
 # define DEFAULT_COLOR		0x6b6b6b
 # define TEXT_COLOR			0x00cdcd
 # define WINDOW_H			1400
@@ -33,7 +32,7 @@
 # define MOVE_STEP_X		25
 # define MOVE_STEP_Y		25
 # define ANGLE_STEP			0.04
-# define Z_COEFF			3
+# define Z_COEFF			-3
 
 # define TRUE				1
 # define FALSE				0
@@ -56,7 +55,6 @@
 # define KEY_G				5
 # define KEY_B				11
 # define KEY_Q				12
-# define KEY_W				13
 # define KEY_J				38
 # define KEY_K				40
 # define KEY_SPACE			49
@@ -159,7 +157,7 @@ void				fdf_points_copy(t_field *field);
 int					fdf_read(int *fd, int *num, t_field *field, char *map_name);
 void				fdf_read_points(char *line, t_list_p *point, t_field *field);
 
-t_point				*ft_peresapis(t_field *field, t_list_p *head);
+t_point				*ft_write_in_points(t_field *field, t_list_p *head);
 void				fdf_plot_image(t_field *field);
 void				fdf_move_to_center(t_field *fdf);
 void				fdf_set_line(t_field field, int i, int j);
@@ -184,8 +182,5 @@ void				fdf_plot_side_view(int keycode, t_field *fdf);
 void				fdf_change_color(int keycode, t_field *fdf);
 int					get_color(t_field field, int start_index, int end_index);
 void				fdf_real_isometry(int keycode, t_field *fdf);
-void				fdf_rainbow(t_field *fdf, int keycode);
-void				fdf_menu_init(t_menu *menu);
-void				fdf_plot_menu(t_field field);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 17:56:02 by mlurker           #+#    #+#             */
-/*   Updated: 2019/04/02 15:36:30 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/09 21:30:19 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 double		percent(double start, double end, double current)
 {
-	double placement;
-	double distance;
+	double	placement;
+	double	distance;
 
 	placement = current - start;
 	distance = end - start;
@@ -29,10 +29,10 @@ int			get_light(double start, double end, double percentage)
 
 int			get_color(t_field field, int start_index, int end_index)
 {
-	int     red;
-	int     green;
-	int     blue;
-	double  percentage;
+	int		red;
+	int		green;
+	int		blue;
+	double	percentage;
 
 	if (field.current->color == END_POINT.color)
 		return (field.current->color);
@@ -40,9 +40,12 @@ int			get_color(t_field field, int start_index, int end_index)
 		percentage = percent(START_POINT.x, END_POINT.x, field.current->x);
 	else
 		percentage = percent(START_POINT.y, END_POINT.y, field.current->y);
-	red = get_light((START_POINT.color >> 16) & 0xFF, (END_POINT.color >> 16) & 0xFF, percentage);
-	green = get_light((START_POINT.color >> 8) & 0xFF, (END_POINT.color >> 8) & 0xFF, percentage);
-	blue = get_light(START_POINT.color & 0xFF, END_POINT.color & 0xFF, percentage);
+	red = get_light((START_POINT.color >> 16) & 0xFF,
+			(END_POINT.color >> 16) & 0xFF, percentage);
+	green = get_light((START_POINT.color >> 8) & 0xFF,
+			(END_POINT.color >> 8) & 0xFF, percentage);
+	blue = get_light(START_POINT.color & 0xFF, END_POINT.color & 0xFF,
+			percentage);
 	return ((red << 16) | (green << 8) | blue);
 }
 
@@ -61,8 +64,6 @@ void		fdf_init_curr(t_field field, int start_index, int end_index)
 		field.current->sy = -1;
 }
 
-
-
 void		fdf_set_line(t_field field, int start_index, int end_index)
 {
 	double	err;
@@ -77,7 +78,9 @@ void		fdf_set_line(t_field field, int start_index, int end_index)
 	{
 		if (field.current->x >= 0 && field.current->x < WINDOW_W
 		&& field.current->y >= 0 && field.current->y < WINDOW_H)
-			*(int*)(field.image + (int)field.current->x * 4 + (int)field.current->y * field.s_line) = get_color(field, start_index, end_index);
+			*(int*)(field.image + (int)field.current->x * 4 +
+			(int)field.current->y * field.s_line) =
+					get_color(field, start_index, end_index);
 		else
 			break ;
 		e2 = err;
@@ -100,25 +103,26 @@ void		fdf_plot_image(t_field *field)
 
 	mlx_clear_window(field->mlx_ptr, field->win_ptr);
 	field->img_ptr = mlx_new_image(field->mlx_ptr, WINDOW_W, WINDOW_H);
-	field->image = mlx_get_data_addr(field->img_ptr, &field->bpp, &field->s_line, &field->endian);
+	field->image = mlx_get_data_addr(field->img_ptr, &field->bpp,
+			&field->s_line, &field->endian);
 	i = 0;
 	while (i++ < field->width * field->height)
 	{
-		if (i % (field->width * field->height) != 0) // если это не последняя точку, то от нее нужно рисовать линии
+		if (i % (field->width * field->height) != 0)
 		{
-			if ((field->height) * (field->width) - i < field->width) // проверка на нижние точки
-				fdf_set_line(*field, i, i + 1); // если это они, то рисуем только вбок
-			else if ((i % (field->width)) == 0 && i != 0) // проверка на боковые точки
-				fdf_set_line(*field, i, i + field->width); // если это они, то рисуем только вниз
-			else // если не крайние точки рисуем :
+			if ((field->height) * (field->width) - i < field->width)
+				fdf_set_line(*field, i, i + 1);
+			else if ((i % (field->width)) == 0 && i != 0)
+				fdf_set_line(*field, i, i + field->width);
+			else
 			{
-				fdf_set_line(*field, i, i + field->width); // вниз
-				fdf_set_line(*field, i, i + 1); // вбок
+				fdf_set_line(*field, i, i + field->width);
+				fdf_set_line(*field, i, i + 1);
 			}
 		}
 	}
-	mlx_put_image_to_window(field->mlx_ptr, field->win_ptr, field->img_ptr, 0, 0);
-	ft_bzero(field->image, WINDOW_H * WINDOW_W);
+	mlx_put_image_to_window(field->mlx_ptr, field->win_ptr,
+			field->img_ptr, 0, 0);
 	mlx_destroy_image(field->mlx_ptr, field->img_ptr);
 	fdf_field_info(*field);
 }

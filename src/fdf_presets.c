@@ -42,7 +42,7 @@ void		fdf_plot_top_view(int keycode, t_field *fdf)
 
 void		fdf_plot_front_view(int keycode, t_field *fdf)
 {
-	fdf->angle_x = - M_PI / 2;
+	fdf->angle_x = -M_PI / 2;
 	fdf->angle_y = 0;
 	fdf->angle_z = 0;
 	fdf->offset_x = 0;
@@ -57,7 +57,7 @@ void		fdf_plot_front_view(int keycode, t_field *fdf)
 void		fdf_plot_side_view(int keycode, t_field *fdf)
 {
 	fdf->angle_x = 0;
-	fdf->angle_y = - M_PI / 2;
+	fdf->angle_y = -M_PI / 2;
 	fdf->angle_z = 0;
 	fdf->offset_x = 0;
 	fdf->offset_y = 0;
