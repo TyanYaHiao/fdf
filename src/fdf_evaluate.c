@@ -32,7 +32,7 @@ void		fdf_evaluate(t_field *fdf)
 		fdf->points_out[i].y = ft_round_double(prev_x * (cos(fdf->angle_y) * sin(fdf->angle_z))
 			+ prev_y * (cos(fdf->angle_x) * cos(fdf->angle_z) - sin(fdf->angle_x) * sin(fdf->angle_y) * sin(fdf->angle_z))
 			+ prev_z * (cos(fdf->angle_x) * sin(fdf->angle_y) * sin(fdf->angle_z) + sin(fdf->angle_x) * cos(fdf->angle_z)));
-		fdf->points_out[i].z = ft_round_double(- prev_x * sin(fdf->angle_y)
+		fdf->points_out[i].z = ft_round_double(-prev_x * sin(fdf->angle_y)
 			- prev_y * (sin(fdf->angle_x) * cos(fdf->angle_y))
 			+ prev_z * (cos(fdf->angle_x) * cos(fdf->angle_y)));
 		fdf->points_out[i].x += fdf->offset_x;

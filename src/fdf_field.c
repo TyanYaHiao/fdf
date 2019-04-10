@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:20:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/09 21:22:08 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/10 17:09:08 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void			fdf_field_init(t_field *init_field)
 
 void			fdf_points_copy(t_field *field)
 {
-	int 		i;
+	int			i;
 
 	i = 0;
 	while (i < (field->width + 1) * (field->height + 1))

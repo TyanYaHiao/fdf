@@ -157,7 +157,7 @@ void				fdf_points_copy(t_field *field);
 int					fdf_read(int *fd, int *num, t_field *field, char *map_name);
 void				fdf_read_points(char *line, t_list_p *point, t_field *field);
 
-t_point				*ft_write_in_points(t_field *field, t_list_p *head);
+t_point				*fdf_write_in_points(t_field *field, t_list_p *head);
 void				fdf_plot_image(t_field *field);
 void				fdf_move_to_center(t_field *fdf);
 void				fdf_set_line(t_field field, int i, int j);
