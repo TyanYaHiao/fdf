@@ -56,3 +56,23 @@ void		fdf_scale_image(int mode, int keycode, t_field *fdf)
 	fdf_center_image(fdf);
 	fdf_plot_image(fdf);
 }
+
+void		fdf_center_image(t_field *field)
+{
+	int		i;
+	int		step_x;
+	int		step_y;
+
+	step_y = (int)((WINDOW_H - (field->points_out[field->width *\
+		field->height].y - field->points_out[1].y)) / 2 -\
+		field->points_out[1].y);
+	step_x = (int)((WINDOW_W - (field->points_out[field->width *\
+		field->height].x - field->points_out[1].x)) / 2 -\
+		field->points_out[1].x);
+	i = 0;
+	while (i++ < field->width * field->height)
+	{
+		(*field).points_out[i].x += step_x + field->offset_x;
+		(*field).points_out[i].y += step_y + field->offset_y;
+	}
+}

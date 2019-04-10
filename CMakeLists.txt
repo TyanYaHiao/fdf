@@ -81,7 +81,7 @@ add_executable(fdf
 		src/fdf_read.c
 		src/fdf_field.c
 		src/fdf_plot.c
-		src/ft_keyboard.c
+		src/fdf_keyboard.c
 		libft/ft_round_double.c
 		src/fdf_evaluate.c
 		libft/ft_abs_double.c
@@ -90,4 +90,5 @@ add_executable(fdf
 		src/fdf_presets.c
 		src/fdf_mouse.c
 		src/fdf_open_close.c
-		src/fdf_change_color.c)
+		src/fdf_change_color.c
+		src/fdf_color_gradient.c)

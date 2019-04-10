@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 14:46:58 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/10 19:14:43 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/10 21:55:51 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,29 @@
 int				fdf_help(int *fd, t_field *field, t_list_p *list_p)
 {
 	char		*line;
+	int			rd;
+	int			check;
 
-	while (get_next_line(*fd, &line) > 0)
+	rd = 0;
+	check = 0;
+	while ((rd = get_next_line(*fd, &line)) > 0)
 	{
 		if (field->height == 0)
 			field->width = ft_count_words(line, ' ');
-		else if (ft_count_words(line, ' ') != field->width)
+		else if (ft_count_words(line, ' ') != field->width
+		|| !ft_strcmp(line, ""))
 			return (0);
 		list_p->points = (t_point*)malloc(sizeof(t_point) * (field->width + 1));
-		fdf_read_points(line, list_p, field);
+		if (!fdf_read_points(line, list_p, field))
+			return (0);
 		field->height++;
 		list_p->next_p = (t_list_p*)malloc(sizeof(t_list_p));
 		list_p = list_p->next_p;
 		free(line);
+		check++;
 	}
+	if (rd == 0 && check == 0)
+		return (0);
 	return (1);
 }
 
@@ -103,7 +112,7 @@ t_point			*fdf_write_in_points(t_field *field, t_list_p *list_p)
 	return (field->points_mem);
 }
 
-void			fdf_read_points(char *line, t_list_p *list, t_field *field)
+int				fdf_read_points(char *line, t_list_p *list, t_field *field)
 {
 	int			i;
 	char		**array;
@@ -115,26 +124,10 @@ void			fdf_read_points(char *line, t_list_p *list, t_field *field)
 		(list->points)[i].n = i + (field->height * field->width);
 		list->points[i].x = i;
 		list->points[i].y = field->height;
+		if (!(list->points[i].color = fdf_find_color(array[i - 1])))
+			return (0);
 		list->points[i].z = ft_atoi(array[i - 1]);
-		list->points[i].color = fdf_find_color(array[i - 1]);
 		i++;
 	}
-}
-
-int				fdf_find_color(char *str)
-{
-	char		*color_string;
-	int			color;
-
-	color_string = strchr(str, ',');
-	if (!color_string)
-	{
-		return (DEFAULT_COLOR);
-	}
-	color = ft_atoi_hex(color_string + 1);
-	if (color >= 0)
-	{
-		return (color);
-	}
-	return (DEFAULT_COLOR);
+	return (1);
 }

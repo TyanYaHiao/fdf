@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:20:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/10 17:09:08 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/10 21:53:34 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,41 @@ void			fdf_points_copy(t_field *field)
 	}
 }
 
+void			fdf_field_info2(t_field field)
+{
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+		WINDOW_W - 150, 90, TEXT_COLOR, "X angle:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 90,
+		TEXT_COLOR, ft_itoa(field.angle_x * 180 / M_PI));
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 110,
+		TEXT_COLOR, "Y angle:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 110,
+		TEXT_COLOR, ft_itoa(field.angle_y * 180 / M_PI));
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 130,
+		TEXT_COLOR, "Z angle:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 130,
+		TEXT_COLOR, ft_itoa(field.angle_z * 180 / M_PI));
+}
+
 void			fdf_field_info(t_field field)
 {
-	mlx_string_put(field.mlx_ptr, field.win_ptr, 10, 10, TEXT_COLOR, field.map_name);
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 10, TEXT_COLOR, "Offset x:");
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 10, TEXT_COLOR, ft_itoa(field.offset_x));
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 30, TEXT_COLOR, "Offset y:");
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 30, TEXT_COLOR, ft_itoa(field.offset_y));
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 50, TEXT_COLOR, "Scale:");
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 50, TEXT_COLOR, ft_itoa(field.scale * 100));
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 70, TEXT_COLOR, "Deepness:");
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 70, TEXT_COLOR, ft_itoa(-field.coeff_z));
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 90, TEXT_COLOR, "X angle:");
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 90, TEXT_COLOR, ft_itoa(field.angle_x * 180 / M_PI));
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 110, TEXT_COLOR, "Y angle:");
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 110, TEXT_COLOR, ft_itoa(field.angle_y * 180 / M_PI));
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 130, TEXT_COLOR, "Z angle:");
-	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 130, TEXT_COLOR, ft_itoa(field.angle_z * 180 / M_PI));
+	mlx_string_put(field.mlx_ptr, field.win_ptr, 10, 10,
+		TEXT_COLOR, field.map_name);
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+		WINDOW_W - 150, 10, TEXT_COLOR, "Offset x:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+		WINDOW_W - 60, 10, TEXT_COLOR, ft_itoa(field.offset_x));
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+		WINDOW_W - 150, 30, TEXT_COLOR, "Offset y:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+		WINDOW_W - 60, 30, TEXT_COLOR, ft_itoa(field.offset_y));
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+		WINDOW_W - 150, 50, TEXT_COLOR, "Scale:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+		WINDOW_W - 60, 50, TEXT_COLOR, ft_itoa(field.scale * 100));
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+		WINDOW_W - 150, 70, TEXT_COLOR, "Deepness:");
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+		WINDOW_W - 60, 70, TEXT_COLOR, ft_itoa(-field.coeff_z));
+	fdf_field_info2(field);
 }

@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 20:52:06 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/02 15:26:56 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/10 20:12:18 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void		fdf_mouse_press(int button, int x, int y, t_field *fdf)
 {
-	if (button == MOUSE_SCROLL_UP || button == MOUSE_SCROLL_DOWN || button == MOUSE_BUTTON_MID)
+	if (button == MOUSE_SCROLL_UP || button == MOUSE_SCROLL_DOWN
+	|| button == MOUSE_BUTTON_MID)
 	{
 		if (button == MOUSE_BUTTON_MID)
 			fdf->control->mouse_button_mid = TRUE;
@@ -49,6 +50,22 @@ void		fdf_mouse_release(int button, int x, int y, t_field *fdf)
 	}
 }
 
+void		fdf_mouse_move_modificator(int x, int y, t_field *fdf)
+{
+	if (fdf->control->key_shift == FALSE && fdf->control->key_ctrl == TRUE)
+	{
+		fdf->offset_x += x - fdf->control->prev_x;
+		fdf->offset_y += y - fdf->control->prev_y;
+		fdf->control->prev_x = x;
+		fdf->control->prev_y = y;
+	}
+	if (fdf->control->key_shift == TRUE && fdf->control->key_ctrl == FALSE)
+	{
+		fdf->angle_z += ANGLE_STEP * (y - fdf->control->prev_y) / 100;
+		fdf->control->prev_x = x;
+	}
+}
+
 void		fdf_mouse_move(int x, int y, t_field *fdf)
 {
 	if (fdf->control->mouse_button_mid == TRUE)
@@ -64,18 +81,8 @@ void		fdf_mouse_move(int x, int y, t_field *fdf)
 			fdf->control->prev_x = x;
 			fdf->control->prev_y = y;
 		}
-		if (fdf->control->key_ctrl == TRUE && fdf->control->key_shift == FALSE)
-		{
-			fdf->offset_x += x - fdf->control->prev_x;
-			fdf->offset_y += y - fdf->control->prev_y;
-			fdf->control->prev_x = x;
-			fdf->control->prev_y = y;
-		}
-		if (fdf->control->key_shift == TRUE && fdf->control->key_ctrl == FALSE)
-		{
-			fdf->angle_z += ANGLE_STEP * (y - fdf->control->prev_y) / 100;
-			fdf->control->prev_x = x;
-		}
+		else
+			fdf_mouse_move_modificator(x, y, fdf);
 		mlx_clear_window((*fdf).mlx_ptr, (*fdf).win_ptr);
 		fdf_points_copy(fdf);
 		fdf_evaluate(fdf);

@@ -6,13 +6,11 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:14:57 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/09 20:10:40 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/10 22:05:57 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-
-/* Image faster than pixel.put */
 
 int				main(int argc, char **argv)
 {
@@ -32,6 +30,6 @@ int				main(int argc, char **argv)
 	mlx_hook(field.win_ptr, 17, 0, fdf_close, 0);
 	mlx_hook(field.win_ptr, 2, 0, fdf_keyboard_press, &field);
 	mlx_hook(field.win_ptr, 3, 0, fdf_keyboard_release, &field);
-	mlx_loop(field.mlx_ptr); //тоже нужно
+	mlx_loop(field.mlx_ptr);
 	return (0);
 }

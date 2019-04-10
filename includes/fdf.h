@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/09 20:36:37 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/10 21:45:32 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <stdio.h> // DELETE THIS!
 
 # define DELTA(a,b) a-b;
-# define START_POINT field.points_out[start_index]
-# define END_POINT field.points_out[end_index]
+# define START_POINT field.points_out[start]
+# define END_POINT field.points_out[end]
 
 # define DEFAULT_COLOR		0x6b6b6b
 # define TEXT_COLOR			0x00cdcd
@@ -55,6 +55,7 @@
 # define KEY_G				5
 # define KEY_B				11
 # define KEY_Q				12
+# define KEY_W				13
 # define KEY_J				38
 # define KEY_K				40
 # define KEY_SPACE			49
@@ -93,23 +94,6 @@ typedef struct		s_point {
 	int				color;
 }					t_point;
 
-typedef struct		s_button {
-	int				x;
-	int 			y;
-	int 			width;
-	int				height;
-	char 			*name;
-}					t_button;
-
-typedef struct		s_menu {
-	t_curr			*corner;
-	int 			width;
-	int				color;
-	int				height;
-	char 			*name;
-	t_button		*button;
-}					t_menu;
-
 typedef struct		s_list_p {
 	t_point			*points;
 	struct s_list_p	*next_p;
@@ -141,7 +125,6 @@ typedef struct		s_field {
 	int				s_line;
 	int				endian;
 	char			*map_name;
-	t_menu			menu;
 	t_curr			*current;
 	t_control		*control;		// struct for control
 	t_point			*points_mem;	// original array
@@ -155,7 +138,7 @@ void				fdf_field_info(t_field field);
 void				fdf_points_copy(t_field *field);
 
 int					fdf_read(int *fd, int *num, t_field *field, char *map_name);
-void				fdf_read_points(char *line, t_list_p *point, t_field *field);
+int					fdf_read_points(char *line, t_list_p *point, t_field *field);
 
 t_point				*fdf_write_in_points(t_field *field, t_list_p *head);
 void				fdf_plot_image(t_field *field);
@@ -180,7 +163,11 @@ void				fdf_plot_top_view(int keycode, t_field *fdf);
 void				fdf_plot_front_view(int keycode, t_field *fdf);
 void				fdf_plot_side_view(int keycode, t_field *fdf);
 void				fdf_change_color(int keycode, t_field *fdf);
-int					get_color(t_field field, int start_index, int end_index);
+int					color(t_field field, int start_index, int end_index);
 void				fdf_real_isometry(int keycode, t_field *fdf);
+void				fdf_rotate_x_eval(double *x, double *y, double *z, double angle);
+void				fdf_rotate_y_eval(double *x, double *y, double *z, double angle);
+void				fdf_rotate_z_eval(double *x, double *y, double *z, double angle);
+void				fdf_init_curr(t_field field, int start_index, int end_index);
 
 #endif

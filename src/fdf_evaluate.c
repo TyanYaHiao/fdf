@@ -6,35 +6,62 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 20:28:21 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/09 20:30:36 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/10 21:21:35 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
+void		fdf_rotate_x_eval(double *x, double *y, double *z, double angle)
+{
+	double previous_y;
+	double previous_z;
+
+	previous_y = *y;
+	previous_z = *z;
+	*y = ft_round_double(previous_y * cos(angle) + previous_z * sin(angle));
+	*z = ft_round_double(-previous_y * sin(angle) + previous_z * cos(angle));
+}
+
+void		fdf_rotate_y_eval(double *x, double *y, double *z, double angle)
+{
+	double previous_x;
+	double previous_z;
+
+	previous_x = *x;
+	previous_z = *z;
+	*x = ft_round_double(previous_x * cos(angle) + previous_z * sin(angle));
+	*z = ft_round_double(-previous_x * sin(angle) + previous_z * cos(angle));
+}
+
+void		fdf_rotate_z_eval(double *x, double *y, double *z, double angle)
+{
+	double previous_x;
+	double previous_y;
+
+	previous_x = *x;
+	previous_y = *y;
+	*x = ft_round_double(previous_x * cos(angle) - previous_y * sin(angle));
+	*y = ft_round_double(previous_x * sin(angle) + previous_y * cos(angle));
+}
+
 void		fdf_evaluate(t_field *fdf)
 {
 	int		i;
-	double	prev_x;
-	double	prev_y;
-	double	prev_z;
 
 	i = 0;
 	while (i++ < fdf->width * fdf->height)
 	{
 		fdf->points_out[i].z *= fdf->coeff_z;
-		prev_x = fdf->points_out[i].x * fdf->scale;
-		prev_y = fdf->points_out[i].y * fdf->scale;
-		prev_z = fdf->points_out[i].z * fdf->scale;
-		fdf->points_out[i].x = ft_round_double(prev_x * (cos(fdf->angle_y) * cos(fdf->angle_z))
-			- prev_y * (sin(fdf->angle_x) * sin(fdf->angle_y) * cos(fdf->angle_z) + cos(fdf->angle_x) * sin(fdf->angle_z))
-			+ prev_z * (cos(fdf->angle_x) * sin(fdf->angle_y) * cos(fdf->angle_z) - sin(fdf->angle_x) * sin(fdf->angle_z)));
-		fdf->points_out[i].y = ft_round_double(prev_x * (cos(fdf->angle_y) * sin(fdf->angle_z))
-			+ prev_y * (cos(fdf->angle_x) * cos(fdf->angle_z) - sin(fdf->angle_x) * sin(fdf->angle_y) * sin(fdf->angle_z))
-			+ prev_z * (cos(fdf->angle_x) * sin(fdf->angle_y) * sin(fdf->angle_z) + sin(fdf->angle_x) * cos(fdf->angle_z)));
-		fdf->points_out[i].z = ft_round_double(-prev_x * sin(fdf->angle_y)
-			- prev_y * (sin(fdf->angle_x) * cos(fdf->angle_y))
-			+ prev_z * (cos(fdf->angle_x) * cos(fdf->angle_y)));
+		fdf->points_out[i].x *= fdf->scale;
+		fdf->points_out[i].y *= fdf->scale;
+		fdf->points_out[i].z *= fdf->scale;
+		fdf_rotate_x_eval(&fdf->points_out[i].x, &fdf->points_out[i].y,
+				&fdf->points_out[i].z, fdf->angle_x);
+		fdf_rotate_y_eval(&fdf->points_out[i].x, &fdf->points_out[i].y,
+				&fdf->points_out[i].z, fdf->angle_y);
+		fdf_rotate_z_eval(&fdf->points_out[i].x, &fdf->points_out[i].y,
+				&fdf->points_out[i].z, fdf->angle_z);
 		fdf->points_out[i].x += fdf->offset_x;
 		fdf->points_out[i].y += fdf->offset_y;
 	}
@@ -60,20 +87,4 @@ void		fdf_start_values(double *step, t_field *field)
 		step[0] = w_step;
 	step[1] = (WINDOW_W - (step[0] * (field->width - 1))) / 2;
 	step[2] = (WINDOW_H - (step[0] * (field->height - 1))) / 2;
-}
-
-void		fdf_center_image(t_field *field)
-{
-	int		i;
-	int		step_x;
-	int		step_y;
-
-	step_y = (int)((WINDOW_H - (field->points_out[field->width * field->height].y - field->points_out[1].y)) / 2 - field->points_out[1].y);
-	step_x = (int)((WINDOW_W - (field->points_out[field->width * field->height].x - field->points_out[1].x)) / 2 - field->points_out[1].x);
-	i = 0;
-	while (i++ < field->width * field->height)
-	{
-		(*field).points_out[i].x += step_x + field->offset_x;
-		(*field).points_out[i].y += step_y + field->offset_y;
-	}
 }
