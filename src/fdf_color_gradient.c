@@ -6,7 +6,7 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:32:20 by mlurker           #+#    #+#             */
-/*   Updated: 2019/04/12 18:18:24 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/12 20:10:16 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int			fdf_find_color(char *str)
 
 	while (*str != ',' && *str != '\0')
 	{
+		if (*str == '-')
+			str++;
 		if (!ft_isdigit(*str))
 			return (0);
 		str++;

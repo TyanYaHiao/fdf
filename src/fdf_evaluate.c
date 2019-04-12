@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 20:28:21 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/12 18:18:24 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/12 21:54:55 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void		fdf_evaluate(t_field *fdf)
 				fdf->angle_z);
 		fdf->points_out[i].x += fdf->offset_x;
 		fdf->points_out[i].y += fdf->offset_y;
+		fdf->points_out[i].color >>= fdf->color_shift;
 	}
 }
 

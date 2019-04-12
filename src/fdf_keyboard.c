@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:37:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/12 18:29:39 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/12 21:50:19 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int			fdf_keyboard_key_check(int keycode)
 		keycode == KEY_Z || keycode == KEY_X || keycode == KEY_T ||
 		keycode == KEY_I || keycode == KEY_R || keycode == KEY_G ||
 		keycode == KEY_B || keycode == KEY_Q || keycode == KEY_S ||
-		keycode == KEY_F)
+		keycode == KEY_F || keycode == KEY_H || keycode == KEY_W)
 		return (1);
 	return (0);
 }
@@ -39,10 +39,12 @@ void		fdf_keyboard_key_letter(int keycode, t_field *fdf)
 		fdf_plot_front_view(fdf);
 	if (keycode == KEY_S)
 		fdf_plot_side_view(fdf);
+	if (keycode == KEY_H)
+		fdf_switch_help(fdf);
 	if (keycode == KEY_Z || keycode == KEY_X)
 		fdf_change_depth(keycode, fdf);
 	if (keycode == KEY_B || keycode == KEY_G ||
-		keycode == KEY_R || keycode == KEY_Q)
+		keycode == KEY_R || keycode == KEY_Q || keycode == KEY_W)
 		fdf_change_color(keycode, fdf);
 }
 
@@ -89,4 +91,16 @@ int			fdf_keyboard_release(int keycode, t_field *fdf)
 		fdf->control->prev_x = 0;
 	}
 	return (0);
+}
+
+void		fdf_switch_help(t_field *fdf)
+{
+	if (fdf->control->help == TRUE)
+		fdf->control->help = FALSE;
+	else
+		fdf->control->help = TRUE;
+	fdf_points_copy(fdf);
+	fdf_evaluate(fdf);
+	fdf_center_image(fdf);
+	fdf_plot_image(fdf);
 }

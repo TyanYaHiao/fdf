@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/12 19:22:52 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/12 21:50:19 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include "../includes/mlx.h"
 # include "../libft/libft.h"
 # include <math.h>
-# include <stdio.h> // DELETE THIS!
 
 # define START_POINT field.points_out[start]
 # define END_POINT field.points_out[end]
@@ -30,6 +29,8 @@
 # define WINDOW_BORDER		50
 # define MOVE_STEP_X		25
 # define MOVE_STEP_Y		25
+# define HELP_X				WINDOW_W - 420
+# define HELP_Y				WINDOW_H - 300
 # define ANGLE_STEP			0.04
 # define Z_COEFF			-3
 
@@ -44,6 +45,7 @@
 # define KEY_CTRL_LEFT		256
 # define KEY_SHIFT_LEFT		257
 # define KEY_F				3
+# define KEY_H				4
 # define KEY_S				1
 # define KEY_Z				6
 # define KEY_X				7
@@ -53,6 +55,7 @@
 # define KEY_G				5
 # define KEY_B				11
 # define KEY_Q				12
+# define KEY_W				13
 # define KEY_SPACE			49
 # define KEY_PLUS			69
 # define KEY_MINUS			78
@@ -69,7 +72,6 @@
 # define KEY_NUM_LEFT		123
 # define KEY_NUM_RIGHT		124
 
-/* Struct for fradient */
 typedef struct		s_curr {
 	double			x;
 	double			y;
@@ -100,6 +102,7 @@ typedef struct		s_control {
 	int				key_ctrl;
 	int				key_shift;
 	int				mouse_button_mid;
+	int 			help;
 }					t_control;
 
 typedef struct		s_field {
@@ -107,11 +110,14 @@ typedef struct		s_field {
 	double			angle_y;
 	double			angle_z;
 	double			scale;
-	int				offset_x;		// image offset on X
-	int				offset_y;		// image offset on Y
-	int				coeff_z;		// coefficient of depth
-	int				width;			// number of points on X
-	int				height;			// number of points on Y
+	int				offset_x;
+	int				offset_y;
+	int				coeff_z;
+	int				width;
+	int				height;
+	int 			color_shift;
+	double 			max_z;
+	double 			min_z;
 	void			*mlx_ptr;
 	void			*win_ptr;
 	void			*img_ptr;
@@ -121,15 +127,16 @@ typedef struct		s_field {
 	int				endian;
 	char			*map_name;
 	t_curr			*current;
-	t_control		*control;		// struct for control
-	t_point			*points_mem;	// original array
-	t_point			*points_out;	// array for output
+	t_control		*control;
+	t_point			*points_mem;
+	t_point			*points_out;
 }					t_field;
 
 int					fdf_open(int argc, char **argv, int *fd);
 int					fdf_close(void *param);
 void				fdf_field_init(t_field *field);
 void				fdf_field_info(t_field field);
+void				fdf_show_help(t_field field);
 void				fdf_points_copy(t_field *field);
 int					fdf_read(int *fd, t_field *field, char *map_name);
 int					fdf_read_points(char *line, t_list_p *point,\
@@ -156,6 +163,7 @@ void				fdf_plot_isometry(t_field *fdf);
 void				fdf_plot_top_view(t_field *fdf);
 void				fdf_plot_front_view(t_field *fdf);
 void				fdf_plot_side_view(t_field *fdf);
+void				fdf_switch_help(t_field *fdf);
 void				fdf_change_color(int keycode, t_field *fdf);
 int					color(t_field field, int start_index, int end_index);
 void				fdf_real_isometry(int keycode, t_field *fdf);

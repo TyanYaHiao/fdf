@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 14:46:58 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/12 18:18:24 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/12 21:25:08 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ void			fdf_cycle(t_field *field, t_list_p *list_p, double *step, int i)
 		field->points_mem[i].x = x;
 		field->points_mem[i].y = step[2];
 		field->points_mem[i].z = (list_p->points)[w1].z;
+		if (field->points_mem[i].z > field->max_z)
+			field->max_z = field->points_mem[i].z;
+		if (field->points_mem[i].z < field->max_z)
+			field->min_z = field->points_mem[i].z;
 		field->points_mem[i].color = (list_p->points)[w1].color;
 		w--;
 		w1++;

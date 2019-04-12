@@ -6,7 +6,7 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:29:24 by mlurker           #+#    #+#             */
-/*   Updated: 2019/04/12 18:18:24 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/12 21:51:52 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,9 @@ void		fdf_change_color(int keycode, t_field *fdf)
 	if (keycode == KEY_R || keycode == KEY_G || keycode == KEY_B)
 		fdf_change_color_rgb(keycode, fdf);
 	else if (keycode == KEY_Q)
-		while (++i < fdf->width * fdf->height)
-		{
-			if (fdf->points_mem[i].color != DEFAULT_COLOR)
-				fdf->points_mem[i].color >>= 1;
-		}
+		fdf->color_shift++;
+	else if (keycode == KEY_W)
+		fdf->color_shift--;
 	fdf_points_copy(fdf);
 	fdf_evaluate(fdf);
 	fdf_center_image(fdf);

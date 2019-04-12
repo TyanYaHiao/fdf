@@ -14,11 +14,13 @@
 
 double		ft_round_double(double x)
 {
-	double x1 = x;
+	double temp;
+
+	temp = x;
 	x -= (int)x;
 	if (x > 0.5)
-		x = (int)x1 + 1;
+		x = (int)temp + 1;
 	else
-		x = (int)x1;
+		x = (int)temp;
 	return (x);
 }

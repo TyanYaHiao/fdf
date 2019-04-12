@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:20:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/12 18:18:24 by mlurker          ###   ########.fr       */
+/*   Updated: 2019/04/12 21:28:42 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@ void			fdf_field_init(t_field *init_field)
 {
 	init_field->height = 0;
 	init_field->width = 0;
-	init_field->scale = 0;
 	init_field->angle_x = 0;
 	init_field->angle_y = 0;
 	init_field->angle_z = 0;
 	init_field->offset_x = 0;
 	init_field->offset_y = 0;
+	init_field->max_z = 0;
+	init_field->min_z = 0;
 	init_field->scale = 1;
 	init_field->coeff_z = Z_COEFF;
 	init_field->control = (t_control*)malloc(sizeof(t_control));
@@ -30,6 +31,7 @@ void			fdf_field_init(t_field *init_field)
 	init_field->control->mouse_button_mid = FALSE;
 	init_field->control->key_shift = FALSE;
 	init_field->control->key_ctrl = FALSE;
+	init_field->control->help = FALSE;
 	init_field->mlx_ptr = mlx_init();
 	init_field->win_ptr = mlx_new_window(init_field->mlx_ptr,
 			WINDOW_W, WINDOW_H, "Fil de Fer");
@@ -48,6 +50,35 @@ void			fdf_points_copy(t_field *field)
 	{
 		field->points_out[i] = field->points_mem[i];
 		i++;
+	}
+}
+
+void			fdf_show_help(t_field field)
+{
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+		10, WINDOW_H - 30, TEXT_COLOR, "Press <H> for help");
+	if (field.control->help == TRUE)
+	{
+		mlx_string_put(field.mlx_ptr, field.win_ptr, HELP_X, HELP_Y,
+			TEXT_COLOR, "Move: keyboard arrows or");
+		mlx_string_put(field.mlx_ptr, field.win_ptr, HELP_X + 62, HELP_Y + 20,
+			TEXT_COLOR, "mouse move + mid button + control");
+		mlx_string_put(field.mlx_ptr, field.win_ptr, HELP_X, HELP_Y + 40,
+			TEXT_COLOR, "Rotation: numpad or");
+		mlx_string_put(field.mlx_ptr, field.win_ptr, HELP_X + 62, HELP_Y + 60,
+			TEXT_COLOR, "mouse move + mid button");
+		mlx_string_put(field.mlx_ptr, field.win_ptr, HELP_X, HELP_Y + 80,
+			TEXT_COLOR, "Zoom: <+> & <-> or");
+		mlx_string_put(field.mlx_ptr, field.win_ptr, HELP_X + 62, HELP_Y + 100,
+			TEXT_COLOR, "mouse scroll");
+		mlx_string_put(field.mlx_ptr, field.win_ptr, HELP_X, HELP_Y + 120,
+			TEXT_COLOR, "Change height: <Z> & <X>");
+		mlx_string_put(field.mlx_ptr, field.win_ptr, HELP_X, HELP_Y + 140,
+			TEXT_COLOR, "Move to center: <SPACE>");
+		mlx_string_put(field.mlx_ptr, field.win_ptr, HELP_X, HELP_Y + 160,
+			TEXT_COLOR, "Isometric view: <I>");
+		mlx_string_put(field.mlx_ptr, field.win_ptr, HELP_X, HELP_Y + 180,
+			TEXT_COLOR, "Top view: <T>");
 	}
 }
 
@@ -88,4 +119,5 @@ void			fdf_field_info(t_field field)
 	mlx_string_put(field.mlx_ptr, field.win_ptr,
 		WINDOW_W - 60, 70, TEXT_COLOR, ft_itoa(-field.coeff_z));
 	fdf_field_info2(field);
+	fdf_show_help(field);
 }
