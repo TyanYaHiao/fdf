@@ -12,7 +12,7 @@
 
 NAME = libft.a
 
-SRC = *.c
+SRC = *.c get_next_line.c
 
 INCLUDES = -I *.h
 
@@ -22,7 +22,7 @@ all: $(NAME)
 
 $(NAME):
 	gcc -c $(SRC) $(FLAGS)
-	ar rc $(NAME) ft_*.o
+	ar rc $(NAME) ft_*.o get_next_line.o
 
 clean:
 	/bin/rm -f *.o

@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 14:46:58 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/10 21:55:51 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/12 18:18:24 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int				fdf_help(int *fd, t_field *field, t_list_p *list_p)
 	return (1);
 }
 
-int				fdf_read(int *fd, int *num, t_field *field, char *map_name)
+int				fdf_read(int *fd, t_field *field, char *map_name)
 {
 	t_list_p	*list_p;
 	t_list_p	*head;
@@ -94,7 +94,6 @@ t_point			*fdf_write_in_points(t_field *field, t_list_p *list_p)
 {
 	double		*step;
 	int			h;
-	double		x;
 	int			i;
 
 	i = 1;

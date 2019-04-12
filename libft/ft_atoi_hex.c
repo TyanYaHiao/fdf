@@ -12,11 +12,10 @@
 
 #include "libft.h"
 
-int		ft_atoi_hex(char *str)
+int			ft_atoi_hex(char *str)
 {
-	int  i;
-	int  num;
-	char *digits;
+	int		i;
+	int		num;
 
 	if (!str || str[0] != '0' || str[1] != 'x')
 		return (-1);

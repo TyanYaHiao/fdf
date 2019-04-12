@@ -6,28 +6,31 @@
 #    By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/19 19:52:14 by fsmith            #+#    #+#              #
-#    Updated: 2019/04/02 15:26:56 by mlurker          ###   ########.fr        #
+#    Updated: 2019/04/12 19:12:55 by mlurker          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME :=			fillit
+NAME :=			fdf
 
 SRC_PATH :=		src/
 INC_PATH :=		includes/
 LIB_PATH :=		libft/
+MLX_PATH :=		minilibx/
 OBJ_PATH :=		.obj/
 
 CC :=			clang
 CFLAGS :=		-g -Wall -Wextra -Werror
 IFLAGS :=		-I $(INC_PATH) -I $(LIB_PATH)
 LFLAGS :=		-lft -L $(LIB_PATH)
+MLXFLAGS :=		-lmlx -framework OpenGL -framework AppKit
 
-HFILES :=		fillit
-FILES :=		main fillit_bit fillit_evaluate fillit_output fillit_figure\
-                fillit_validate fillit_change_size fillit_open_n_read\
-                fillit_move
+HFILES :=		fdf
+FILES :=		main fdf_read fdf_field fdf_plot fdf_keyboard fdf_evaluate\
+				fdf_rotation fdf_moving fdf_presets fdf_mouse fdf_open_close\
+				fdf_change_color fdf_color_gradient
 
 LIB :=			$(LIB_PATH)libft.a
+MLX :=			$(MLX_PATH)libmlx.a
 
 HDRS :=			$(addprefix $(INC_PATH), $(addsuffix .h, $(HFILES)))
 SRCS :=			$(addprefix $(SRC_PATH), $(addsuffix .c, $(FILES)))
@@ -35,8 +38,8 @@ OBJS :=			$(addprefix $(OBJ_PATH), $(SRCS:%.c=%.o))
 
 all: $(NAME)
 
-$(NAME): $(LIB) $(OBJ_PATH) $(OBJS)
-	@ $(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) $(OBJS) -o $(NAME)
+$(NAME): $(LIB) $(OBJ_PATH) $(OBJS) $(MLX)
+	@ $(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) $(OBJS) -o $(NAME) $(MLX) $(MLXFLAGS)
 $(LIB):
 	@ $(MAKE) -C $(dir $@) $(notdir $@)
 

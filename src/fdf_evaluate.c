@@ -6,13 +6,13 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 20:28:21 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/10 21:21:35 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/12 18:18:24 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void		fdf_rotate_x_eval(double *x, double *y, double *z, double angle)
+void		fdf_rotate_x_eval(double *y, double *z, double angle)
 {
 	double previous_y;
 	double previous_z;
@@ -23,7 +23,7 @@ void		fdf_rotate_x_eval(double *x, double *y, double *z, double angle)
 	*z = ft_round_double(-previous_y * sin(angle) + previous_z * cos(angle));
 }
 
-void		fdf_rotate_y_eval(double *x, double *y, double *z, double angle)
+void		fdf_rotate_y_eval(double *x, double *z, double angle)
 {
 	double previous_x;
 	double previous_z;
@@ -34,7 +34,7 @@ void		fdf_rotate_y_eval(double *x, double *y, double *z, double angle)
 	*z = ft_round_double(-previous_x * sin(angle) + previous_z * cos(angle));
 }
 
-void		fdf_rotate_z_eval(double *x, double *y, double *z, double angle)
+void		fdf_rotate_z_eval(double *x, double *y, double angle)
 {
 	double previous_x;
 	double previous_y;
@@ -56,12 +56,12 @@ void		fdf_evaluate(t_field *fdf)
 		fdf->points_out[i].x *= fdf->scale;
 		fdf->points_out[i].y *= fdf->scale;
 		fdf->points_out[i].z *= fdf->scale;
-		fdf_rotate_x_eval(&fdf->points_out[i].x, &fdf->points_out[i].y,
+		fdf_rotate_x_eval(&fdf->points_out[i].y,
 				&fdf->points_out[i].z, fdf->angle_x);
-		fdf_rotate_y_eval(&fdf->points_out[i].x, &fdf->points_out[i].y,
+		fdf_rotate_y_eval(&fdf->points_out[i].x,
 				&fdf->points_out[i].z, fdf->angle_y);
 		fdf_rotate_z_eval(&fdf->points_out[i].x, &fdf->points_out[i].y,
-				&fdf->points_out[i].z, fdf->angle_z);
+				fdf->angle_z);
 		fdf->points_out[i].x += fdf->offset_x;
 		fdf->points_out[i].y += fdf->offset_y;
 	}

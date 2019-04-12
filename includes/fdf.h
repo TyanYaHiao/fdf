@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/10 21:45:32 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/12 19:22:52 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,11 @@
 # define FDF_H
 # include <unistd.h>
 # include <fcntl.h>
-# include "../minilibx/mlx.h"
+# include "../includes/mlx.h"
 # include "../libft/libft.h"
 # include <math.h>
 # include <stdio.h> // DELETE THIS!
 
-# define DELTA(a,b) a-b;
 # define START_POINT field.points_out[start]
 # define END_POINT field.points_out[end]
 
@@ -49,15 +48,11 @@
 # define KEY_Z				6
 # define KEY_X				7
 # define KEY_I				34
-# define KEY_U				32
 # define KEY_T				17
 # define KEY_R				15
 # define KEY_G				5
 # define KEY_B				11
 # define KEY_Q				12
-# define KEY_W				13
-# define KEY_J				38
-# define KEY_K				40
 # define KEY_SPACE			49
 # define KEY_PLUS			69
 # define KEY_MINUS			78
@@ -136,10 +131,9 @@ int					fdf_close(void *param);
 void				fdf_field_init(t_field *field);
 void				fdf_field_info(t_field field);
 void				fdf_points_copy(t_field *field);
-
-int					fdf_read(int *fd, int *num, t_field *field, char *map_name);
-int					fdf_read_points(char *line, t_list_p *point, t_field *field);
-
+int					fdf_read(int *fd, t_field *field, char *map_name);
+int					fdf_read_points(char *line, t_list_p *point,\
+					t_field *field);
 t_point				*fdf_write_in_points(t_field *field, t_list_p *head);
 void				fdf_plot_image(t_field *field);
 void				fdf_move_to_center(t_field *fdf);
@@ -147,27 +141,28 @@ void				fdf_set_line(t_field field, int i, int j);
 int					fdf_find_color(char *str);
 void				fdf_isometry(double *x, double *y, double z, double angle);
 void				fdf_start_values(double *step, t_field *field);
-void 				fdf_mouse_press(int button, int x, int y, t_field *fdf);
-void 				fdf_mouse_release(int button, int x, int y, t_field *fdf);
-void				fdf_mouse_move(int x, int y, t_field *fdf);
+int					fdf_mouse_press(int button, int x, int y, t_field *fdf);
+int					fdf_mouse_release(int button, int x, int y, t_field *fdf);
+int					fdf_mouse_move(int x, int y, t_field *fdf);
 void				fdf_scale_image(int mode, int keycode, t_field *fdf);
 void				fdf_move(int mode, int keycode, t_field *fdf);
-void 				fdf_keyboard_press(int keycode, t_field *fdf);
-void 				fdf_keyboard_release(int keycode, t_field *fdf);
+int					fdf_keyboard_press(int keycode, t_field *fdf);
+int					fdf_keyboard_release(int keycode, t_field *fdf);
 void				fdf_center_image(t_field *field);
 void				fdf_evaluate(t_field *fdf);
 void				fdf_change_depth(int keycode, t_field *fdf);
 void				fdf_rotate(int mode, int keycode, t_field *fdf);
-void				fdf_plot_isometry(int keycode, t_field *fdf);
-void				fdf_plot_top_view(int keycode, t_field *fdf);
-void				fdf_plot_front_view(int keycode, t_field *fdf);
-void				fdf_plot_side_view(int keycode, t_field *fdf);
+void				fdf_plot_isometry(t_field *fdf);
+void				fdf_plot_top_view(t_field *fdf);
+void				fdf_plot_front_view(t_field *fdf);
+void				fdf_plot_side_view(t_field *fdf);
 void				fdf_change_color(int keycode, t_field *fdf);
 int					color(t_field field, int start_index, int end_index);
 void				fdf_real_isometry(int keycode, t_field *fdf);
-void				fdf_rotate_x_eval(double *x, double *y, double *z, double angle);
-void				fdf_rotate_y_eval(double *x, double *y, double *z, double angle);
-void				fdf_rotate_z_eval(double *x, double *y, double *z, double angle);
-void				fdf_init_curr(t_field field, int start_index, int end_index);
+void				fdf_rotate_x_eval(double *y, double *z, double angle);
+void				fdf_rotate_y_eval(double *x, double *z, double angle);
+void				fdf_rotate_z_eval(double *x, double *y, double angle);
+void				fdf_init_curr(t_field field, int start_index,\
+					int end_index);
 
 #endif

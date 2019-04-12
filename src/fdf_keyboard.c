@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:37:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/10 21:32:17 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/12 18:29:39 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ int			fdf_keyboard_key_check(int keycode)
 void		fdf_keyboard_key_letter(int keycode, t_field *fdf)
 {
 	if (keycode == KEY_I)
-		fdf_plot_isometry(keycode, fdf);
+		fdf_plot_isometry(fdf);
 	if (keycode == KEY_T)
-		fdf_plot_top_view(keycode, fdf);
+		fdf_plot_top_view(fdf);
 	if (keycode == KEY_F)
-		fdf_plot_front_view(keycode, fdf);
+		fdf_plot_front_view(fdf);
 	if (keycode == KEY_S)
-		fdf_plot_side_view(keycode, fdf);
+		fdf_plot_side_view(fdf);
 	if (keycode == KEY_Z || keycode == KEY_X)
 		fdf_change_depth(keycode, fdf);
 	if (keycode == KEY_B || keycode == KEY_G ||
@@ -46,10 +46,12 @@ void		fdf_keyboard_key_letter(int keycode, t_field *fdf)
 		fdf_change_color(keycode, fdf);
 }
 
-void		fdf_keyboard_press(int keycode, t_field *fdf)
+int			fdf_keyboard_press(int keycode, t_field *fdf)
 {
 	if (fdf_keyboard_key_check(keycode))
 	{
+		if (keycode == KEY_ESC)
+			exit(0);
 		mlx_clear_window((*fdf).mlx_ptr, (*fdf).win_ptr);
 		fdf_keyboard_key_letter(keycode, fdf);
 		if (keycode == KEY_NUM_LEFT || keycode == KEY_NUM_RIGHT ||
@@ -59,8 +61,6 @@ void		fdf_keyboard_press(int keycode, t_field *fdf)
 			fdf_scale_image(KEYBOARD, keycode, fdf);
 		if (keycode == KEY_SPACE)
 			fdf_move_to_center(fdf);
-		if (keycode == KEY_ESC)
-			exit(0);
 		if (keycode == KEY_NUM_1 || keycode == KEY_NUM_2 ||
 		keycode == KEY_NUM_3 || keycode == KEY_NUM_4
 		|| keycode == KEY_NUM_6 || keycode == KEY_NUM_7 ||
@@ -71,9 +71,10 @@ void		fdf_keyboard_press(int keycode, t_field *fdf)
 		fdf->control->key_ctrl = TRUE;
 	if (keycode == KEY_SHIFT_LEFT)
 		fdf->control->key_shift = TRUE;
+	return (0);
 }
 
-void		fdf_keyboard_release(int keycode, t_field *fdf)
+int			fdf_keyboard_release(int keycode, t_field *fdf)
 {
 	if (keycode == KEY_CTRL_LEFT)
 	{
@@ -87,4 +88,5 @@ void		fdf_keyboard_release(int keycode, t_field *fdf)
 		fdf->control->prev_y = 0;
 		fdf->control->prev_x = 0;
 	}
+	return (0);
 }

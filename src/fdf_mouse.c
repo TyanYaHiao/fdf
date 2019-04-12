@@ -6,13 +6,13 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/27 20:52:06 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/10 20:12:18 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/12 19:16:56 by mlurker          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void		fdf_mouse_press(int button, int x, int y, t_field *fdf)
+int			fdf_mouse_press(int button, int x, int y, t_field *fdf)
 {
 	if (button == MOUSE_SCROLL_UP || button == MOUSE_SCROLL_DOWN
 	|| button == MOUSE_BUTTON_MID)
@@ -38,16 +38,20 @@ void		fdf_mouse_press(int button, int x, int y, t_field *fdf)
 			}
 		}
 	}
+	return (0);
 }
 
-void		fdf_mouse_release(int button, int x, int y, t_field *fdf)
+int			fdf_mouse_release(int button, int x, int y, t_field *fdf)
 {
+	x++;
+	y++;
 	if (button == MOUSE_BUTTON_MID)
 	{
 		fdf->control->mouse_button_mid = FALSE;
 		fdf->control->prev_y = 0;
 		fdf->control->prev_x = 0;
 	}
+	return (0);
 }
 
 void		fdf_mouse_move_modificator(int x, int y, t_field *fdf)
@@ -66,7 +70,7 @@ void		fdf_mouse_move_modificator(int x, int y, t_field *fdf)
 	}
 }
 
-void		fdf_mouse_move(int x, int y, t_field *fdf)
+int			fdf_mouse_move(int x, int y, t_field *fdf)
 {
 	if (fdf->control->mouse_button_mid == TRUE)
 	{
@@ -89,4 +93,5 @@ void		fdf_mouse_move(int x, int y, t_field *fdf)
 		fdf_center_image(fdf);
 		fdf_plot_image(fdf);
 	}
+	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "../includes/fdf.h"
 
-void		fdf_plot_isometry(int keycode, t_field *fdf)
+void		fdf_plot_isometry(t_field *fdf)
 {
 	fdf->angle_x = 0.785398;
 	fdf->angle_y = 0.610865;
@@ -26,7 +26,7 @@ void		fdf_plot_isometry(int keycode, t_field *fdf)
 	fdf_plot_image(fdf);
 }
 
-void		fdf_plot_top_view(int keycode, t_field *fdf)
+void		fdf_plot_top_view(t_field *fdf)
 {
 	fdf->angle_x = 0;
 	fdf->angle_y = 0;
@@ -40,7 +40,7 @@ void		fdf_plot_top_view(int keycode, t_field *fdf)
 	fdf_plot_image(fdf);
 }
 
-void		fdf_plot_front_view(int keycode, t_field *fdf)
+void		fdf_plot_front_view(t_field *fdf)
 {
 	fdf->angle_x = -M_PI / 2;
 	fdf->angle_y = 0;
@@ -54,7 +54,7 @@ void		fdf_plot_front_view(int keycode, t_field *fdf)
 	fdf_plot_image(fdf);
 }
 
-void		fdf_plot_side_view(int keycode, t_field *fdf)
+void		fdf_plot_side_view(t_field *fdf)
 {
 	fdf->angle_x = 0;
 	fdf->angle_y = -M_PI / 2;
