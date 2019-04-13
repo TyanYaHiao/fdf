@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/24 16:37:23 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/12 21:50:19 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/13 18:55:01 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,7 @@ int			fdf_keyboard_release(int keycode, t_field *fdf)
 
 void		fdf_switch_help(t_field *fdf)
 {
-	if (fdf->control->help == TRUE)
-		fdf->control->help = FALSE;
-	else
-		fdf->control->help = TRUE;
+	fdf->control->help = !fdf->control->help;
 	fdf_points_copy(fdf);
 	fdf_evaluate(fdf);
 	fdf_center_image(fdf);

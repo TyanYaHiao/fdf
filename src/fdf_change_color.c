@@ -6,7 +6,7 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/01 15:29:24 by mlurker           #+#    #+#             */
-/*   Updated: 2019/04/13 16:01:32 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/13 20:11:49 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,11 @@ void		fdf_color_on_height(t_field *fdf, int i)
 	int		delta;
 
 	spectrum = (int)(fdf->max_z - fdf->min_z);
-	delta = (int)(fdf->max_z - fdf->points_mem[i].z);
-	fdf->points_out[i].color = 0xFF0000 * delta / spectrum;
+	if (spectrum != 0)
+	{
+		delta = (int)(fdf->max_z - fdf->points_mem[i].z);
+		fdf->points_out[i].color = 0xFF0000 * delta / spectrum;
+	}
 }
 
 void		fdf_change_color(int keycode, t_field *fdf)
@@ -59,7 +62,7 @@ void		fdf_change_color(int keycode, t_field *fdf)
 	else if (keycode == KEY_W)
 		fdf->color_shift--;
 	else if (keycode == KEY_E)
-		ft_switch_bool(&fdf->color_height);
+		fdf->color_height = !fdf->color_height;
 	fdf_points_copy(fdf);
 	fdf_evaluate(fdf);
 	fdf_center_image(fdf);

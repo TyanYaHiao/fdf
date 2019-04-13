@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/13 16:39:52 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/13 16:43:08 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ typedef struct		s_field {
 	int				width;
 	int				height;
 	int				color_shift;
-	int 			color_height;
+	int				color_height;
 	double			max_z;
 	double			min_z;
 	void			*mlx_ptr;

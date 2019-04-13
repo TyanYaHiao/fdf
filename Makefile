@@ -6,7 +6,7 @@
 #    By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/19 19:52:14 by fsmith            #+#    #+#              #
-#    Updated: 2019/04/12 20:10:13 by fsmith           ###   ########.fr        #
+#    Updated: 2019/04/13 17:53:38 by fsmith           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ MLXFLAGS :=		-lmlx -framework OpenGL -framework AppKit
 HFILES :=		fdf
 FILES :=		main fdf_read fdf_field fdf_plot fdf_keyboard fdf_evaluate\
 				fdf_rotation fdf_moving fdf_presets fdf_mouse fdf_open_close\
-				fdf_change_color fdf_color_gradient
+				fdf_change_color fdf_color_gradient fdf_menu
 
 LIB :=			$(LIB_PATH)libft.a
 MLX :=			$(MLX_PATH)libmlx.a
