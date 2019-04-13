@@ -17,8 +17,10 @@
 # include <stdlib.h>
 # include <string.h>
 
-# define BUFF_SIZE 50
-# define MAX_FD 1023
+# define BUFF_SIZE	50
+# define MAX_FD		1023
+# define TRUE		1
+# define FALSE		0
 
 typedef struct		s_list
 {
@@ -103,5 +105,6 @@ int					ft_sqrt_up(int num);
 int					ft_atoi_hex(char *str);
 double				ft_round_double(double x);
 double				ft_abs_double(double x0, double x1);
+void				ft_switch_bool(int *value);
 
 #endif

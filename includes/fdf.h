@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/12 21:50:19 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/13 16:39:52 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,11 @@
 # define WINDOW_BORDER		50
 # define MOVE_STEP_X		25
 # define MOVE_STEP_Y		25
-# define HELP_X				WINDOW_W - 420
-# define HELP_Y				WINDOW_H - 300
+# define HELP_X				10
+# define HELP_Y				WINDOW_H - 280
 # define ANGLE_STEP			0.04
 # define Z_COEFF			-3
 
-# define TRUE				1
-# define FALSE				0
 # define KEYBOARD			1
 # define MOUSE				2
 # define MOUSE_SCROLL_UP	4
@@ -51,6 +49,7 @@
 # define KEY_X				7
 # define KEY_I				34
 # define KEY_T				17
+# define KEY_E				14
 # define KEY_R				15
 # define KEY_G				5
 # define KEY_B				11
@@ -102,7 +101,7 @@ typedef struct		s_control {
 	int				key_ctrl;
 	int				key_shift;
 	int				mouse_button_mid;
-	int 			help;
+	int				help;
 }					t_control;
 
 typedef struct		s_field {
@@ -115,9 +114,10 @@ typedef struct		s_field {
 	int				coeff_z;
 	int				width;
 	int				height;
-	int 			color_shift;
-	double 			max_z;
-	double 			min_z;
+	int				color_shift;
+	int 			color_height;
+	double			max_z;
+	double			min_z;
 	void			*mlx_ptr;
 	void			*win_ptr;
 	void			*img_ptr;
@@ -165,6 +165,8 @@ void				fdf_plot_front_view(t_field *fdf);
 void				fdf_plot_side_view(t_field *fdf);
 void				fdf_switch_help(t_field *fdf);
 void				fdf_change_color(int keycode, t_field *fdf);
+void				fdf_color_on_height(t_field *fdf, int i);
+void				fdf_color_calc(int *color, int color_shift);
 int					color(t_field field, int start_index, int end_index);
 void				fdf_real_isometry(int keycode, t_field *fdf);
 void				fdf_rotate_x_eval(double *y, double *z, double angle);

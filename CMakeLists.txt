@@ -10,6 +10,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lmlx -framework OpenGL -framework AppKit")
 add_executable(fdf
 		minilibx/libmlx.a
 		libft/libft.h
+		libft/ft_abs.c
 		libft/ft_atoi.c
 		libft/ft_atoi_hex.c
 		libft/ft_bzero.c
@@ -91,4 +92,6 @@ add_executable(fdf
 		src/fdf_mouse.c
 		src/fdf_open_close.c
 		src/fdf_change_color.c
-		src/fdf_color_gradient.c)
+		src/fdf_color_gradient.c
+		libft/ft_switch_bool.c
+		src/fdf_menu.c)

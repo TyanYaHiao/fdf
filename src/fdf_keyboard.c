@@ -24,7 +24,8 @@ int			fdf_keyboard_key_check(int keycode)
 		keycode == KEY_Z || keycode == KEY_X || keycode == KEY_T ||
 		keycode == KEY_I || keycode == KEY_R || keycode == KEY_G ||
 		keycode == KEY_B || keycode == KEY_Q || keycode == KEY_S ||
-		keycode == KEY_F || keycode == KEY_H || keycode == KEY_W)
+		keycode == KEY_F || keycode == KEY_H || keycode == KEY_W ||
+		keycode == KEY_E)
 		return (1);
 	return (0);
 }
@@ -43,7 +44,7 @@ void		fdf_keyboard_key_letter(int keycode, t_field *fdf)
 		fdf_switch_help(fdf);
 	if (keycode == KEY_Z || keycode == KEY_X)
 		fdf_change_depth(keycode, fdf);
-	if (keycode == KEY_B || keycode == KEY_G ||
+	if (keycode == KEY_B || keycode == KEY_G || keycode == KEY_E ||
 		keycode == KEY_R || keycode == KEY_Q || keycode == KEY_W)
 		fdf_change_color(keycode, fdf);
 }

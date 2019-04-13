@@ -6,7 +6,7 @@
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 14:46:58 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/12 21:25:08 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/04/13 15:47:29 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int				fdf_read(int *fd, t_field *field, char *map_name)
 	if (!(list_p = (t_list_p*)malloc(sizeof(t_list_p))))
 		return (0);
 	fdf_field_init(field);
+	field->color_height = FALSE;
+	field->color_shift = 0;
 	field->map_name = map_name;
 	head = list_p;
 	if (!fdf_help(fd, field, head))
