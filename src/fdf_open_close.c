@@ -14,7 +14,7 @@
 
 int		fdf_open(int argc, char **argv, int *fd)
 {
-	if (argc < 2)
+	if (argc != 2)
 	{
 		ft_putendl("Usage: ./fdf source_file.fdf");
 		return (0);

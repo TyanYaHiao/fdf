@@ -90,7 +90,8 @@ typedef struct		s_point {
 	int				color;
 }					t_point;
 
-typedef struct		s_list_p {
+typedef struct		s_list_p
+{
 	t_point			*points;
 	struct s_list_p	*next_p;
 }					t_list_p;
