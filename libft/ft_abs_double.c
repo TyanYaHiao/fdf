@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs_double.c                                    :+:      :+:    :+:   */
+/*   ft_diff_double.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/23 20:30:56 by fsmith            #+#    #+#             */
-/*   Updated: 2019/03/23 20:31:35 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/07/13 18:44:28 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-double		ft_abs_double(double x0, double x1)
+double		ft_diff_double(double x0, double x1)
 {
 	double	d;
 

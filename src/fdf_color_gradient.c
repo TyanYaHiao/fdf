@@ -6,7 +6,7 @@
 /*   By: mlurker <mlurker@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 19:32:20 by mlurker           #+#    #+#             */
-/*   Updated: 2019/04/12 20:10:16 by fsmith           ###   ########.fr       */
+/*   Updated: 2019/07/13 18:44:28 by fsmith           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void		fdf_init_curr(t_field field, int start, int end)
 {
 	field.current->x = START_POINT.x;
 	field.current->y = START_POINT.y;
-	field.current->dx = ft_abs_double(END_POINT.x, START_POINT.x);
-	field.current->dy = ft_abs_double(END_POINT.y, START_POINT.y);
+	field.current->dx = ft_diff_double(END_POINT.x, START_POINT.x);
+	field.current->dy = ft_diff_double(END_POINT.y, START_POINT.y);
 	field.current->color = START_POINT.color;
 	field.current->sx = 1;
 	field.current->sy = 1;
