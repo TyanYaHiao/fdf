@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf_read.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pcollio- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/31 14:46:58 by fsmith            #+#    #+#             */
-/*   Updated: 2019/07/13 18:44:28 by fsmith           ###   ########.fr       */
+/*   Created: 2019/09/11 16:12:45 by pcollio-          #+#    #+#             */
+/*   Updated: 2019/10/14 19:40:17 by pcollio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int				fdf_help(int *fd, t_field *field, t_list_p *list_p)
 	int			rd;
 	int			check;
 
-	rd = 0;
 	check = 0;
 	while ((rd = get_next_line(*fd, &line)) > 0)
 	{
@@ -62,10 +61,11 @@ int				fdf_read(int *fd, t_field *field, char *map_name)
 			* (field->height + 1)));
 	field->points_out = (t_point*)malloc(sizeof(t_point) * ((field->width + 1)
 			* (field->height + 1)));
-	field->current = (t_curr*)malloc(sizeof(*(field->current)));
+	field->current = (t_curr*)malloc(sizeof(t_curr));
 	field->points_mem = fdf_write_in_points(field, head);
 	fdf_points_copy(field);
 	close(*fd);
+	field->list = head;
 	return (1);
 }
 
@@ -114,6 +114,7 @@ t_point			*fdf_write_in_points(t_field *field, t_list_p *list_p)
 		step[2] += step[0];
 		h--;
 	}
+	free (step);
 	return (field->points_mem);
 }
 
@@ -134,5 +135,12 @@ int				fdf_read_points(char *line, t_list_p *list, t_field *field)
 		list->points[i].z = ft_atoi(array[i - 1]);
 		i++;
 	}
+	i = 0;
+	while (array[i] != NULL)
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
 	return (1);
 }

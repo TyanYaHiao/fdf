@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pcollio- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/10 15:15:03 by fsmith            #+#    #+#             */
-/*   Updated: 2019/07/13 18:44:23 by fsmith           ###   ########.fr       */
+/*   Created: 2019/09/11 16:12:45 by pcollio-          #+#    #+#             */
+/*   Updated: 2019/10/14 19:40:33 by pcollio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,7 @@ typedef struct		s_point {
 	int				color;
 }					t_point;
 
-typedef struct		s_list_p
-{
+typedef struct		s_list_p {
 	t_point			*points;
 	struct s_list_p	*next_p;
 }					t_list_p;
@@ -127,6 +126,7 @@ typedef struct		s_field {
 	int				s_line;
 	int				endian;
 	char			*map_name;
+	t_list_p		*list;
 	t_curr			*current;
 	t_control		*control;
 	t_point			*points_mem;

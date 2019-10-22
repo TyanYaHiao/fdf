@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf_menu.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fsmith <fsmith@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pcollio- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/13 16:48:34 by fsmith            #+#    #+#             */
-/*   Updated: 2019/04/15 21:53:00 by fsmith           ###   ########.fr       */
+/*   Created: 2019/09/11 16:12:45 by pcollio-          #+#    #+#             */
+/*   Updated: 2019/10/15 18:31:41 by pcollio-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,40 +52,65 @@ void			fdf_show_help(t_field field)
 
 void			fdf_field_info2(t_field field)
 {
+	char	*txt;
+
 	mlx_string_put(field.mlx_ptr, field.win_ptr,
-		WINDOW_W - 150, 90, TEXT_COLOR, "X angle:");
+			WINDOW_W - 150, 50, TEXT_COLOR, "Scale:");
+	txt = ft_itoa(field.scale * 100);
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+				WINDOW_W - 60, 50, TEXT_COLOR, txt);
+	free(txt);
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+				WINDOW_W - 150, 70, TEXT_COLOR, "Deepness:");
+	txt = ft_itoa(-field.coeff_z);
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+			WINDOW_W - 60, 70, TEXT_COLOR, txt);
+	free(txt);
+	mlx_string_put(field.mlx_ptr, field.win_ptr,
+			WINDOW_W - 150, 90, TEXT_COLOR, "X angle:");
+	txt = ft_itoa(field.angle_x * 180 / M_PI);
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 90,
-		TEXT_COLOR, ft_itoa(field.angle_x * 180 / M_PI));
+			TEXT_COLOR, txt);
+	free(txt);
+}
+
+void			fdf_field_info3(t_field field)
+{
+	char	*txt;
+
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 110,
-		TEXT_COLOR, "Y angle:");
+				TEXT_COLOR, "Y angle:");
+	txt = ft_itoa(field.angle_y * 180 / M_PI);
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 110,
-		TEXT_COLOR, ft_itoa(field.angle_y * 180 / M_PI));
+				TEXT_COLOR, txt);
+	free(txt);
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 150, 130,
-		TEXT_COLOR, "Z angle:");
+			TEXT_COLOR, "Z angle:");
+	txt = ft_itoa(field.angle_z * 180 / M_PI);
 	mlx_string_put(field.mlx_ptr, field.win_ptr, WINDOW_W - 60, 130,
-		TEXT_COLOR, ft_itoa(field.angle_z * 180 / M_PI));
+				TEXT_COLOR, txt);
+	free(txt);
 }
 
 void			fdf_field_info(t_field field)
 {
+	char	*txt;
+
 	mlx_string_put(field.mlx_ptr, field.win_ptr, 10, 10,
 		TEXT_COLOR, field.map_name);
 	mlx_string_put(field.mlx_ptr, field.win_ptr,
 		WINDOW_W - 150, 10, TEXT_COLOR, "Offset x:");
+	txt = ft_itoa(field.offset_x);
 	mlx_string_put(field.mlx_ptr, field.win_ptr,
-		WINDOW_W - 60, 10, TEXT_COLOR, ft_itoa(field.offset_x));
+		WINDOW_W - 60, 10, TEXT_COLOR, txt);
+	free(txt);
 	mlx_string_put(field.mlx_ptr, field.win_ptr,
 		WINDOW_W - 150, 30, TEXT_COLOR, "Offset y:");
+	txt = ft_itoa(field.offset_y);
 	mlx_string_put(field.mlx_ptr, field.win_ptr,
-		WINDOW_W - 60, 30, TEXT_COLOR, ft_itoa(field.offset_y));
-	mlx_string_put(field.mlx_ptr, field.win_ptr,
-		WINDOW_W - 150, 50, TEXT_COLOR, "Scale:");
-	mlx_string_put(field.mlx_ptr, field.win_ptr,
-		WINDOW_W - 60, 50, TEXT_COLOR, ft_itoa(field.scale * 100));
-	mlx_string_put(field.mlx_ptr, field.win_ptr,
-		WINDOW_W - 150, 70, TEXT_COLOR, "Deepness:");
-	mlx_string_put(field.mlx_ptr, field.win_ptr,
-		WINDOW_W - 60, 70, TEXT_COLOR, ft_itoa(-field.coeff_z));
+		WINDOW_W - 60, 30, TEXT_COLOR, txt);
+	free(txt);
 	fdf_field_info2(field);
+	fdf_field_info3(field);
 	fdf_show_help(field);
 }
